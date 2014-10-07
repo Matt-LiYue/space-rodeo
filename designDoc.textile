@@ -8,7 +8,7 @@ h2. Basic Design Info
 * *Market:* Ages 7 to 70
 * *Setting:* Space
 * *Plays like*: Angry Birds meets the Wild West in space
-* *Summary:* The courageous cowgoat Billy the Kid ventures into space to round up evil mad cows and defeat the evil cow overlord. 
+* *Summary:* Earth's cows has been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows and defeat the evil cow overlord. Along the way he must master and make use of the physics of the Milky Way. 
 
 h2. Mechanics
 * *Survival:* Player has finite number of lives which are lost upon crashes into objects and the map edges
@@ -17,7 +17,9 @@ h2. Mechanics
 * *Space Effects:* Player must engage with various space effects such as worm holes (map teleportation effect) and deadly astroids.
 
 h2. Reference Art
-
+* Run from the Sun
+* Cows in Space
+* Spy Fox in Dry Cereal
 
 h2. Related Games
 
