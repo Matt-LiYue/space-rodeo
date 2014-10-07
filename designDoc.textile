@@ -1,4 +1,4 @@
-h1. Basic Design Info
+h2. Basic Design Info
 
 * *Title:* Space Rodeo
 * *Tagline:* "Would you like fries with that milkshake?"
@@ -8,4 +8,12 @@ h1. Basic Design Info
 * *Market:* 7 to 70
 * *Setting:* Space
 * *Plays like*: Angry Birds meets the Wild West in space
-* *Summary:* Courageous cowboy ventures into space to round up ljk
+* *Summary:* The courageous cowgoat Billy the Kid ventures into space to round up evil mad cows and defeat the evil cow overlord. 
+
+h2. Mechanics
+* *Survival:* Player has finite number of lives which are lost upon crashes into objects and the map edges
+* *Movement:* Player controls his space ship's movement by rotating his ship and by firing a rocket propulsion pulse. She may exploit gravity by orbiting around planets.
+* *Map Objectives:* Player must round up a certain quota of cows on each level and reach the Space Ranch on the map. He lassos cows by either encircling them geometrically with the path of his ship or by shooting a lasso rope in one direction
+* *Space Effects:* Player must engage with various space effects such as worm holes (map teleportation effect) and deadly astroids.
+
+h2. Related Games
