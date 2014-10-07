@@ -1,0 +1,11 @@
+h1. Basic Design Info
+
+* *Title:* Space Rodeo
+* *Tagline:* "Would you like fries with that milkshake?"
+* *Team Members:* Yue Li, Michael Trotta, Kate Quinn, Joe Soultanis
+* *Genre:* Adventure Physics
+* *Platform:* PC
+* *Market:* 7 to 70
+* *Setting:* Space
+* *Plays like*: Angry Birds meets the Wild West in space
+* *Summary:* Courageous cowboy ventures into space to round up ljk
