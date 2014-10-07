@@ -20,10 +20,10 @@
 
 
 > Space Ship State Graph
-> ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+> ![alt text](https://github.com/mstrotta/space-rodeo/blob/master/Spaceship%20State.jpg "Logo Title Text 1")
 
 
 ----------
 >UML Design
->![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+>![alt text](https://github.com/mstrotta/space-rodeo/blob/master/UML%20Design.jpg "Logo Title Text 1")
 
