@@ -3,9 +3,9 @@ h2. Basic Design Info
 * *Title:* Space Rodeo
 * *Tagline:* "Would you like fries with that milkshake?"
 * *Team Members:* Yue Li, Michael Trotta, Kate Quinn, Joe Soultanis
-* *Genre:* Adventure Physics
+* *Genre:* Physics Puzzles, Adventure
 * *Platform:* PC
-* *Market:* 7 to 70
+* *Market:* Ages 7 to 70
 * *Setting:* Space
 * *Plays like*: Angry Birds meets the Wild West in space
 * *Summary:* The courageous cowgoat Billy the Kid ventures into space to round up evil mad cows and defeat the evil cow overlord. 
@@ -16,4 +16,25 @@ h2. Mechanics
 * *Map Objectives:* Player must round up a certain quota of cows on each level and reach the Space Ranch on the map. He lassos cows by either encircling them geometrically with the path of his ship or by shooting a lasso rope in one direction
 * *Space Effects:* Player must engage with various space effects such as worm holes (map teleportation effect) and deadly astroids.
 
+h2. Reference Art
+
+
 h2. Related Games
+
+h3. Angry Birds
+* *Developer:* Rovio Entertainment
+* *Platform:* Apple iOS
+* *Year:* 2009
+* The game has been called "the largest mobile app success the world has seen," and the mobile app has inspired an entire franchise of related work, including a television series and an Angry Birds Space-themed park at Kennedy and Houston NASA Space Centers. Look for a Sony Pictures Entertainment animated film in 2016.
+
+h3. Cows in Space
+* *Developer:* Donut Games
+* *Platform:* Apple iOS
+* *Year:* 2014
+* Similar to Space Rodeo in theme: cows are floating around in space and must be teleported back to Earth. The gameplay is a puzzle game where the player shoots projectiles from a left-right moving shooter to try to knock cows into stars in a Peggle/Pong-type game. There are some interesting gravity mechanics that we may use for inspiration.
+
+h3. Run from the Sun
+* *Publisher:* Armor Games
+* *Platform:* PC
+* *Year:* 2011
+* Player controls a space ship, which they launch from one planet to another in a side-scrolling journey, racking up points for distance and other achievements. Ship upgrades are given for points.
