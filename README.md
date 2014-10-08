@@ -9,6 +9,10 @@ TEAM MEMBER:
 * Kate Quinn 
 * Joe Soultanis
 
+---
+Game Sketch:
+[here](https://docs.google.com/a/email.wm.edu/drawings/d/1xYh8jg4GNXSXfe8FnY6u53KfgXnZI5msjQjy0PmOp-g/edit?usp=sharing)
+
 ##Detailed Game Design Document
 ---
 
