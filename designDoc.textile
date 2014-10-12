@@ -3,12 +3,12 @@ h2. Basic Design Info
 * *Title:* Space Rodeo
 * *Tagline:* "Would you like fries with that milkshake?"
 * *Team Members:* Yue Li, Michael Trotta, Kate Quinn, Joe Soultanis
-* *Genre:* Physics Puzzles, Adventure
+* *Genre:* Physics Puzzles
 * *Platform:* PC
-* *Market:* Ages 7 to 70
+* *Market:* Ages 7 to 5
 * *Setting:* Space
-* *Plays like*: Angry Birds meets the Wild West in space
-* *Summary:* Earth's cows has been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows and defeat the evil cow overlord. Along the way he must master and make use of the physics of the Milky Way. 
+* *Plays like*: Angry Birds meets Run from the Sun with a Western theme
+* *Summary:* Earth's cows have been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows and defeat the evil cow overlord. Along the way he must master and make use of the physics of the Milky Way. 
 
 h2. Mechanics
 * *Survival:* Player has finite number of lives which are lost upon crashes into objects and the map edges
@@ -39,4 +39,4 @@ h3. Run from the Sun
 * *Publisher:* Armor Games
 * *Platform:* PC
 * *Year:* 2011
-* Player controls a space ship, which they launch from one planet to another in a side-scrolling journey, racking up points for distance and other achievements. Ship upgrades are given for points.
+* Player controls a space ship, which they launch from one planet to another in a side-scrolling journey, racking up points for distance and other achievements. Players must time the firing of a rocket pulse with the rotation of a planet in order to succeed. Ship upgrades are given for points.
