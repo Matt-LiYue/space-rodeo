@@ -1,4 +1,4 @@
-pace Rodeo - Design Document__ 
+__pace Rodeo - Design Document__ 
 
 ----------
 ### __1. Title page__
@@ -6,6 +6,7 @@ pace Rodeo - Design Document__
 ----------
 
 ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Screen%20Shot%202014-10-13%20at%2012.26.41%20PM.png "Space Rodeo")
+
 ### __2. Executive summary__
 
 
@@ -28,6 +29,7 @@ Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Ove
    * Market: Ages 7 to 5
    * Setting: Space
    * Plays like: Angry Birds meets Run from the Sun with a Western theme
+
 ### __4. Related Games__
 
 
@@ -39,12 +41,14 @@ Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Ove
 * __Platform:__ Apple iOS
 * __Year:__ 2009
 * The game has been called “the largest mobile app success the world has seen,” and the mobile app has inspired an entire franchise of related work, including a television series and an Angry Birds Space-themed park at Kennedy and Houston NASA Space Centers. Look for a Sony Pictures Entertainment animated film in 2016.
+
 #### __Cows in Space__
 
  * __Developer:__ Donut Games
  * __Platform:__ Apple iOS
  * __Year:__ 2014
  * Similar to Space Rodeo in theme: cows are floating around in space and must be teleported back to Earth. The gameplay is a puzzle game where the player shoots projectiles from a left-right moving shooter to try to knock cows into stars in a Peggle/Pong-type game. There are some interesting gravity mechanics that we may use for inspiration.
+
 ####__Run from the Sun__
 * Publisher: Armor Games
 * Platform: PC
@@ -161,20 +165,35 @@ The lower part of this figure shows the most basic level, player simply fires th
 
 
 ###__17.Schedule__
+
 > Oct 17 -- Game prototype and skeleton
+
 > Oct 22 -- Basic sprites
+
 > Oct 22 -- Milestone: game playable and tolerable visuals
+
 > Oct 23 -- Progress presentation
+
 > Oct 31 -- Shop System
+
 > Nov 7 --  Enrich elements and levels 
+
 > Nov 10 -- Sounds and music
+
 > Nov 10 -- Milestone: Game roughly look like the final version
+
 > Nov 11 -- Progress presentation
+
 > Nov 21 -- Improve sprites, elements and levels
+
 > Nov 23 -- Testing and Refining
+
 > Nov 24 -- Final presentation and demo
+
 > Nov 28 -- Final refinement
+
 > Nov 28 -- Milestone: Game complete
+
 > Dec 4 -- Final report 
 
 ###__18.Budget__
