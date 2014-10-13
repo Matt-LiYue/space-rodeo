@@ -30,14 +30,14 @@ Game Sketch:
 > * __Cow usage__: Player aims to collect more mad cow for currency, which can be used in Space Shop.
 > * __Space Shop__: Player can purchase advanced spaceship, spaceship parts and life in Space Shop. Space Shop locates at certain levels, which can be visited by traveling through it. 
 
+>Simple Space Ship State Graph
 
 ----------
-
 
 > ![Simple Space Ship State Graph](https://github.com/mstrotta/space-rodeo/blob/master/materials/Spaceship%20State.jpg)
 
 
-
+>Simple Space Ship State Graph
 ----------
 >![UML Design - a draft](https://github.com/mstrotta/space-rodeo/blob/master/materials/UML%20Design.jpg)
 
