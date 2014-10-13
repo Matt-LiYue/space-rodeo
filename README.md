@@ -34,12 +34,10 @@ Game Sketch:
 ----------
 
 
-> Simple Space Ship State Graph
-> ![alt text](https://github.com/mstrotta/space-rodeo/blob/master/Spaceship%20State.jpg "Logo Title Text 1")
+> ![Simple Space Ship State Graph](https://github.com/mstrotta/space-rodeo/blob/master/materials/Spaceship%20State.jpg)
 
 
 
 ----------
->UML Design - a draft
->![alt text](https://github.com/mstrotta/space-rodeo/blob/master/UML%20Design.jpg "Logo Title Text 1")
+>![UML Design - a draft](https://github.com/mstrotta/space-rodeo/blob/master/materials/UML%20Design.jpg)
 
