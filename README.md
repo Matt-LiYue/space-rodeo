@@ -31,7 +31,6 @@ Game Sketch:
 > * __Space Shop__: Player can purchase advanced spaceship, spaceship parts and life in Space Shop. Space Shop locates at certain levels, which can be visited by traveling through it. 
 
 >Simple Space Ship State Graph
-
 ----------
 
 > ![Simple Space Ship State Graph](https://github.com/mstrotta/space-rodeo/blob/master/materials/Spaceship%20State.jpg)
