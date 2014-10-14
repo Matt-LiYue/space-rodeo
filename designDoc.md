@@ -117,6 +117,22 @@ The Evil Cow Overlord is a mysterious bovine extraterrestrial who has appeared i
 
 ----------
 
+#####__Tags and Dialog__:
+ex. 
+__ATTACK__ = "Launch attack"
+
+__SHOOT__ = "Shoot lasers"
+__WITHDRAW__ = "Withdraw lasers"
+__LASSO__ = "Go lasso"
+__CUT__ = "Cut lasso"
+__MOVE__ = "Move the ship"
+
+#####__Dialog examples:__
+"You haven't seen the last of us!"
+
+"MOOOOOOOO"
+
+"Another day, another lasso"
 
 ###__12.Technology plan__
 
@@ -128,7 +144,7 @@ The Evil Cow Overlord is a mysterious bovine extraterrestrial who has appeared i
 
 
 ----------
-
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/UML%20Design.jpg "Space Rodeo")
 
 ###__14.Controls__
 We control the spaceship of Billy traveling in the space. The control mechanism is much like Angry Birds. Player almost loses control of track of the space after firing it with one exception -- bursts that can escape the gravity of a planet. Player has the ability to shoot lassos when flying or trailing lassos when orbiting a planet to collect cows. Player needs to plan ahead to make good use of limited bursts to collect as many as cows and eventually fly to the destination of each level. There are 4 kinds of control.
