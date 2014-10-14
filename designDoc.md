@@ -26,7 +26,7 @@ Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Ove
    * Team Members: Yue Li, Michael Trotta, Kate Quinn, Joe Soultanis
    * Genre: Physics Puzzles
    * Platform: PC
-   * Market: Ages 7 to 5
+   * Market: Ages 7 to 50
    * Setting: Space
    * Plays like: Angry Birds meets Run from the Sun with a Western theme
 
