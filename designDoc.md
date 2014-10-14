@@ -117,17 +117,20 @@ The Evil Cow Overlord is a mysterious bovine extraterrestrial who has appeared i
 
 ----------
 
-#####__Tags and Dialog__:
-ex. 
-__ATTACK__ = "Launch attack"
+__TAGS:__
 
 __SHOOT__ = "Shoot lasers"
+
 __WITHDRAW__ = "Withdraw lasers"
+
 __LASSO__ = "Go lasso"
+
 __CUT__ = "Cut lasso"
+
 __MOVE__ = "Move the ship"
 
-#####__Dialog examples:__
+__Dialog examples:__
+
 "You haven't seen the last of us!"
 
 "MOOOOOOOO"
