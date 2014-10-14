@@ -147,6 +147,13 @@ __Dialog examples:__
 
 
 ----------
+
+__Software architecture:__
+
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Architecture.jpg "Space Rodeo")
+
+__UML:__
+
 ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/UML%20Design.jpg "Space Rodeo")
 
 ###__14.Controls__
