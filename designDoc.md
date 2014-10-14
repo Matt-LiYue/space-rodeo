@@ -144,6 +144,8 @@ __DIALOG EXAMPLES:__
 
 ----------
 
+We will simply use SFML to implement our game. At this stage no further technology is needed.
+
 
 ###__13.Software architecture__
 
