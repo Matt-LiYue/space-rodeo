@@ -5,14 +5,15 @@ __Space Rodeo - Design Document__
 
 ----------
 ####__Space Rodeo__####
-####__Would you like fries with that milkshake?__####
+####__--Would you like fries with that milkshake?__####
 ####__Members:__####
+
 * Yue Li
 * Michael Trotta
 * Kate Quinn
 * Joseph Soultanis
 
-####__Oct 15, 2014__
+####__Oct 15, 2014__####
 ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Screen%20Shot%202014-10-13%20at%2012.26.41%20PM.png "Space Rodeo")
 
 ### __2. Executive summary__
