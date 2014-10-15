@@ -99,19 +99,26 @@ The Evil Cow Overlord is a mysterious bovine extraterrestrial who has appeared i
 
 ----------
 
+__Refer to the following graph__
+
+
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Spaceship%20State.jpg "Space Rodeo")
+
 
 ###__9. Art direction__
 
-
 ----------
 
+We designs our art in an Angry Bird style. 
 
 ###__10.UI story boards__
 
 
 ----------
 
+__Sample Sketch:__
 
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/SpaceRodeo_illustration.jpg "Space Rodeo")
 ###__11.Tags & Dialog__
 
 
