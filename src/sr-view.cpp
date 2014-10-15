@@ -9,10 +9,15 @@ View::View(int height, int width, Logic& logic, sf::RenderWindow& window) {
 }
 
 void View::drawPlay() {
-	sf::Shape shipShape = _logic->getShipShape();
-	shipShape.setPosition(width * shipShape.getPosition().x, height * shipShape.getPosition().y)
-  _window->draw(_logic->getShipShape());	
+	sf::Shape* shipShape = _logic->getShipShape();
+	shipShape->setPosition(_width * shipShape->getPosition().x, _height * shipShape->getPosition().y);
+  _window->draw(*shipShape);	
+	
+	/* for model in getModels, draw model */
 }
 
+/* getModels - gets list/array of models to draw
+
+*/
 
 

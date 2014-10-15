@@ -6,17 +6,18 @@
 /*
 Design Overview:
 space-rodeo.cpp: contains main game loop with timer. Has logic and view objects.
-             Gives the logic object to the view
+             Gives the logic object to the view. Processes input and gives it to logic.
+
 sr-logic.h:  Controls all the variables of the game. Note positions are in [0,1] x [0,1].
              Game objects are called sr-models, and the logic has these.
+
 sr-view.h:   Responsible for drawing shapes. Has a pointer to logic so that it can get
              the sr-models to draw
+
 sr-model.h:  A model is a superclass which represents objects such as ship, planet, cow.
              Contains an sf::Shape and a position
+
 sr-ship.h:   Extends the model superclass with more vars like rocket fuel, direction,etc.
-
-
-
 
 */
 

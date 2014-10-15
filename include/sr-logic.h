@@ -7,7 +7,8 @@
 class Logic {
   public:
 		Logic();
-		sf::Shape getShipShape();
+		void beginLevel();
+		sf::Shape* getShipShape();
 		
 	private:
     Ship _ship;

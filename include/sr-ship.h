@@ -10,9 +10,11 @@ class Ship: public Model {
 	  Ship();
 		
 		// mutators
+		void setPosition(float x, float y);
 		
 		
-		// accessors
+		// accessor
+		sf::Shape* getShape();
 		
 
 };

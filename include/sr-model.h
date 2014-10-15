@@ -5,10 +5,12 @@
 
 class Model {
   public:
-	  //float x;
-		//float y;
-	private:
-		sf::Shape shape;
+	  //getShape
+	
+	protected:
+		sf::Shape *_shape;
+		float _xPos;
+		float _yPos;
 		
 		//void setPosition(float x, float y);
 		//sf::Shape getShape();
