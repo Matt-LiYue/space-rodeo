@@ -1,23 +1,27 @@
+#include <SFML/Graphics.hpp>
 #include "sr-view.h"
-#include <iostream> // dbg
+#include <iostream>
 
-View::View(int height, int width, Logic& logic, sf::RenderWindow& window) {
-	_height = height;
-	_width = width;
-	_logic = &logic;
-	_window = &window;	
+View::View(){
+  _view.create(sf::VideoMode(800,600,32),"Space Rodeo");
+  std::cout << _view.isOpen();
 }
 
-void View::drawPlay() {
-	sf::Shape* shipShape = _logic->getShipShape();
-	shipShape->setPosition(_width * shipShape->getPosition().x, _height * shipShape->getPosition().y);
-  _window->draw(*shipShape);	
-	
-	/* for model in getModels, draw model */
+void View::drawAll(std::vector<CircleModel*> mycirmodels){
+  _view.clear(sf::Color::Black);
+  while (_view.pollEvent(_event)){//TODO: Use Control Class to handle the event
+    if (_event.type == sf::Event::Closed)
+      _view.close();
+  }
+  for (int i = 0; i < mycirmodels.size(); i++){
+    _view.draw(*mycirmodels[i]);
+  }
+  _view.display();
 }
 
-/* getModels - gets list/array of models to draw
-
-*/
-
-
+bool View::isRun(){
+  if (_view.isOpen())
+    return true;
+  else
+    return false;
+}
