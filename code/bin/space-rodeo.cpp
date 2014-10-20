@@ -6,7 +6,12 @@
 int main(int argc, char** argv){
   Models mymodels;
   View myview;
+  Control mycontrol;
+  myview.setController(mycontrol);
+  sf::Time _interval;
+  sf::Clock _mainclock;
   while (myview.isRun()){
+    _mainclock.restart();
     std::vector<CircleModel*> mycirmodels = mymodels.getcirmodels();
 /*
   for (int i = 0; i < mycirmodels.size(); i++)
@@ -16,6 +21,9 @@ int main(int argc, char** argv){
     std::cout << mycirmodels[i]->getPosition().x << "," << mycirmodels[i]->getPosition().y << "\n";
 */
     myview.drawAll(mycirmodels);
+    _interval = _mainclock.getElapsedTime();
+    mycontrol.setmodels(mycirmodels);
+    mycontrol.update(_interval.asSeconds());
   }
   return 0;
 }
