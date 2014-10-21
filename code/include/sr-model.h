@@ -3,6 +3,7 @@
 class CircleModel: public sf::CircleShape{
   public:
     bool _movable;
+		bool intersects(CircleModel *other);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
   protected:

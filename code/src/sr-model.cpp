@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <math.h> /* sqrt */
 #include "sr-model.h"
 #include <iostream>
 
@@ -51,6 +52,13 @@ void CircleModel::setSpd(sf::Vector2f speed){
   _spd = speed;
 }
 
+bool CircleModel::intersects(CircleModel *other) {
+	sf::Vector2f diff = getPosition() - other->getPosition();
+	float radiusSum = getRadius() + other->getRadius();
+	if (radiusSum < diff.x || radiusSum < diff.y) return false;
+	if (radiusSum < sqrt(diff.x*diff.x + diff.y*diff.y)) return false;
+	return true;
+}
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(){//TODO: Read from a txt file to place the elements in map
