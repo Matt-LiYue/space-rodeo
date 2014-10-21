@@ -15,9 +15,27 @@ void Control::setmodels(std::vector<CircleModel*>& mymodels){
 
 void Control::update(float timeInterval){
   for (int i = 0; i < _cirmodels.size(); i++){
-    if (_cirmodels[i] -> _movable == true)
+    if (_cirmodels[i] -> _movable == true) {
+			
+    	/* update positions */
       _cirmodels[i] -> setPosition(_cirmodels[i] -> getPosition() + _cirmodels[i] -> getSpd()*timeInterval);
+		
+			/* check intersections */
+			for (int j = 0; j < _cirmodels.size(); j++) {
+				if (i == j) continue;
+				if (_cirmodels[i]->intersects(_cirmodels[j])) {
+				/*
+					numLives--;
+					if (numLives == 0) gameOver();
+				  else restartLevel();
+				*/
+				}
+			}
+		}
   }
+	
+	
+	
 
 }
 
