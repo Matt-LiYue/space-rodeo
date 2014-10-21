@@ -13,7 +13,7 @@ void View::setController(Control& controller){
 }
 
 
-void View::drawAll(std::vector<CircleModel*> mycirmodels){
+void View::drawAll(std::vector<CircleModel*>& mycirmodels){
   _view.clear(sf::Color::Black);
   while (_view.pollEvent(_event)){//TODO: Use Control Class to handle the event
     switch (_event.type){

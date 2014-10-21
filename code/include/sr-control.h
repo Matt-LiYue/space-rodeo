@@ -9,6 +9,7 @@ class Control{
     void update(float);
     void setmodels(std::vector<CircleModel*>&);
     void handleEvent(sf::Event);
-  private:
+    void test();
+ // private:
     std::vector<CircleModel*> _cirmodels;
 };

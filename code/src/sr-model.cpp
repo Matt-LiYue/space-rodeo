@@ -57,7 +57,6 @@ Models::Models(){//TODO: Read from a txt file to place the elements in map
   _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
   _circlemodels.push_back(new Planet(sf::Vector2f(400,200),60,20,3));
   _circlemodels.push_back(new Cow(sf::Vector2f(300,400),10,Cow::FLY));
-  _circlemodels[0] -> setSpd(sf::Vector2f(50,50));
 
 }
 std::vector<CircleModel*> Models::getcirmodels(){
