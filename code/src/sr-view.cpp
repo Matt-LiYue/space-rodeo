@@ -22,6 +22,11 @@ void View::drawAll(std::vector<CircleModel*> mycirmodels){
         break;
       case sf::Event::KeyPressed:
         _controller.handleEvent(_event);
+				break;
+				
+			default:
+			  break;
+				
     }
   }
   for (int i = 0; i < mycirmodels.size(); i++){
