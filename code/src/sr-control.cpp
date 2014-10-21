@@ -56,7 +56,7 @@ void Control::update(float timeInterval){
 						sf::Vector2f dir = ship->getSpd();
 						float dot = shipToPlanet.x * dir.x + shipToPlanet.y * dir.y;
 						sf::Vector2f secant = (dir * dot / (float) sqrt(dir.x*dir.x + dir.y*dir.y)) - planet->getPosition();
-						if (sqrt(secant.x*secant.x + secant.y*secant.y) < planet->getRadius()) {
+						if (sqrt(secant.x*secant.x + secant.y*secant.y) < planet->getRadius() + ship->getRadius()) {
 							/* crash */
 						}
 						else {
