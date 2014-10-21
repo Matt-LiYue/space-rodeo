@@ -25,8 +25,14 @@ Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
 int Planet::getCowno(){
   return _cow;
 }
-//Cow Class
 
+sf::CircleShape Planet::getGravityCircle() {
+	sf::CircleShape cs = sf::CircleShape(_gravitybound + getRadius());
+	cs.setPosition(getPosition());
+	return cs;
+}
+
+//Cow Class
 Cow::Cow(sf::Vector2f pos, int radius, Cow::CowType type){
   _movable = false;
   _cowType = type;
@@ -52,7 +58,7 @@ void CircleModel::setSpd(sf::Vector2f speed){
   _spd = speed;
 }
 
-bool CircleModel::intersects(CircleModel *other) {
+bool CircleModel::intersects(sf::CircleShape *other) {
 	sf::Vector2f diff = getPosition() - other->getPosition();
 	float radiusSum = getRadius() + other->getRadius();
 	if (radiusSum < fabs(diff.x) || radiusSum < fabs(diff.y)) return false;
