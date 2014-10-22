@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <math.h> /* fabs */
 #include "sr-model.h"
 #include <iostream>
 
@@ -24,8 +25,14 @@ Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
 int Planet::getCowno(){
   return _cow;
 }
-//Cow Class
 
+sf::CircleShape Planet::getGravityCircle() {
+	sf::CircleShape cs = sf::CircleShape(_gravitybound + getRadius());
+	cs.setPosition(getPosition());
+	return cs;
+}
+
+//Cow Class
 Cow::Cow(sf::Vector2f pos, int radius, Cow::CowType type){
   _movable = false;
   _cowType = type;
@@ -51,6 +58,13 @@ void CircleModel::setSpd(sf::Vector2f speed){
   _spd = speed;
 }
 
+bool CircleModel::intersects(sf::CircleShape *other) {
+	sf::Vector2f diff = getPosition() - other->getPosition();
+	float radiusSum = getRadius() + other->getRadius();
+	if (radiusSum < fabs(diff.x) || radiusSum < fabs(diff.y)) return false;
+	if (radiusSum * radiusSum < diff.x*diff.x + diff.y*diff.y) return false;
+	return true;
+}
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(){//TODO: Read from a txt file to place the elements in map

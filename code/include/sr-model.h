@@ -3,10 +3,21 @@
 class CircleModel: public sf::CircleShape{
   public:
     bool _movable;
+		bool intersects(sf::CircleShape *other);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
   protected:
     sf::Vector2f _spd;
+};
+
+class Planet: public CircleModel{
+  public:
+    Planet(sf::Vector2f,int,int,int);
+    int getCowno();
+		sf::CircleShape getGravityCircle();
+  private:
+    int _gravitybound;
+    int _cow;
 };
 
 class Ship : public CircleModel{
@@ -14,15 +25,7 @@ class Ship : public CircleModel{
     Ship(sf::Vector2f, int, int);
   private:
     int _burst;
-};
-
-class Planet: public CircleModel{
-  public:
-    Planet(sf::Vector2f,int,int,int);
-    int getCowno();
-  private:
-    int _gravitybound;
-    int _cow;
+		Planet* _orbiting;
 };
 
 class Cow: public CircleModel{
