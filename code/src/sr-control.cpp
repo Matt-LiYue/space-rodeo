@@ -77,6 +77,17 @@ void Control::update(float timeInterval){
 
 void Control::handleEvent(sf::Event event){
   if (event.key.code == sf::Keyboard::Space){ // Fire the rocket
-    _cirmodels[0] -> setSpd(sf::Vector2f(50,50)); //fire
+    for (int i = 0 ; i < _cirmodels.size(); i++ ){
+      if (dynamic_cast<Ship*>(_cirmodels[i]) != 0){ 
+        Ship* ship = (Ship *) _cirmodels[i];
+        if (ship -> getState() == Ship::REST){//fire
+          ship -> setSpd(sf::Vector2f(50,50));
+          ship -> setState(Ship::FLY);
+        }
+        else if (ship -> getState() == Ship::FLY){//burst
+          ship -> setSpd(sf::Vector2f(150,150)); 
+        }
+      }
+    }
   }
 }

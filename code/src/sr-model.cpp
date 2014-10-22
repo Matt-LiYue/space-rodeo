@@ -8,11 +8,22 @@
 Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   _burst = burst;
   _movable = true;
+  _shipState = Ship::REST;
   setPosition(pos);
   setRadius(radius);
 }
 
+int Ship::getburst(){
+  return _burst;
+}
 
+Ship::ShipState Ship::getState(){
+  return _shipState;
+}
+
+void Ship::setState(Ship::ShipState state){
+  _shipState = state;
+}
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
@@ -32,6 +43,7 @@ sf::CircleShape Planet::getGravityCircle() {
 	return cs;
 }
 
+
 //Cow Class
 Cow::Cow(sf::Vector2f pos, int radius, Cow::CowType type){
   _movable = false;
@@ -49,6 +61,14 @@ int Cow::getCowValue(){
   else
     return 100;
 }
+
+//SpaceRanch Class
+SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
+  _movable = false;
+  setPosition(pos);
+  setRadius(radius);
+}
+
 //CircleModel - Base Class of Circle-shaped elements
 sf::Vector2f CircleModel::getSpd(){
   return _spd;
@@ -71,6 +91,7 @@ Models::Models(){//TODO: Read from a txt file to place the elements in map
   _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
   _circlemodels.push_back(new Planet(sf::Vector2f(400,200),60,20,3));
   _circlemodels.push_back(new Cow(sf::Vector2f(300,400),10,Cow::FLY));
+  _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),40));
 
 }
 std::vector<CircleModel*> Models::getcirmodels(){

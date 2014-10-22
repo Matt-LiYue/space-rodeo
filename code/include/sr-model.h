@@ -3,7 +3,7 @@
 class CircleModel: public sf::CircleShape{
   public:
     bool _movable;
-		bool intersects(sf::CircleShape *other);
+    bool intersects(sf::CircleShape *other);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
   protected:
@@ -14,7 +14,7 @@ class Planet: public CircleModel{
   public:
     Planet(sf::Vector2f,int,int,int);
     int getCowno();
-		sf::CircleShape getGravityCircle();
+    sf::CircleShape getGravityCircle();
   private:
     int _gravitybound;
     int _cow;
@@ -22,10 +22,24 @@ class Planet: public CircleModel{
 
 class Ship : public CircleModel{
   public:
+    typedef enum{
+      REST,
+      FLY,
+      BURST,
+      ORBIT,
+      CRASH,
+      FINISH
+    }ShipState;
     Ship(sf::Vector2f, int, int);
+    int getburst();
+    ShipState getState();
+    void setState(ShipState);
+    sf::Vector2f getOrientation();
   private:
+    sf::Vector2f _orientation;
+    ShipState _shipState;
     int _burst;
-		Planet* _orbiting;
+    Planet* _orbiting;
 };
 
 class Cow: public CircleModel{
@@ -40,6 +54,12 @@ class Cow: public CircleModel{
     CowType _cowType;
     CowType getCowType();
     int getCowValue();
+};
+
+
+class SpaceRanch : public CircleModel{
+  public:
+   SpaceRanch(sf::Vector2f, int);
 };
 
 class Models{
