@@ -29,13 +29,13 @@ void Ship::setState(Ship::ShipState state){
   _shipState = state;
 }
 
-<<<<<<< HEAD
-=======
 void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
   float angle = getRotation();
   float PI = 3.1415926;
   std::cout << angle<< "\n";
   setSpd(sf::Vector2f(spd * cos(angle*PI/180), spd * sin(angle*PI/180)));
+}
+
 void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
 }
@@ -45,7 +45,6 @@ sf::Vector2f Ship::getGravityPull() {
 	/*if (_orbiting == 0) return v; //TODO work in progress
 	return _orbiting->getPosition() - getPosition();
 	*/
->>>>>>> e1a48c81df092526405118764ff7c84053601cb3
 }
 
 //Planet Class

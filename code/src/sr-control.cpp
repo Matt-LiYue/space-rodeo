@@ -111,8 +111,6 @@ void Control::handleEvent(sf::Event event){
     }
   }
   if (event.key.code == sf::Keyboard::Space){ // Fire the rocket
-<<<<<<< HEAD
-=======
       if (ship -> getState() == Ship::REST){//fire
         ship -> adjustSpd(100);
         ship -> setState(Ship::FLY);
@@ -126,9 +124,7 @@ void Control::handleEvent(sf::Event event){
 	ship -> setOrbit(0);
 	ship -> setState(Ship::FLY);
 				}
->>>>>>> e1a48c81df092526405118764ff7c84053601cb3
       }
-    }
   if (event.key.code == sf::Keyboard::Left){
     if (ship -> getState() == Ship::REST){
       ship -> rotate(-5); 

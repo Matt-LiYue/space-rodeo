@@ -35,13 +35,10 @@ class Ship : public CircleModel{
     int getburst();
     ShipState getState();
     void setState(ShipState);
-<<<<<<< HEAD
-=======
     void adjustSpd(int);
     void setOrbit(Planet*);
     sf::Vector2f getGravityPull();
 		
->>>>>>> e1a48c81df092526405118764ff7c84053601cb3
   private:
     ShipState _shipState;
     int _burst;
