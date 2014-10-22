@@ -22,10 +22,9 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
         break;
       case sf::Event::KeyPressed:
         _controller.handleEvent(_event);
-				break;
-				
-			default:
-			  break;
+	break;
+      default:
+        break;
 				
     }
   }

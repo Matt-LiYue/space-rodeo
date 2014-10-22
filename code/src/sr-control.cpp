@@ -104,23 +104,35 @@ void Control::update(float timeInterval){
 
 
 void Control::handleEvent(sf::Event event){
-  if (event.key.code == sf::Keyboard::Space){ // Fire the rocket
-    for (int i = 0 ; i < _cirmodels.size(); i++ ){
-      if (dynamic_cast<Ship*>(_cirmodels[i]) != 0){ 
-        Ship* ship = (Ship *) _cirmodels[i];
-        if (ship -> getState() == Ship::REST){//fire
-          ship -> setSpd(sf::Vector2f(50,50));
-          ship -> setState(Ship::FLY);
-        }
-        else if (ship -> getState() == Ship::FLY){//burst
-          ship -> setSpd(sf::Vector2f(150,150)); 
-        }
-				else if (ship -> getState() == Ship::ORBIT) {
-					ship -> setSpd(sf::Vector2f(150,150));
-					ship -> setOrbit(0);
-					ship -> setState(Ship::FLY);
-				}
-      }
+  Ship * ship;
+  for (int i = 0 ; i < _cirmodels.size(); i++ ){
+    if (dynamic_cast<Ship*>(_cirmodels[i]) != 0){ 
+      ship = (Ship *) _cirmodels[i];
     }
   }
+  if (event.key.code == sf::Keyboard::Space){ // Fire the rocket
+      if (ship -> getState() == Ship::REST){//fire
+        ship -> adjustSpd(100);
+        ship -> setState(Ship::FLY);
+      }
+      else if (ship -> getState() == Ship::FLY){//burst, TODO: Need a counter
+        ship -> adjustSpd(300);
+        ship -> setState(Ship::BURST);
+      }
+      else if (ship -> getState() == Ship::ORBIT) {
+        ship -> adjustSpd(300);
+	ship -> setOrbit(0);
+	ship -> setState(Ship::FLY);
+				}
+      }
+  if (event.key.code == sf::Keyboard::Left){
+    if (ship -> getState() == Ship::REST){
+      ship -> rotate(-5); 
+    }
+  }
+  if (event.key.code == sf::Keyboard::Right){
+    if (ship -> getState() == Ship::REST){
+      ship -> rotate(5);
+    }
+  } 
 }

@@ -5,11 +5,15 @@
 
 //Ship class
 Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
+  _texture.loadFromFile("rock.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
   _burst = burst;
   _movable = true;
   _shipState = Ship::REST;
   setPosition(pos);
   setRadius(radius);
+  setOrigin(radius,radius);//for ship rotation
 }
 
 int Ship::getburst(){
@@ -22,6 +26,13 @@ Ship::ShipState Ship::getState(){
 
 void Ship::setState(Ship::ShipState state){
   _shipState = state;
+}
+
+void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
+  float angle = getRotation();
+  float PI = 3.1415926;
+  std::cout << angle<< "\n";
+  setSpd(sf::Vector2f(spd * cos(angle*PI/180), spd * sin(angle*PI/180)));
 }
 
 void Ship::setOrbit(Planet* planet) {
