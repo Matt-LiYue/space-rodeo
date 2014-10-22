@@ -3,7 +3,6 @@
 #include "sr-model.h"
 #include <iostream>
 
-//constructor
 //Ship class
 Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   _burst = burst;
@@ -27,14 +26,15 @@ void Ship::setState(Ship::ShipState state){
 
 void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
+	float centripetal = planet->getRadius() / (M_PI*M_PI) * (_spd.x*_spd.x + _spd.y*_spd.y);
+	_gravityPull = centripetal * (planet->getPosition() - getPosition());
+	std::cout << "Setting gravity pull to " << _gravityPull.x << "," << _gravityPull.y << std::endl;
 }
 
 sf::Vector2f Ship::getGravityPull() {
-	return sf::Vector2f(0,0);
-	/*if (_orbiting == 0) return v; //TODO work in progress
-	return _orbiting->getPosition() - getPosition();
-	*/
+	return _gravityPull;
 }
+
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){

@@ -43,6 +43,7 @@ class Ship : public CircleModel{
     sf::Vector2f _orientation;
     ShipState _shipState;
     int _burst;
+		sf::Vector2f _gravityPull;
     Planet* _orbiting;
 };
 
