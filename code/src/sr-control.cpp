@@ -79,3 +79,4 @@ void Control::handleEvent(sf::Event event){
   if (event.key.code == sf::Keyboard::Space){ // Fire the rocket
     _cirmodels[0] -> setSpd(sf::Vector2f(50,50)); //fire
   }
+}
