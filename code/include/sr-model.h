@@ -34,12 +34,13 @@ class Ship : public CircleModel{
     int getburst();
     ShipState getState();
     void setState(ShipState);
-    sf::Vector2f getOrientation();
+    void adjustSpd(int);
   private:
-    sf::Vector2f _orientation;
     ShipState _shipState;
     int _burst;
     Planet* _orbiting;
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
 };
 
 class Cow: public CircleModel{
