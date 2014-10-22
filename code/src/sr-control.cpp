@@ -14,8 +14,6 @@ void Control::setmodels(std::vector<CircleModel*>& mymodels){
   ;
 }
 
-<<<<<<< HEAD
-=======
 
 void Control::update(float timeInterval){
   for (int i = 0; i < _cirmodels.size(); i++){
@@ -74,7 +72,6 @@ void Control::update(float timeInterval){
 	
 	
 
->>>>>>> 82ab4d2d2302a1db278357857a1f5846ce70ae92
 }
 
 
