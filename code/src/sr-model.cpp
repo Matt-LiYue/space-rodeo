@@ -25,6 +25,17 @@ void Ship::setState(Ship::ShipState state){
   _shipState = state;
 }
 
+void Ship::setOrbit(Planet* planet) {
+	_orbiting = planet;
+}
+
+sf::Vector2f Ship::getGravityPull() {
+	return sf::Vector2f(0,0);
+	/*if (_orbiting == 0) return v; //TODO work in progress
+	return _orbiting->getPosition() - getPosition();
+	*/
+}
+
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
   _cow = cow;
@@ -89,7 +100,7 @@ bool CircleModel::intersects(sf::CircleShape *other) {
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(){//TODO: Read from a txt file to place the elements in map
   _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
-  _circlemodels.push_back(new Planet(sf::Vector2f(400,200),60,20,3));
+  _circlemodels.push_back(new Planet(sf::Vector2f(300,200),60,50,3));
   _circlemodels.push_back(new Cow(sf::Vector2f(300,400),10,Cow::FLY));
   _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),40));
 

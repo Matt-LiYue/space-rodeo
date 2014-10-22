@@ -30,11 +30,15 @@ class Ship : public CircleModel{
       CRASH,
       FINISH
     }ShipState;
+		
     Ship(sf::Vector2f, int, int);
     int getburst();
     ShipState getState();
     void setState(ShipState);
+		void setOrbit(Planet*);
+		sf::Vector2f getGravityPull();
     sf::Vector2f getOrientation();
+		
   private:
     sf::Vector2f _orientation;
     ShipState _shipState;
