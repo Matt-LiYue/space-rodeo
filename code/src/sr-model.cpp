@@ -49,6 +49,9 @@ sf::Vector2f Ship::getGravityPull() {
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
+  _texture.loadFromFile("planet.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
   _cow = cow;
   _movable = false;
   _gravitybound = gravity; 
@@ -68,6 +71,9 @@ sf::CircleShape Planet::getGravityCircle() {
 
 //Cow Class
 Cow::Cow(sf::Vector2f pos, int radius, Cow::CowType type){
+  _texture.loadFromFile("cow.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
   _movable = false;
   _cowType = type;
   setPosition(pos);
@@ -86,6 +92,9 @@ int Cow::getCowValue(){
 
 //SpaceRanch Class
 SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
+  _texture.loadFromFile("ranch.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
   _movable = false;
   setPosition(pos);
   setRadius(radius);
@@ -112,8 +121,8 @@ bool CircleModel::intersects(sf::CircleShape *other) {
 Models::Models(){//TODO: Read from a txt file to place the elements in map
   _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
   _circlemodels.push_back(new Planet(sf::Vector2f(300,200),60,50,3));
-  _circlemodels.push_back(new Cow(sf::Vector2f(300,400),10,Cow::FLY));
-  _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),40));
+  _circlemodels.push_back(new Cow(sf::Vector2f(300,400),40,Cow::FLY));
+  _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),50));
 
 }
 std::vector<CircleModel*> Models::getcirmodels(){

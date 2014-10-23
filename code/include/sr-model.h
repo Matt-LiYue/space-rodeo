@@ -18,6 +18,9 @@ class Planet: public CircleModel{
   private:
     int _gravitybound;
     int _cow;
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
+  
 };
 
 class Ship : public CircleModel{
@@ -60,12 +63,17 @@ class Cow: public CircleModel{
     CowType _cowType;
     CowType getCowType();
     int getCowValue();
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
 };
 
 
 class SpaceRanch : public CircleModel{
   public:
    SpaceRanch(sf::Vector2f, int);
+  private:
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
 };
 
 class Models{
