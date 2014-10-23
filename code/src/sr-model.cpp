@@ -43,7 +43,7 @@ void Ship::setOrbit(Planet* planet) {
 	std::cout << "setting orbit" << std::endl;
 	setOrigin(sf::Vector2f(getRadius(),getRadius()));
 	setPosition(300,200);
-	setOrigin(sf::Vector2f(getRadius(),getRadius()-100));
+	setOrigin(sf::Vector2f(getRadius()+100,getRadius()));
 	//sf::Vector2f oldPos = sf::Vector2f(300,300);
 	//sf::Vector2f trans = sf::Vector2f(getRadius(),getRadius()) - getOrigin();
 	//setOrigin(sf::Vector2f(0,0));
