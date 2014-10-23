@@ -38,18 +38,19 @@ class Ship : public CircleModel{
     Ship(sf::Vector2f, int, int);
     int getburst();
     ShipState getState();
-		Planet* getOrbitPlanet();
+    Planet* getOrbitPlanet();
     void setState(ShipState);
     void setSpd(sf::Vector2f);
     void adjustOri(sf::Vector2f);
     void adjustSpd(int);
     void setOrbit(Planet*);
+    void quitOrbit();
     sf::Vector2f getGravityPull();
 		
   private:
     ShipState _shipState;
     int _burst;
-		sf::Vector2f _gravityPull;
+    sf::Vector2f _gravityPull;
     Planet* _orbiting;
     sf::Texture _texture;
     sf::Texture* _textpointer;
@@ -82,8 +83,10 @@ class SpaceRanch : public CircleModel{
 
 class Models{
   public:
-    Models();
+    Models(int);
     std::vector<CircleModel*> getcirmodels();
   private:
     std::vector<CircleModel*> _circlemodels;
+    int totallevel;
+    int currentlevel;
 };

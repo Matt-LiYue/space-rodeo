@@ -15,7 +15,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   setPosition(pos);
   setRadius(radius);
   setOrigin(radius,radius);//for ship rotation
-	rotate(90);
+  rotate(90);
 	
 }
 
@@ -33,25 +33,32 @@ void Ship::setState(Ship::ShipState state){
 
 void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
   float angle = getRotation() - 90;
-  float PI = 3.1415926;
   std::cout << angle<< "\n";
-  setSpd(sf::Vector2f(spd * cos(angle*PI/180), spd * sin(angle*PI/180)));
+  setSpd(sf::Vector2f(spd * cos(angle*M_PI/180), spd * sin(angle*M_PI/180)));
 }
 
 void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
 	std::cout << "setting orbit" << std::endl;
-	setOrigin(sf::Vector2f(getRadius(),getRadius()));
-	setPosition(300,200);
-	setOrigin(sf::Vector2f(getRadius()+100,getRadius()));
+	setPosition(planet->getPosition());
+	setOrigin(sf::Vector2f(getRadius() + planet->getRadius() + 30,getRadius()));
 	//sf::Vector2f oldPos = sf::Vector2f(300,300);
 	//sf::Vector2f trans = sf::Vector2f(getRadius(),getRadius()) - getOrigin();
 	//setOrigin(sf::Vector2f(0,0));
-	
 	//setPosition();
-	
-	std::cout << getOrigin().x << "," << getOrigin().y << std::endl;
+        //std::cout << getRotation()<<std::endl;
+        //std::cout << planet->getPosition().x << "," << planet->getPosition().y<<std::endl;
+	//std::cout << getOrigin().x << "," << getOrigin().y << std::endl;
+	//std::cout << getPosition().x << "," << getPosition().y << std::endl;
 
+}
+
+void Ship::quitOrbit(){
+  float dis = getOrigin().x - getRadius();
+  float angle = getRotation();
+  setPosition(getPosition().x-cos(angle*M_PI/180)*dis, getPosition().y-sin(angle*M_PI/180)*dis);
+  setOrigin(sf::Vector2f(getRadius(),getRadius()));
+  //std::cout << "OUT: "<<getPosition().x << "," << getPosition().y<<std::endl;
 }
 
 Planet* Ship::getOrbitPlanet() {
@@ -145,18 +152,26 @@ bool CircleModel::intersects(sf::CircleShape *other) {
 }
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
-Models::Models(){//TODO: Read from a txt file to place the elements in map
-  _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
-  _circlemodels.push_back(new Planet(sf::Vector2f(300,200),70,50,3));
-  _circlemodels.push_back(new Cow(sf::Vector2f(300,400),40,Cow::FLY));
-  _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),50));
-	for (int i=0; i<_circlemodels.size(); i++) {
-		float r = _circlemodels[i]->getRadius();
-		sf::Vector2f center = _circlemodels[i]->getPosition();
-		_circlemodels[i]->setOrigin(sf::Vector2f(r,r));
-		_circlemodels[i]->setPosition(center);
-		std::cout << _circlemodels[i]->getPosition().x << "," << _circlemodels[i]->getPosition().y << std::endl;
-	}
+Models::Models(int level){//TODO: Read from a txt file to place the elements in map
+  if (level == 0){
+    _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
+    _circlemodels.push_back(new Cow(sf::Vector2f(400,80),40,Cow::FLY));
+    _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),70));
+  }
+  if (level == 1){
+    _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
+    _circlemodels.push_back(new Planet(sf::Vector2f(300,200),70,30,0));
+    _circlemodels.push_back(new Cow(sf::Vector2f(600,400),40,Cow::FLY));
+    _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,500),70));
+  }
+   for (int i=0; i<_circlemodels.size(); i++) {
+    float r = _circlemodels[i]->getRadius();
+    sf::Vector2f center = _circlemodels[i]->getPosition();
+    _circlemodels[i]->setOrigin(sf::Vector2f(r,r));
+    _circlemodels[i]->setPosition(center);
+    std::cout << _circlemodels[i]->getPosition().x << "," << _circlemodels[i]->getPosition().y << std::endl;
+    std::cout << _circlemodels[i]->getOrigin().x << "," << _circlemodels[i] -> getOrigin().y<<std::endl;
+  }
 }
 std::vector<CircleModel*> Models::getcirmodels(){
   return _circlemodels;

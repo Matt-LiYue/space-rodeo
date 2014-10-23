@@ -4,7 +4,8 @@
 #include <unistd.h>
 
 int main(int argc, char** argv){
-  Models mymodels;
+  for (int i = 0 ; i < 2; i++){
+  Models mymodels(i);
   View myview;
   Control mycontrol;
   sf::Time _interval;
@@ -17,6 +18,8 @@ int main(int argc, char** argv){
     myview.drawAll(mycirmodels);
     _interval = _mainclock.getElapsedTime();
     mycontrol.update(_interval.asSeconds());
+    if (mycontrol.getlevelfinished() == true) break;
+  }
   }
   return 0;
 }
