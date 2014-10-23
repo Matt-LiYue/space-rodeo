@@ -256,7 +256,7 @@ The game is now a pure puzzle game. Each level is stand alone. Player tries to c
   * Player uses "left" and "right" key to adjust the firing direction of the spaceship, and press "enter" for firing.
   * Collision detection. The spaceship will crash if it runs into a planet, or flies out of bound.
   * Gravity force -- Spaceship orbiting the planet. An simple illustration is as follows:
-  ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/SpaceRodeo_illustration.jpg "Space Rodeo")
+  ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/gravity.png "Space Rodeo")
   * Part of the art and text file map input.
   ![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/cow.png "Cow")
   ![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/ranch.png "Space Ranch")
