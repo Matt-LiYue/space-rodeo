@@ -32,18 +32,11 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
     }
   }
   for (int i = 0; i < mycirmodels.size(); i++){
-    _view.draw(*mycirmodels[i]);
+		if (mycirmodels[i]->draw)
+      _view.draw(*mycirmodels[i]);
   }
   _view.display();
 }
-
-/*
-void View::drawDbg(std::vector<sf::Drawable>& dbgModels) {
-  for (int i = 0; i < dbgModels.size(); i++){
-    _view.draw(*dbgModels[i]);
-  }
-}
-*/
 
 bool View::isRun(){
   if (_view.isOpen())

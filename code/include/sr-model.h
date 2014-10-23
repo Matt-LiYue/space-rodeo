@@ -3,6 +3,7 @@
 class CircleModel: public sf::CircleShape{
   public:
     bool _movable;
+		bool draw;
     bool intersects(sf::CircleShape *other);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
@@ -37,6 +38,7 @@ class Ship : public CircleModel{
     Ship(sf::Vector2f, int, int);
     int getburst();
     ShipState getState();
+		Planet* getOrbitPlanet();
     void setState(ShipState);
     void setSpd(sf::Vector2f);
     void adjustOri(sf::Vector2f);
