@@ -154,9 +154,9 @@ bool CircleModel::intersects(sf::CircleShape *other) {
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
   if (level == 0){
-    _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
-    _circlemodels.push_back(new Cow(sf::Vector2f(400,80),40,Cow::FLY));
-    _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),70));
+    _circlemodels.push_back(new Ship(sf::Vector2f(50,300), 20, 5));
+    _circlemodels.push_back(new Cow(sf::Vector2f(400,300),40,Cow::FLY));
+    _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,300),70));
   }
   if (level == 1){
     _circlemodels.push_back(new Ship(sf::Vector2f(50,80), 20, 5));
