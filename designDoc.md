@@ -258,7 +258,9 @@ The game is now a pure puzzle game. Each level is stand alone. Player tries to c
   * Gravity force -- Spaceship orbiting the planet. An simple illustration is as follows:
   ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/SpaceRodeo_illustration.jpg "Space Rodeo")
   * Part of the art and text file map input.
-  ![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/SpaceRodeo_illustration.jpg "Space Rodeo")
+  ![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/cow.png "Cow")
+  ![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/ranch.png "Space Ranch")
+  ![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/rock.png "Rocket")
 * __Core functionality remaining:__
   * Lasso: Spaceship shoots the lasso to capture cows
   * Trailing lasso to collect cows on planet
