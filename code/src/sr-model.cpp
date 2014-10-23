@@ -37,9 +37,7 @@ void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
 
 void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
-	float centripetal = planet->getRadius() / (M_PI*M_PI) * (_spd.x*_spd.x + _spd.y*_spd.y);
-	_gravityPull = centripetal * (planet->getPosition() - getPosition());
-	std::cout << "Setting gravity pull to " << _gravityPull.x << "," << _gravityPull.y << std::endl;
+
 }
 
 sf::Vector2f Ship::getGravityPull() {
@@ -123,8 +121,15 @@ Models::Models(){//TODO: Read from a txt file to place the elements in map
   _circlemodels.push_back(new Planet(sf::Vector2f(300,200),60,50,3));
   _circlemodels.push_back(new Cow(sf::Vector2f(300,400),40,Cow::FLY));
   _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,80),50));
-
+	for (int i=0; i<_circlemodels.size(); i++) {
+		float r = _circlemodels[i]->getRadius();
+		sf::Vector2f center = _circlemodels[i]->getPosition();
+		_circlemodels[i]->setOrigin(sf::Vector2f(r,r));
+		_circlemodels[i]->setPosition(center);
+		std::cout << _circlemodels[i]->getPosition().x << "," << _circlemodels[i]->getPosition().y << std::endl;
+	}
 }
 std::vector<CircleModel*> Models::getcirmodels(){
   return _circlemodels;
 }
+
