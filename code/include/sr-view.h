@@ -12,4 +12,6 @@ class View{
     sf::RenderWindow _view;
     sf::Event _event;
     Control _controller;
+    sf::Texture _bgtexture;
+    sf::Sprite _bgsprite;
 };

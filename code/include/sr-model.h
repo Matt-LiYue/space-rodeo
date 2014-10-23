@@ -38,6 +38,8 @@ class Ship : public CircleModel{
     int getburst();
     ShipState getState();
     void setState(ShipState);
+    void setSpd(sf::Vector2f);
+    void adjustOri(sf::Vector2f);
     void adjustSpd(int);
     void setOrbit(Planet*);
     sf::Vector2f getGravityPull();

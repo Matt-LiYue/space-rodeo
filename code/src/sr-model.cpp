@@ -44,6 +44,14 @@ sf::Vector2f Ship::getGravityPull() {
 	return _gravityPull;
 }
 
+void Ship::setSpd(sf::Vector2f spd){
+  _spd = spd;
+  adjustOri(spd);
+}
+
+void Ship::adjustOri(sf::Vector2f spd){
+ ;
+}
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
