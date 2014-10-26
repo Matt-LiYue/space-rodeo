@@ -29,10 +29,9 @@ class Ship : public CircleModel{
     typedef enum{
       REST,
       FLY,
+			GRAVITY,
       BURST,
-      ORBIT,
-      CRASH,
-      FINISH
+      ORBIT
     }ShipState;
 		
     Ship(sf::Vector2f, int, int);
@@ -44,13 +43,13 @@ class Ship : public CircleModel{
     void adjustOri(sf::Vector2f);
     void adjustSpd(int);
     void setOrbit(Planet*);
-    void quitOrbit();
-    sf::Vector2f getGravityPull();
+		void setAngularVelocity(float);
+    float getAngularVelocity();
 		
   private:
     ShipState _shipState;
     int _burst;
-    sf::Vector2f _gravityPull;
+    float _angularVelocity;
     Planet* _orbiting;
     sf::Texture _texture;
     sf::Texture* _textpointer;

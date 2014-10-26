@@ -29,6 +29,7 @@ Ship::ShipState Ship::getState(){
 
 void Ship::setState(Ship::ShipState state){
   _shipState = state;
+	std::cout << "setting state: " << state << std::endl;
 }
 
 void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
@@ -40,33 +41,18 @@ void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
 void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
 	std::cout << "setting orbit" << std::endl;
-	setPosition(planet->getPosition());
-	setOrigin(sf::Vector2f(getRadius() + planet->getRadius() + 30,getRadius()));
-	//sf::Vector2f oldPos = sf::Vector2f(300,300);
-	//sf::Vector2f trans = sf::Vector2f(getRadius(),getRadius()) - getOrigin();
-	//setOrigin(sf::Vector2f(0,0));
-	//setPosition();
-        //std::cout << getRotation()<<std::endl;
-        //std::cout << planet->getPosition().x << "," << planet->getPosition().y<<std::endl;
-	//std::cout << getOrigin().x << "," << getOrigin().y << std::endl;
-	//std::cout << getPosition().x << "," << getPosition().y << std::endl;
-
-}
-
-void Ship::quitOrbit(){
-  float dis = getOrigin().x - getRadius();
-  float angle = getRotation();
-  setPosition(getPosition().x-cos(angle*M_PI/180)*dis, getPosition().y-sin(angle*M_PI/180)*dis);
-  setOrigin(sf::Vector2f(getRadius(),getRadius()));
-  //std::cout << "OUT: "<<getPosition().x << "," << getPosition().y<<std::endl;
 }
 
 Planet* Ship::getOrbitPlanet() {
   return _orbiting;	
 }
 
-sf::Vector2f Ship::getGravityPull() {
-	return _gravityPull;
+void Ship::setAngularVelocity(float av) {
+	_angularVelocity = av;
+}
+
+float Ship::getAngularVelocity() {
+	return _angularVelocity;
 }
 
 void Ship::setSpd(sf::Vector2f spd){

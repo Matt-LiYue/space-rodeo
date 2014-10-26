@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include "sr-control.h"
+#include "sr-utils.h"
 
 
 Control::Control(){
@@ -32,17 +33,35 @@ bool Control::getlevelfinished(){
 
 void Control::update(float timeInterval) {
 	
-	/* Ship */
+	/* begin ship movement */
+	
+	/* Ship States 
+	1 - not in a gravity field: state = FLY, _orbiting = 0
+	2 - in a gravity field, not yet orbiting: state = GRAVITY, _orbiting = planet*
+	3 - in orbit: state = ORBIT, _orbiting = planet*
+	4 - has burst out of orbit, still in gravity field: state = BURST, _orbiting = planet*
+	5 - not in a gravity field: state = FLY, _orbiting = 0
+	*/
+	
+	Planet* planet = _ship->getOrbitPlanet();
+	
 	/* map exit */
 	sf::Vector2f pos = _ship->getPosition();
-  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) exit(0);
+  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) {std::cout << "screen exit\n"; exit(0);}
 	
 	/* movement */
+	if (_ship->getState() == Ship::GRAVITY && 
+	  (dot(_ship->getOrbitPlanet()->getPosition() - _ship->getPosition(),_ship->getSpd()) <= 0)) {
+		_ship->setState(Ship::ORBIT);
+		float theta = sqrt(norm_sqrd(_ship->getSpd()) / norm_sqrd(planet->getPosition() - _ship->getPosition()));
+		_ship->setAngularVelocity(theta);
+	  	
+	}
+	
 	if (_ship->getState() == Ship::ORBIT) {
-    Planet* planet = _ship->getOrbitPlanet();
-    float distance = sqrt(_ship->getSpd().x*_ship->getSpd().x + _ship->getSpd().y*_ship->getSpd().y) * timeInterval;
-    float theta = 360 * distance / (2 * M_PI * planet->getRadius());
-    _ship->rotate(theta);
+	  _ship->setSpd((planet->getPosition() - _ship->getPosition() + rotate(_ship->getPosition() 
+			- planet->getPosition(), timeInterval * _ship->getAngularVelocity())) / timeInterval);
+		_ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
 	}
   else {
     _ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
@@ -61,33 +80,29 @@ void Control::update(float timeInterval) {
     _levelfinished = true;
   }
 	
+	// planet, gravity intersections
 	for (int j=0; j < _planets.size(); j++) {
 		Planet* planet = _planets[j];
-		if (_ship->getState() == Ship::ORBIT) break; // don't bother w/ collisions if snapped to orbit
+		
+		// planet
+		if (_ship->intersects(planet)) {
+			std::cout << "ship hit planet\n";
+			exit(1);
+		}
+		
+		// gravity field
     sf::CircleShape gravity = planet->getGravityCircle();
     if (_ship->getState() == Ship::FLY && _ship->intersects(&gravity)) {
-			
-      /* check for orbit or crash */
-      sf::Vector2f shipToPlanet = planet->getPosition() - _ship->getPosition();
-      sf::Vector2f dir = _ship->getSpd();
-      float dot = shipToPlanet.x * dir.x + shipToPlanet.y * dir.y;
-      sf::Vector2f projection = dir * (dot / (dir.x*dir.x + dir.y*dir.y));
-      sf::Vector2f secant = projection + _ship->getPosition() - planet->getPosition();
-		
-
-      if (sqrt(secant.x*secant.x + secant.y*secant.y) < planet->getRadius() + _ship->getRadius()) {
-      /* crash */
-        std::cout << "ship will crash into planet\n";
-        _ship -> setState(Ship::CRASH);
-      }
-      else {
-      /* orbit */
-        std::cout << "ship in orbit. state: " << _ship -> getState() << "\n";
-        _ship -> setState(Ship::ORBIT);
-        _ship -> setOrbit(planet);
-      }
+		  _ship->setState(Ship::GRAVITY);
+			_ship->setOrbit(planet);
     }
+		else if (_ship->getState() == Ship::BURST && !_ship->intersects(&gravity)) {
+			_ship->setState(Ship::FLY);
+			_ship->setOrbit(0);
+		}
+		
 	}
+	/* end ship movement */
 }
 	
 void Control::handleEvent(sf::Event event){
@@ -99,11 +114,9 @@ void Control::handleEvent(sf::Event event){
       }
       else if (_ship -> getState() == Ship::FLY){//burst, TODO: Need a counter
         _ship -> adjustSpd(300);
-        _ship -> setState(Ship::BURST);
       }
       else if (_ship -> getState() == Ship::ORBIT) {
         _ship -> adjustSpd(300);
-        _ship -> quitOrbit();
 	      _ship -> setState(Ship::BURST);
       }
   }
