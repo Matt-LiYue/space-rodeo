@@ -54,6 +54,7 @@ void Control::update(float timeInterval) {
 	  (dot(_ship->getOrbitPlanet()->getPosition() - _ship->getPosition(),_ship->getSpd()) <= 0)) {
 		_ship->setState(Ship::ORBIT);
 		float theta = sqrt(norm_sqrd(_ship->getSpd()) / norm_sqrd(planet->getPosition() - _ship->getPosition()));
+		if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 		_ship->setAngularVelocity(theta);
 	  	
 	}
