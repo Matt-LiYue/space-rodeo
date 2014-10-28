@@ -11,7 +11,10 @@ int main(int argc, char** argv){
   sf::Time _interval;
   sf::Clock _mainclock;
   std::vector<CircleModel*> mycirmodels = mymodels.getcirmodels();
+	std::cout << mycirmodels.size() << std::endl;
   mycontrol.setmodels(mycirmodels);
+	std::cout << mycirmodels.size() << std::endl;
+	
   myview.setController(mycontrol);
   while (myview.isRun()){
     _mainclock.restart();

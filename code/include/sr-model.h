@@ -24,6 +24,28 @@ class Planet: public CircleModel{
   
 };
 
+class Lasso: public CircleModel {
+  public:
+    typedef enum{
+      HELD,    // base-state
+			SHOT,    // fired
+			CAUGHT,  // returning with cow
+			MISSED   // returning w/o cow
+    }LassoState;
+		
+	  Lasso(int,float);
+		float getLength();
+		LassoState getState();
+		void setState(LassoState);
+		float getLassoSpd();
+		
+	private:
+		float _length;
+		float _lassoSpd;
+    LassoState _lassoState;
+		
+};
+
 class Ship : public CircleModel{
   public:
     typedef enum{
@@ -43,8 +65,12 @@ class Ship : public CircleModel{
     void adjustOri(sf::Vector2f);
     void adjustSpd(int);
     void setOrbit(Planet*);
+		float getDir();
 		void setAngularVelocity(float);
     float getAngularVelocity();
+		Lasso* getLasso();
+		void shoot();
+		sf::Vector2f getLassoDest();
 		
   private:
     ShipState _shipState;
@@ -53,6 +79,8 @@ class Ship : public CircleModel{
     Planet* _orbiting;
     sf::Texture _texture;
     sf::Texture* _textpointer;
+		Lasso* _lasso;
+		sf::Vector2f _lassoDest;
 };
 
 class Cow: public CircleModel{
@@ -74,11 +102,13 @@ class Cow: public CircleModel{
 
 class SpaceRanch : public CircleModel{
   public:
-   SpaceRanch(sf::Vector2f, int);
+    SpaceRanch(sf::Vector2f, int);
   private:
     sf::Texture _texture;
     sf::Texture* _textpointer;
 };
+
+
 
 class Models{
   public:
