@@ -1,0 +1,19 @@
+==TODO list==
+    updated 10/27
+
+M - Finish lasso
+Y - Finish astroid, wormhole
+K - Text input
+ - Art
+M   - Animate lasso
+K   - game music
+K   - sound effects
+J   - draw own spaceship and cows, astroid, wormhole
+Y - HUD display
+M - remove cows
+Y - planetary motion ?
+M - bend effect
+J - Start screen, next level screen, game over screen, you win
+
+
+ 

@@ -16,8 +16,10 @@ void Control::setmodels(std::vector<CircleModel*>& mymodels){
 	
 	/* Store circle models as their derived classes */
   for (int i = 0; i < _cirmodels.size(); i++) {
-	  if (dynamic_cast<Ship*>(_cirmodels[i]) != 0)
+	  if (dynamic_cast<Ship*>(_cirmodels[i]) != 0) {
 			_ship = (Ship*) _cirmodels[i];
+			_cirmodels.push_back(_ship->getLasso());
+		}
 	  else if (dynamic_cast<SpaceRanch*>(_cirmodels[i]) != 0)
 			_ranch = (SpaceRanch*) _cirmodels[i];
 	  else if (dynamic_cast<Planet*>(_cirmodels[i]) != 0)
@@ -25,6 +27,7 @@ void Control::setmodels(std::vector<CircleModel*>& mymodels){
 	  else if (dynamic_cast<Cow*>(_cirmodels[i]) != 0)
 			_cows.push_back((Cow*) _cirmodels[i]);
 	}
+	std::cout << "number of models: " << _cirmodels.size() << std::endl;
 }
 
 bool Control::getlevelfinished(){
@@ -104,11 +107,50 @@ void Control::update(float timeInterval) {
 		
 	}
 	/* end ship movement */
+	
+	/* lasso */
+	if (_ship->getLasso()->getState() != Lasso::HELD) {
+		Lasso* lasso = _ship->getLasso();
+		lasso->setPosition(lasso->getPosition() + lasso->getSpd() * timeInterval);
+		if (lasso->getState() == Lasso::SHOT) {
+			sf::Vector2f dest = _ship->getLassoDest();
+			float r = lasso->getRadius();
+				
+			/* cow intersect */
+			for (int j=0; j < _cows.size(); j++) {
+			  Cow* cow = _cows[j];
+				if (lasso->intersects(cow)) {
+					cow->draw = false; //TODO: better hit cow status
+					lasso->setState(Lasso::CAUGHT);
+				}
+			}
+			
+			/* destination intersect (point-circle)*/
+			if (lasso->getState() != Lasso::CAUGHT &&
+				withinBox(lasso->getPosition(), dest.x - r, dest.x + r, dest.y - r, dest.y + r)) {
+				if (norm_sqrd(lasso->getPosition() - dest) < r*r) {
+					lasso->setState(Lasso::MISSED);
+				}
+			}
+		}
+		else if (lasso->getState() == Lasso::CAUGHT || lasso->getState() == Lasso::MISSED) {			
+			sf::Vector2f dir = _ship->getPosition() - lasso->getPosition(); // not normalized
+			float d_sqrd = norm_sqrd(dir);
+			if (d_sqrd < _ship->getRadius() * _ship->getRadius()) {
+				lasso->setState(Lasso::HELD);
+				lasso->draw = false;
+			}
+			lasso->setSpd(dir / norm(dir) * lasso->getLassoSpd());
+		}
+  }
 }
 	
 void Control::handleEvent(sf::Event event){
+  if (event.key.code == sf::Keyboard::Space) {
+  	_ship->shoot();
+  }
 
-  if (event.key.code == sf::Keyboard::Space){ // Fire the rocket
+  if (event.key.code == sf::Keyboard::Up){ // Fire the rocket
       if (_ship -> getState() == Ship::REST){//fire
         _ship -> adjustSpd(100);
         _ship -> setState(Ship::FLY);
