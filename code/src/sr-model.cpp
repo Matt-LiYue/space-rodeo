@@ -10,7 +10,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   _textpointer = &_texture;
   setTexture(_textpointer);
   _burst = burst;
-	_lasso = new Lasso(30,100);
+	_lasso = new Lasso(20,100);
   _movable = true;
 	draw = true;
   _shipState = Ship::REST;
@@ -36,13 +36,11 @@ void Ship::setState(Ship::ShipState state){
 
 void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
   float angle = getDir();
-  std::cout << angle<< "\n";
   setSpd(sf::Vector2f(spd * cos(angle*M_PI/180), spd * sin(angle*M_PI/180)));
 }
 
 void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
-	std::cout << "setting orbit" << std::endl;
 }
 
 float Ship::getDir() { return getRotation() - 90;}

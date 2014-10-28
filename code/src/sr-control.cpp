@@ -117,9 +117,17 @@ void Control::update(float timeInterval) {
 			float r = lasso->getRadius();
 				
 			/* cow intersect */
+			for (int j=0; j < _cows.size(); j++) {
+			  Cow* cow = _cows[j];
+				if (lasso->intersects(cow)) {
+					cow->draw = false; //TODO: better hit cow status
+					lasso->setState(Lasso::CAUGHT);
+				}
+			}
 			
-			/* destination intersect */
-			if (withinBox(lasso->getPosition(), dest.x - r, dest.x + r, dest.y - r, dest.y + r)) {
+			/* destination intersect (point-circle)*/
+			if (lasso->getState() != Lasso::CAUGHT &&
+				withinBox(lasso->getPosition(), dest.x - r, dest.x + r, dest.y - r, dest.y + r)) {
 				if (norm_sqrd(lasso->getPosition() - dest) < r*r) {
 					lasso->setState(Lasso::MISSED);
 				}
