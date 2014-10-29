@@ -7,6 +7,7 @@
 //Ship class
 Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   _texture.loadFromFile("rock.png");
+	hasAnimation = false;
   _textpointer = &_texture;
   setTexture(_textpointer);
   _burst = burst;
@@ -82,6 +83,7 @@ void Ship::shoot() {
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){
+	hasAnimation = false;
   _texture.loadFromFile("planet.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
@@ -109,6 +111,7 @@ Cow::Cow(sf::Vector2f pos, int radius, Cow::CowType type){
   _textpointer = &_texture;
   setTexture(_textpointer);
 	draw = true;
+	hasAnimation = false;
   _movable = false;
   _cowType = type;
   setPosition(pos);
@@ -131,6 +134,7 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
   _textpointer = &_texture;
   setTexture(_textpointer);
 	draw = true;
+	hasAnimation = false;
   _movable = false;
   setPosition(pos);
   setRadius(radius);
@@ -139,23 +143,32 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
 	
-	hasSprite = true;
+	hasAnimation = true;
 	draw = false;
 	_movable = true;
 	_length = length;
   setRadius(radius);
 	_lassoSpd = 300;
 	
-	_curFrame = 0;
   _texture.loadFromFile("art/lasso.png");
+	_animation.setSize(radius*2);
+	_animation.setTexture(_texture);
+	_animation.addFrame(0,0,160,145);
+	_animation.addFrame(160,0,305,160);
+	_animation.addFrame(0,140,160,300);
+	//std::cout << "# frames: " << _animation._frameCoords.size()/4 << std::endl;
+	
+	/*_curFrame = 0;
   _sprite.setTexture(_texture);
 	_addFrame(0,0,160,145);
 	_addFrame(160,0,305,160);
 	_addFrame(0,140,160,300);
-	_setFrame(0);
+	_setFrame(0);*/
 }
 
+/*
 void Lasso::_addFrame(float x1, float x2, float y1, float y2) {
+	//std::cout << "adding frame\n";
 	_frameCoords.push_back(x1);
 	_frameCoords.push_back(x2);
 	_frameCoords.push_back(y1);
@@ -174,11 +187,11 @@ void Lasso::_setFrame(int i) {
 	float y2 = _frameCoords[4*i+3];
 	float radius = getRadius();
 
-	_sprite.setTextureRect(sf::IntRect(x1,y1,x2,y2));
-	_sprite.setScale(2.0*radius/(x2-x1), 2*radius/(y2-y1));
-	_sprite.setOrigin((float)(x2-x1)/2.0, (float)(y2-y1)/2.0);
+	_animation.setTextureRect(sf::IntRect(x1,y1,x2,y2));
+	_animation.setScale(2.0*radius/(x2-x1), 2*radius/(y2-y1));
+	_animation.setOrigin((float)(x2-x1)/2.0, (float)(y2-y1)/2.0);
 }
-
+*/
 Lasso::LassoState Lasso::getState(){
   return _lassoState;
 }
@@ -211,13 +224,13 @@ bool CircleModel::intersects(sf::CircleShape *other) {
 
 void CircleModel::setPosition(sf::Vector2f pos) {
 	((sf::CircleShape*) this)->setPosition(pos);
-	if (hasSprite) {
-		_sprite.setPosition(pos);
+	if (hasAnimation) {
+		_animation.setPosition(pos);
 	}
 }
 
-sf::Sprite* CircleModel::getSprite() {
-	return &_sprite;
+Animation* CircleModel::getAnimation() {
+	return &_animation;
 }
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
@@ -249,12 +262,12 @@ std::vector<CircleModel*> Models::getcirmodels(){
   return _circlemodels;
 }
 
-std::vector<sf::Sprite*> Models::getSprites() {
-	std::vector<sf::Sprite*> v;
+std::vector<Animation*> Models::getAnimations() {
+	std::vector<Animation*> v;
 	for(int i=0; i < _circlemodels.size(); i++) {
 		CircleModel* c = _circlemodels[i];
-		if (c->hasSprite) {
-			v.push_back(c->getSprite());
+		if (c->hasAnimation) {
+			v.push_back(c->getAnimation());
 		}
 	}
 	return v;

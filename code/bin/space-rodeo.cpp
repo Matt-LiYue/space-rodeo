@@ -12,21 +12,22 @@ int main(int argc, char** argv){
 	  sf::Clock _mainclock;
 	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
 	  myControl.setmodels(myCirModels);
-		std::vector<sf::Sprite*> sprites = myModels.getSprites();	
+		std::vector<Animation*> animations = myModels.getAnimations();	
 	  myView.setController(myControl);
+		
+		std::cout << "there are " << myCirModels.size() << " circle models\n";
+		std::cout << "there are " << animations.size() << " animations\n";
+		
 		
 	  while (myView.isRun()){
 	    _mainclock.restart();
-	    myView.drawAll(myCirModels, sprites);
+	    myView.drawAll(myCirModels);
 	    _interval = _mainclock.getElapsedTime();
 	    myControl.update(_interval.asSeconds());
 	    if (myControl.getlevelfinished() == true) break;
-			
-			for (int i=0; i < myCirModels.size(); i++) {
-				CircleModel* model = myCirModels[i];
-				if (dynamic_cast<Lasso*>(model) != 0) {
-					((Lasso*) model)->advanceFrame();
-				}
+
+			for (int i=0; i < animations.size(); i++) {
+					animations[i]->advanceFrame();
 			}
 	  }
   }

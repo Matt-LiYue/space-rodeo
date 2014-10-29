@@ -5,7 +5,7 @@
 class View{
   public:
     View();
-    void drawAll(std::vector<CircleModel*>&, std::vector<sf::Sprite*>&);
+    void drawAll(std::vector<CircleModel*>&);
     void setController(Control&);
     bool isRun();
   private:

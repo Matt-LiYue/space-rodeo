@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "sr-animation.h"
 
 class CircleModel: public sf::CircleShape{
   public:
@@ -7,13 +8,13 @@ class CircleModel: public sf::CircleShape{
     bool intersects(sf::CircleShape *other);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
-		sf::Sprite* getSprite();
+		Animation* getAnimation();
 		void setPosition(sf::Vector2f);
-		bool hasSprite;
+		bool hasAnimation;
 		
   protected:
     sf::Vector2f _spd;
-		sf::Sprite _sprite;
+		Animation _animation;
 };
 
 class Planet: public CircleModel{
@@ -42,20 +43,13 @@ class Lasso: public CircleModel {
 		float getLength();
 		LassoState getState();
 		void setState(LassoState);
-		float getLassoSpd();
-		void advanceFrame();
-		
+		float getLassoSpd();		
 		
 	private:
 		float _length;
 		float _lassoSpd;
     LassoState _lassoState;
-    sf::Texture _texture;
-		int _curFrame;
-		std::vector<float> _frameCoords;
-		void _addFrame(float,float,float,float);
-		void _setFrame(int);
-		
+    sf::Texture _texture;		
 		
 };
 
@@ -127,7 +121,7 @@ class Models{
   public:
     Models(int);
     std::vector<CircleModel*> getcirmodels();
-		std::vector<sf::Sprite*> getSprites();
+		std::vector<Animation*> getAnimations();
   private:
     std::vector<CircleModel*> _circlemodels;
     int totallevel;
