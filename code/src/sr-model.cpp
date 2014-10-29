@@ -138,6 +138,9 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
 
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
+  _texture.loadFromFile("art/lasso_3.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
 	draw = false;
 	_movable = true;
 	_length = length;

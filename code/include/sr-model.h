@@ -43,6 +43,8 @@ class Lasso: public CircleModel {
 		float _length;
 		float _lassoSpd;
     LassoState _lassoState;
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
 		
 };
 
