@@ -15,7 +15,7 @@ void View::setController(Control& controller){
 }
 
 
-void View::drawAll(std::vector<CircleModel*>& mycirmodels){
+void View::drawAll(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Sprite*>& sprites){
   _view.clear(sf::Color::Black);
   _view.draw(_bgsprite);
   while (_view.pollEvent(_event)){//TODO: Use Control Class to handle the event
@@ -31,10 +31,17 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
 				
     }
   }
-  for (int i = 0; i < mycirmodels.size(); i++){
-		if (mycirmodels[i]->draw)
-      _view.draw(*mycirmodels[i]);
-  }
+  for (int i = 0; i < mycirmodels.size(); i++) {
+		if (mycirmodels[i]->draw) {
+			if (mycirmodels[i]->hasSprite) {
+				_view.draw(*mycirmodels[i]->getSprite());
+			}
+      else {
+				_view.draw(*mycirmodels[i]);
+			}
+		}
+	}
+
   _view.display();
 }
 

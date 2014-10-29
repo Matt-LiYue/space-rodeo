@@ -7,8 +7,13 @@ class CircleModel: public sf::CircleShape{
     bool intersects(sf::CircleShape *other);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
+		sf::Sprite* getSprite();
+		void setPosition(sf::Vector2f);
+		bool hasSprite;
+		
   protected:
     sf::Vector2f _spd;
+		sf::Sprite _sprite;
 };
 
 class Planet: public CircleModel{
@@ -44,7 +49,6 @@ class Lasso: public CircleModel {
 		float _lassoSpd;
     LassoState _lassoState;
     sf::Texture _texture;
-    sf::Texture* _textpointer;
 		
 };
 
@@ -116,6 +120,7 @@ class Models{
   public:
     Models(int);
     std::vector<CircleModel*> getcirmodels();
+		std::vector<sf::Sprite*> getSprites();
   private:
     std::vector<CircleModel*> _circlemodels;
     int totallevel;

@@ -138,14 +138,16 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
 
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
-  _texture.loadFromFile("art/lasso_3.png");
-  _textpointer = &_texture;
-  setTexture(_textpointer);
+  _texture.loadFromFile("art/lasso.png");
+  _sprite.setTexture(_texture);
+	_sprite.setTextureRect(sf::IntRect(0, 0, 160, 145));
+	_sprite.setOrigin(80,72.5);
+	_sprite.setScale(2*radius/160.0, 2*radius/145.0);
+	hasSprite = true;
 	draw = false;
 	_movable = true;
 	_length = length;
   setRadius(radius);
-	setPosition(-500,-500);
 	_lassoSpd = 300;
 }
 
@@ -154,15 +156,13 @@ Lasso::LassoState Lasso::getState(){
 }
 
 float Lasso::getLength() { return _length; }
+
 float Lasso::getLassoSpd() { return _lassoSpd; }
 
 void Lasso::setState(LassoState state){
   _lassoState = state;
-	std::cout << "setting state: " << state << std::endl;
 }
 
-//float Lasso::getSpd() { return _spd; }
-//void Lasso::setSpd(spd) { _spd = spd; }
 
 //CircleModel - Base Class of Circle-shaped elements
 sf::Vector2f CircleModel::getSpd(){
@@ -179,6 +179,17 @@ bool CircleModel::intersects(sf::CircleShape *other) {
 	if (radiusSum < fabs(diff.x) || radiusSum < fabs(diff.y)) return false;
 	if (radiusSum * radiusSum < diff.x*diff.x + diff.y*diff.y) return false;
 	return true;
+}
+
+void CircleModel::setPosition(sf::Vector2f pos) {
+	((sf::CircleShape*) this)->setPosition(pos);
+	if (hasSprite) {
+		_sprite.setPosition(pos);
+	}
+}
+
+sf::Sprite* CircleModel::getSprite() {
+	return &_sprite;
 }
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
@@ -205,7 +216,19 @@ Models::Models(int level){//TODO: Read from a txt file to place the elements in 
     _circlemodels[i]->setPosition(center);
   }
 }
+
 std::vector<CircleModel*> Models::getcirmodels(){
   return _circlemodels;
+}
+
+std::vector<sf::Sprite*> Models::getSprites() {
+	std::vector<sf::Sprite*> v;
+	for(int i=0; i < _circlemodels.size(); i++) {
+		CircleModel* c = _circlemodels[i];
+		if (c->hasSprite) {
+			v.push_back(c->getSprite());
+		}
+	}
+	return v;
 }
 

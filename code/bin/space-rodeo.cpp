@@ -5,24 +5,24 @@
 
 int main(int argc, char** argv){
   for (int i = 0 ; i < 2; i++){
-  Models mymodels(i);
-  View myview;
-  Control mycontrol;
-  sf::Time _interval;
-  sf::Clock _mainclock;
-  std::vector<CircleModel*> mycirmodels = mymodels.getcirmodels();
-	std::cout << mycirmodels.size() << std::endl;
-  mycontrol.setmodels(mycirmodels);
-	std::cout << mycirmodels.size() << std::endl;
+	  Models myModels(i);
+	  View myView;
+	  Control myControl;
+	  sf::Time _interval;
+	  sf::Clock _mainclock;
+	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
+	  myControl.setmodels(myCirModels);
+		std::vector<sf::Sprite*> sprites = myModels.getSprites();
+		std::cout << sprites.size() << std::endl;
 	
-  myview.setController(mycontrol);
-  while (myview.isRun()){
-    _mainclock.restart();
-    myview.drawAll(mycirmodels);
-    _interval = _mainclock.getElapsedTime();
-    mycontrol.update(_interval.asSeconds());
-    if (mycontrol.getlevelfinished() == true) break;
-  }
+	  myView.setController(myControl);
+	  while (myView.isRun()){
+	    _mainclock.restart();
+	    myView.drawAll(myCirModels, sprites);
+	    _interval = _mainclock.getElapsedTime();
+	    myControl.update(_interval.asSeconds());
+	    if (myControl.getlevelfinished() == true) break;
+	  }
   }
   return 0;
 }
