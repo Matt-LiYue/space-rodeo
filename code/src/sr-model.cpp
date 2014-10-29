@@ -138,17 +138,45 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
 
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
-  _texture.loadFromFile("art/lasso.png");
-  _sprite.setTexture(_texture);
-	_sprite.setTextureRect(sf::IntRect(0, 0, 160, 145));
-	_sprite.setOrigin(80,72.5);
-	_sprite.setScale(2*radius/160.0, 2*radius/145.0);
+	
 	hasSprite = true;
 	draw = false;
 	_movable = true;
 	_length = length;
   setRadius(radius);
 	_lassoSpd = 300;
+	
+	_curFrame = 0;
+  _texture.loadFromFile("art/lasso.png");
+  _sprite.setTexture(_texture);
+	_addFrame(0,0,160,145);
+	_addFrame(160,0,305,160);
+	_addFrame(0,140,160,300);
+	_setFrame(0);
+}
+
+void Lasso::_addFrame(float x1, float x2, float y1, float y2) {
+	_frameCoords.push_back(x1);
+	_frameCoords.push_back(x2);
+	_frameCoords.push_back(y1);
+	_frameCoords.push_back(y2);
+}
+
+void Lasso::advanceFrame() {
+	_curFrame = (_curFrame + 1) % (_frameCoords.size()/4);
+	_setFrame(_curFrame);
+}
+
+void Lasso::_setFrame(int i) {
+	float x1 = _frameCoords[4*i];
+	float y1 = _frameCoords[4*i+1];
+	float x2 = _frameCoords[4*i+2];
+	float y2 = _frameCoords[4*i+3];
+	float radius = getRadius();
+
+	_sprite.setTextureRect(sf::IntRect(x1,y1,x2,y2));
+	_sprite.setScale(2.0*radius/(x2-x1), 2*radius/(y2-y1));
+	_sprite.setOrigin((float)(x2-x1)/2.0, (float)(y2-y1)/2.0);
 }
 
 Lasso::LassoState Lasso::getState(){

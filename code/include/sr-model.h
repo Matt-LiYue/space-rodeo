@@ -43,12 +43,19 @@ class Lasso: public CircleModel {
 		LassoState getState();
 		void setState(LassoState);
 		float getLassoSpd();
+		void advanceFrame();
+		
 		
 	private:
 		float _length;
 		float _lassoSpd;
     LassoState _lassoState;
     sf::Texture _texture;
+		int _curFrame;
+		std::vector<float> _frameCoords;
+		void _addFrame(float,float,float,float);
+		void _setFrame(int);
+		
 		
 };
 
