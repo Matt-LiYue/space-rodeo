@@ -150,7 +150,7 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
 }
 
 //Wormhole Class
-Wormhole::Wormhole(sf::Vector2f pos, float radius){
+Wormhole::Wormhole(sf::Vector2f pos, int radius){
   _texture.loadFromFile("wormhole.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
@@ -167,6 +167,33 @@ void Wormhole::setOpen(bool open){
 
 bool Wormhole::getOpen(){
   return _open;
+}
+//Asteroid Class
+Asteroid::Asteroid(sf::Vector2f pos, int radius, sf::Vector2f spd){
+  _texture.loadFromFile("asteroid.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
+  draw = true;
+  hasAnimation = false;
+  _movable = true;
+  _oripos = pos;
+  setPosition(pos);
+  setRadius(radius);
+  setSpd(spd);
+  setExist(true);
+}
+
+void Asteroid::replay(){
+  setPosition(_oripos);
+  setExist(true);
+}
+
+void Asteroid::setExist(bool exist){
+  _exist = exist;
+}
+
+bool Asteroid::getExist(){
+  return _exist;
 }
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
@@ -278,6 +305,7 @@ Models::Models(int level){//TODO: Read from a txt file to place the elements in 
     _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,500),70));
     _circlemodels.push_back(new Wormhole(sf::Vector2f(600,80),50));
     _circlemodels.push_back(new Wormhole(sf::Vector2f(100,500),50));
+    _circlemodels.push_back(new Asteroid(sf::Vector2f(850,-50),30,sf::Vector2f(-80,80)));
   }
 	std::cout << "Original models: " << _circlemodels.size() << std::endl;
   for (int i=0; i<_circlemodels.size(); i++) {

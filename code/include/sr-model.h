@@ -31,9 +31,23 @@ class Planet: public CircleModel{
 };
 
 
+class Asteroid : public CircleModel{
+  public:
+    Asteroid(sf::Vector2f,int,sf::Vector2f);
+    void replay();
+    bool getExist();
+    void setExist(bool);
+  private:
+    sf::Vector2f _oripos;
+    sf::Texture _texture;
+    sf::Texture * _textpointer;
+    bool _exist;
+};
+
+
 class Wormhole: public CircleModel{
   public:
-    Wormhole(sf::Vector2f,float);
+    Wormhole(sf::Vector2f,int);
     bool getOpen();
     void setOpen(bool);
   private:

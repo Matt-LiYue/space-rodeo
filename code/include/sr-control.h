@@ -19,6 +19,7 @@ class Control{
 		std::vector<Planet*> _planets;
 		std::vector<Cow*> _cows;
                 std::vector<Wormhole*> _wormholes;
+                std::vector<Asteroid*> _asteroids;
 		SpaceRanch* _ranch;
 		
 };

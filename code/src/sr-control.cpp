@@ -28,6 +28,8 @@ void Control::setmodels(std::vector<CircleModel*>& mymodels){
 			_cows.push_back((Cow*) _cirmodels[i]);
           else if (dynamic_cast<Wormhole*>(_cirmodels[i]) != 0)
                         _wormholes.push_back((Wormhole*) _cirmodels[i]);
+          else if (dynamic_cast<Asteroid*>(_cirmodels[i]) != 0)
+			_asteroids.push_back((Asteroid*) _cirmodels[i]);
 	}
 	std::cout << "number of models: " << _cirmodels.size() << std::endl;
 }
@@ -86,7 +88,14 @@ void Control::update(float timeInterval) {
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
   }
-	
+	//Asteroid
+	for (int j = 0; j<_asteroids.size();j++){
+          Asteroid* asteroid = _asteroids[j];
+          if (_ship -> intersects(asteroid)){
+            std::cout << "ship hit asteroid\n";
+            exit(1);
+          }
+        }
 	// planet, gravity intersections
 	for (int j=0; j < _planets.size(); j++) {
 		Planet* planet = _planets[j];
@@ -125,6 +134,25 @@ void Control::update(float timeInterval) {
         }
         else
           _wormholes[j] -> setOpen(true);
+      }
+        /* Asteroid movement*/
+      for (int j = 0; j< _asteroids.size();j++){
+        sf::Vector2f pos = _asteroids[j]->getPosition();
+        _asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
+      //  std::cout << _asteroids[j]->getPosition().x << std::endl;
+        if (pos.x < -200 || pos.x > 1000 || pos.y < -200 || pos.y>800){
+          _asteroids[j]->setExist(false);
+        }
+        if (_asteroids[j] -> getExist() == false){
+          _asteroids[j] -> replay(); 
+        }
+        for (int k = 0; k<_cirmodels.size();k++){
+          if (dynamic_cast<Asteroid*>(_cirmodels[k]) == 0){
+            if (_cirmodels[k]->intersects(_asteroids[j])){
+              _asteroids[j]->setExist(false);
+            }
+          }
+        }
       }
 	/* end ship movement */
 	
