@@ -80,6 +80,15 @@ void Ship::shoot() {
 	_lasso->setState(Lasso::SHOT);
 }
 
+void Ship::decelerate(){
+  if (sqrt(getSpd().x*getSpd().x + getSpd().y*getSpd().y) > 100){
+    setSpd(getSpd()*0.998f);
+    if (sqrt(getSpd().x*getSpd().x + getSpd().y*getSpd().y) <= 100){
+      setState(FLY);
+      adjustSpd(100);
+    }
+  }
+}
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity,int cow){

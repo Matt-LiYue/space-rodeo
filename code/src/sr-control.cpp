@@ -47,6 +47,7 @@ void Control::update(float timeInterval) {
 	*/
 	
 	Planet* planet = _ship->getOrbitPlanet();
+        _ship->decelerate();
 	
 	/* map exit */
 	sf::Vector2f pos = _ship->getPosition();
@@ -157,10 +158,11 @@ void Control::handleEvent(sf::Event event){
       }
       else if (_ship -> getState() == Ship::FLY){//burst, TODO: Need a counter
         _ship -> adjustSpd(300);
+        _ship -> setState(Ship::BURST);
       }
       else if (_ship -> getState() == Ship::ORBIT) {
         _ship -> adjustSpd(300);
-	      _ship -> setState(Ship::BURST);
+	_ship -> setState(Ship::BURST);
       }
   }
   if (event.key.code == sf::Keyboard::Left){

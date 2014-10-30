@@ -78,6 +78,7 @@ class Ship : public CircleModel{
 		Lasso* getLasso();
 		void shoot();
 		sf::Vector2f getLassoDest();
+                void decelerate();
 		
   private:
     ShipState _shipState;
