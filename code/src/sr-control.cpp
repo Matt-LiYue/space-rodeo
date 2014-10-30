@@ -26,6 +26,8 @@ void Control::setmodels(std::vector<CircleModel*>& mymodels){
 			_planets.push_back((Planet*) _cirmodels[i]);
 	  else if (dynamic_cast<Cow*>(_cirmodels[i]) != 0)
 			_cows.push_back((Cow*) _cirmodels[i]);
+          else if (dynamic_cast<Wormhole*>(_cirmodels[i]) != 0)
+                        _wormholes.push_back((Wormhole*) _cirmodels[i]);
 	}
 	std::cout << "number of models: " << _cirmodels.size() << std::endl;
 }
@@ -107,6 +109,23 @@ void Control::update(float timeInterval) {
 		}
 		
 	}
+        //Wormhole
+      for (int j=0; j < _wormholes.size();j++){ //Wormhole implementation
+        if (_ship->intersects(_wormholes[j])){ //Run into Wormhole
+          if (_wormholes[j]->getOpen() == true){
+            _wormholes[j]->setOpen(false);
+            int target;
+            if (j % 2 == 0)
+              target = j+1;
+            else
+              target = j-1;
+            _wormholes[target] -> setOpen(false);
+            _ship -> setPosition(_wormholes[target]->getPosition());
+          }
+        }
+        else
+          _wormholes[j] -> setOpen(true);
+      }
 	/* end ship movement */
 	
 	/* lasso */

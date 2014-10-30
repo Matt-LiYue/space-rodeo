@@ -30,6 +30,18 @@ class Planet: public CircleModel{
   
 };
 
+
+class Wormhole: public CircleModel{
+  public:
+    Wormhole(sf::Vector2f,float);
+    bool getOpen();
+    void setOpen(bool);
+  private:
+    bool _open;
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
+};
+
 class Lasso: public CircleModel {
   public:
     typedef enum{

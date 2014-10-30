@@ -149,6 +149,25 @@ SpaceRanch::SpaceRanch(sf::Vector2f pos, int radius){
   setRadius(radius);
 }
 
+//Wormhole Class
+Wormhole::Wormhole(sf::Vector2f pos, float radius){
+  _texture.loadFromFile("wormhole.png");
+  _textpointer = &_texture;
+  setTexture(_textpointer);
+  draw = true;
+  hasAnimation = false;
+  _movable = false;
+  setPosition(pos);
+  setRadius(radius);
+}
+
+void Wormhole::setOpen(bool open){
+  _open = open;
+}
+
+bool Wormhole::getOpen(){
+  return _open;
+}
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
 	
@@ -257,6 +276,8 @@ Models::Models(int level){//TODO: Read from a txt file to place the elements in 
     _circlemodels.push_back(new Cow(sf::Vector2f(600,400),40,Cow::FLY));
 		_circlemodels.push_back(new Cow(sf::Vector2f(500,200),40,Cow::FLY));
     _circlemodels.push_back(new SpaceRanch(sf::Vector2f(700,500),70));
+    _circlemodels.push_back(new Wormhole(sf::Vector2f(600,80),50));
+    _circlemodels.push_back(new Wormhole(sf::Vector2f(100,500),50));
   }
 	std::cout << "Original models: " << _circlemodels.size() << std::endl;
   for (int i=0; i<_circlemodels.size(); i++) {
