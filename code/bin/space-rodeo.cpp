@@ -22,6 +22,7 @@ int main(int argc, char** argv){
 	  while (myView.isRun()){
 	    _mainclock.restart();
 	    myView.drawAll(myCirModels);
+			
 	    _interval = _mainclock.getElapsedTime();
 	    myControl.update(_interval.asSeconds());
 	    if (myControl.getlevelfinished() == true) break;
@@ -29,6 +30,7 @@ int main(int argc, char** argv){
 			for (int i=0; i < animations.size(); i++) {
 					animations[i]->advanceFrame();
 			}
+			
 	  }
   }
   return 0;

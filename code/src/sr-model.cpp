@@ -15,6 +15,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   _movable = true;
 	draw = true;
   _shipState = Ship::REST;
+	_orbiting = 0;
   setPosition(pos);
   setRadius(radius);
   setOrigin(radius,radius);//for ship rotation
@@ -32,7 +33,6 @@ Ship::ShipState Ship::getState(){
 
 void Ship::setState(Ship::ShipState state){
   _shipState = state;
-	std::cout << "setting state: " << state << std::endl;
 }
 
 void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
@@ -44,7 +44,7 @@ void Ship::setOrbit(Planet* planet) {
 	_orbiting = planet;
 }
 
-float Ship::getDir() { return getRotation() - 90;}
+float Ship::getDir() { return getRotation() - 90; }
 
 Planet* Ship::getOrbitPlanet() {
   return _orbiting;	
