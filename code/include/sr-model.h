@@ -104,17 +104,21 @@ class Ship : public CircleModel{
 		Lasso* getLasso();
 		void shoot();
 		sf::Vector2f getLassoDest();
-                void decelerate();
+    void decelerate();
+		void brake();
+		void setBaseAngVelocity(float);
 		
   private:
     ShipState _shipState;
     int _burst;
     float _angularVelocity;
+		float _baseAngVelocity;
     Planet* _orbiting;
     sf::Texture _texture;
     sf::Texture* _textpointer;
 		Lasso* _lasso;
 		sf::Vector2f _lassoDest;
+		
 };
 
 class Cow: public CircleModel{

@@ -48,10 +48,16 @@ void Control::update(float timeInterval) {
 	3 - in orbit: state = ORBIT, _orbiting = planet*
 	4 - has burst out of orbit, still in gravity field: state = BURST, _orbiting = planet*
 	5 - not in a gravity field: state = FLY, _orbiting = 0
+	
+	State Transitions:
+	2 --> 3: at point when ship orientation and line to planet are perpendicular.
 	*/
 	
+	
+	
+	
 	Planet* planet = _ship->getOrbitPlanet();
-        _ship->decelerate();
+  _ship->decelerate();
 	
 	/* map exit */
 	sf::Vector2f pos = _ship->getPosition();
@@ -60,19 +66,26 @@ void Control::update(float timeInterval) {
 	/* movement */
 	if (_ship->getState() == Ship::GRAVITY && 
 	  (dot(_ship->getOrbitPlanet()->getPosition() - _ship->getPosition(),_ship->getSpd()) <= 0)) {
+			
 		_ship->setState(Ship::ORBIT);
 		float theta = sqrt(norm_sqrd(_ship->getSpd()) / norm_sqrd(planet->getPosition() - _ship->getPosition()));
 		if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 		_ship->setAngularVelocity(theta);
+		
+		// base Angular Velocity
+		theta = 100 / norm(planet->getPosition() - _ship->getPosition());
+		if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+		_ship->setBaseAngVelocity(theta);
 	  	
 	}
 	
 	if (_ship->getState() == Ship::ORBIT) {
+		
 	  _ship->setSpd((planet->getPosition() - _ship->getPosition() + rotate(_ship->getPosition() 
 			- planet->getPosition(), timeInterval * _ship->getAngularVelocity())) / timeInterval);
 		_ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
 	}
-  else {
+  else { // normal movement
     _ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
 	}
 	
@@ -205,11 +218,10 @@ void Control::handleEvent(sf::Event event){
       }
       else if (_ship -> getState() == Ship::FLY){//burst, TODO: Need a counter
         _ship -> adjustSpd(300);
-        _ship -> setState(Ship::BURST);
       }
       else if (_ship -> getState() == Ship::ORBIT) {
         _ship -> adjustSpd(300);
-	_ship -> setState(Ship::BURST);
+	      _ship -> setState(Ship::BURST);
       }
   }
   if (event.key.code == sf::Keyboard::Left){

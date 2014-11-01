@@ -18,8 +18,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
   setPosition(pos);
   setRadius(radius);
   setOrigin(radius,radius);//for ship rotation
-  rotate(90);
-	
+  rotate(90);	
 }
 
 int Ship::getburst(){
@@ -55,6 +54,7 @@ void Ship::setAngularVelocity(float av) {
 }
 
 float Ship::getAngularVelocity() {
+	std::cout << "angular velocity: " << _angularVelocity << std::endl;
 	return _angularVelocity;
 }
 
@@ -65,6 +65,14 @@ void Ship::setSpd(sf::Vector2f spd){
 
 void Ship::adjustOri(sf::Vector2f spd){
  ;
+}
+
+void Ship::brake() {
+
+}
+
+void Ship::setBaseAngVelocity(float theta) {
+	_baseAngVelocity = theta;
 }
 
 Lasso* Ship::getLasso() {return _lasso;}
@@ -81,13 +89,15 @@ void Ship::shoot() {
 }
 
 void Ship::decelerate(){
-  if (sqrt(getSpd().x*getSpd().x + getSpd().y*getSpd().y) > 100){
+  if (_shipState == FLY && norm_sqrd(getSpd()) > 100*100){
     setSpd(getSpd()*0.998f);
-    if (sqrt(getSpd().x*getSpd().x + getSpd().y*getSpd().y) <= 100){
-      setState(FLY);
+    if (norm_sqrd(getSpd()) <= 100*100){
       adjustSpd(100);
     }
   }
+	else if (_shipState == ORBIT && _angularVelocity > _baseAngVelocity) {
+		_angularVelocity *= .998f;
+	}
 }
 
 //Planet Class
