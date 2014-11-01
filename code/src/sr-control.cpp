@@ -7,31 +7,27 @@
 
 Control::Control(){
   _levelfinished = false;
-  std::cout << "\nController initialized \n";
 }
 
 
-void Control::setmodels(std::vector<CircleModel*>& mymodels){
-  _cirmodels = mymodels;
-	
+void Control::setmodels(std::vector<CircleModel*>& myModels){
+  _cirmodels = &myModels;
+		
 	/* Store circle models as their derived classes */
-  for (int i = 0; i < _cirmodels.size(); i++) {
-	  if (dynamic_cast<Ship*>(_cirmodels[i]) != 0) {
-			_ship = (Ship*) _cirmodels[i];
-			_cirmodels.push_back(_ship->getLasso());
-		}
-	  else if (dynamic_cast<SpaceRanch*>(_cirmodels[i]) != 0)
-			_ranch = (SpaceRanch*) _cirmodels[i];
-	  else if (dynamic_cast<Planet*>(_cirmodels[i]) != 0)
-			_planets.push_back((Planet*) _cirmodels[i]);
-	  else if (dynamic_cast<Cow*>(_cirmodels[i]) != 0)
-			_cows.push_back((Cow*) _cirmodels[i]);
-          else if (dynamic_cast<Wormhole*>(_cirmodels[i]) != 0)
-                        _wormholes.push_back((Wormhole*) _cirmodels[i]);
-          else if (dynamic_cast<Asteroid*>(_cirmodels[i]) != 0)
-			_asteroids.push_back((Asteroid*) _cirmodels[i]);
+  for (int i = 0; i < myModels.size(); i++) {
+	  if (dynamic_cast<Ship*>(myModels[i]) != 0)
+			_ship = (Ship*) myModels[i];
+	  else if (dynamic_cast<SpaceRanch*>(myModels[i]) != 0)
+			_ranch = (SpaceRanch*) myModels[i];
+	  else if (dynamic_cast<Planet*>(myModels[i]) != 0)
+			_planets.push_back((Planet*) myModels[i]);
+	  else if (dynamic_cast<Cow*>(myModels[i]) != 0)
+			_cows.push_back((Cow*) myModels[i]);
+		else if (dynamic_cast<Wormhole*>(myModels[i]) != 0)
+			_wormholes.push_back((Wormhole*) myModels[i]);
+    else if (dynamic_cast<Asteroid*>(myModels[i]) != 0)
+			_asteroids.push_back((Asteroid*) myModels[i]);
 	}
-	std::cout << "number of models: " << _cirmodels.size() << std::endl;
 }
 
 bool Control::getlevelfinished(){
@@ -93,7 +89,8 @@ void Control::update(float timeInterval) {
 	for (int j=0; j < _cows.size(); j++) {
 	  Cow* cow = _cows[j];
 		if (_ship->intersects(cow)) {
-			cow->draw = false; //TODO: better hit cow status
+			_removeModel(cow);
+			//cow->draw = false; //TODO: better hit cow status
 		}
 	}
 	
@@ -131,43 +128,44 @@ void Control::update(float timeInterval) {
 		}
 		
 	}
-        //Wormhole
-      for (int j=0; j < _wormholes.size();j++){ //Wormhole implementation
-        if (_ship->intersects(_wormholes[j])){ //Run into Wormhole
-          if (_wormholes[j]->getOpen() == true){
-            _wormholes[j]->setOpen(false);
-            int target;
-            if (j % 2 == 0)
-              target = j+1;
-            else
-              target = j-1;
-            _wormholes[target] -> setOpen(false);
-            _ship -> setPosition(_wormholes[target]->getPosition());
-          }
-        }
-        else
-          _wormholes[j] -> setOpen(true);
-      }
-        /* Asteroid movement*/
-      for (int j = 0; j< _asteroids.size();j++){
-        sf::Vector2f pos = _asteroids[j]->getPosition();
-        _asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
-      //  std::cout << _asteroids[j]->getPosition().x << std::endl;
-        if (pos.x < -200 || pos.x > 1000 || pos.y < -200 || pos.y>800){
-          _asteroids[j]->setExist(false);
-        }
-        if (_asteroids[j] -> getExist() == false){
-          _asteroids[j] -> replay(); 
-        }
-        for (int k = 0; k<_cirmodels.size();k++){
-          if (dynamic_cast<Asteroid*>(_cirmodels[k]) == 0){
-            if (_cirmodels[k]->intersects(_asteroids[j])){
-              _asteroids[j]->setExist(false);
-            }
-          }
-        }
-      }
 	/* end ship movement */
+	
+  //Wormhole
+  for (int j=0; j < _wormholes.size();j++){ //Wormhole implementation
+    if (_ship->intersects(_wormholes[j])){ //Run into Wormhole
+      if (_wormholes[j]->getOpen() == true){
+        _wormholes[j]->setOpen(false);
+        int target;
+        if (j % 2 == 0)
+          target = j+1;
+        else
+          target = j-1;
+        _wormholes[target] -> setOpen(false);
+        _ship -> setPosition(_wormholes[target]->getPosition());
+      }
+    }
+    else
+      _wormholes[j] -> setOpen(true);
+  }
+  
+	/* Asteroid movement */	
+  for (int j = 0; j < _asteroids.size(); j++){
+    sf::Vector2f pos = _asteroids[j]->getPosition();
+    _asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
+    if (pos.x < -200 || pos.x > 1000 || pos.y < -200 || pos.y>800){
+      _asteroids[j]->setExist(false);
+    }
+    if (_asteroids[j] -> getExist() == false){
+      _asteroids[j] -> replay(); 
+    }
+		
+		// asteroid - asteroid collisions
+    for (int k = 0; k < _asteroids.size();k++){ 
+      if (k != j && _asteroids[k]->intersects(_asteroids[j])){
+        _asteroids[j]->setExist(false);
+      }
+    }
+  }
 	
 	/* lasso */
 	if (_ship->getLasso()->getState() != Lasso::HELD) {
@@ -181,7 +179,8 @@ void Control::update(float timeInterval) {
 			for (int j=0; j < _cows.size(); j++) {
 			  Cow* cow = _cows[j];
 				if (lasso->intersects(cow)) {
-					cow->draw = false; //TODO: better hit cow status
+					//cow->draw = false; //TODO: better hit cow status
+					_removeModel(cow);
 					lasso->setState(Lasso::CAUGHT);
 				}
 			}
@@ -212,11 +211,11 @@ void Control::handleEvent(sf::Event event){
   }
 
   if (event.key.code == sf::Keyboard::Up){ // Fire the rocket
-      if (_ship -> getState() == Ship::REST){//fire
+      if (_ship -> getState() == Ship::REST){
         _ship -> adjustSpd(100);
         _ship -> setState(Ship::FLY);
       }
-      else if (_ship -> getState() == Ship::FLY){//burst, TODO: Need a counter
+      else if (_ship -> getState() == Ship::FLY){// TODO: Need a counter
         _ship -> adjustSpd(300);
       }
       else if (_ship -> getState() == Ship::ORBIT) {
@@ -234,4 +233,18 @@ void Control::handleEvent(sf::Event event){
       _ship -> rotate(3);
     }
   } 
+}
+
+void Control::_removeModel(CircleModel* cm) {
+	std::vector<CircleModel*>& modelsRef = *_cirmodels;
+	CircleModel* tmp = modelsRef[modelsRef.size() - 1];
+	
+	for (int i = 0; i < modelsRef.size(); i++) {
+		if (modelsRef[i] == cm) {
+		  modelsRef[modelsRef.size() - 1] = cm;
+			modelsRef[i] = tmp;
+			modelsRef.pop_back();
+			break;
+		}
+	}
 }

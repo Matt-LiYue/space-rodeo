@@ -14,12 +14,14 @@ class Control{
   private:		
 		/* data members */
     bool _levelfinished;
-    std::vector<CircleModel*> _cirmodels;
+    std::vector<CircleModel*>* _cirmodels;
 		Ship* _ship;
 		std::vector<Planet*> _planets;
 		std::vector<Cow*> _cows;
                 std::vector<Wormhole*> _wormholes;
                 std::vector<Asteroid*> _asteroids;
 		SpaceRanch* _ranch;
+		
+		void _removeModel(CircleModel*);
 		
 };
