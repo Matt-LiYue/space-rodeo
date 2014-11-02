@@ -1,11 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <math.h> /* fabs */
+#include <cfloat> /* epsilon */
 #include "sr-model.h"
 #include "sr-utils.h"
 #include <iostream>
 
 //Ship class
-Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
+Ship::Ship(sf::Vector2f pos, int radius, int burst){
   _texture.loadFromFile("rock.png");
 	hasAnimation = false;
   _textpointer = &_texture;
@@ -18,7 +19,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){//Ship is a circle class
 	_orbiting = 0;
   setPosition(pos);
   setRadius(radius);
-  setOrigin(radius,radius);//for ship rotation
+  setOrigin(radius,radius);
   rotate(90);	
 }
 
@@ -34,9 +35,8 @@ void Ship::setState(Ship::ShipState state){
   _shipState = state;
 }
 
-void Ship::adjustSpd(int spd){//Used for adjust speed for rotation and firing
-  float angle = getDir();
-  setSpd(sf::Vector2f(spd * cos(angle*M_PI/180), spd * sin(angle*M_PI/180)));
+void Ship::adjustSpd(int spd){
+  setSpd(sf::Vector2f(spd * cos(getDir()*M_PI/180), spd * sin(getDir()*M_PI/180)));
 }
 
 void Ship::setOrbit(Planet* planet) {
@@ -59,11 +59,16 @@ float Ship::getAngularVelocity() {
 
 void Ship::setSpd(sf::Vector2f spd){
   _spd = spd;
-  adjustOri(spd);
 }
 
-void Ship::adjustOri(sf::Vector2f spd){
- ;
+void Ship::updateOrientation(){
+	if (_shipState != REST) {
+		std::cout << "speed is: " << _spd.x << "," << _spd.y << std::endl;
+		float degrees = 180 / M_PI * atan(_spd.y/_spd.x);
+		if (fabs(_spd.x) < FLT_EPSILON) degrees = 0;
+	  if (_spd.x < 0) degrees += -180;
+		setRotation(degrees + 90);
+	}
 }
 
 void Ship::brake() {
@@ -74,7 +79,7 @@ void Ship::setBaseAngVelocity(float theta) {
 	_baseAngVelocity = theta;
 }
 
-Lasso* Ship::getLasso() {return _lasso;}
+Lasso* Ship::getLasso() { return _lasso; }
 sf::Vector2f Ship::getLassoDest() {return _lassoDest; }
 
 void Ship::shoot() {

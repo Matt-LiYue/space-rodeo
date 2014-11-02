@@ -80,33 +80,38 @@ class Lasso: public CircleModel {
 };
 
 class Ship : public CircleModel{
+	
+	/* Constructor and types */
   public:
-    typedef enum{
+    typedef enum {
       REST,
       FLY,
 			GRAVITY,
       BURST,
-      ORBIT
-    }ShipState;
-		
+      ORBIT } ShipState;
+			
     Ship(sf::Vector2f, int, int);
+		
+		/* accessors */
     int getburst();
     ShipState getState();
     Planet* getOrbitPlanet();
-    void setState(ShipState);
-    void setSpd(sf::Vector2f);
-    void adjustOri(sf::Vector2f);
-    void adjustSpd(int);
-    void setOrbit(Planet*);
 		float getDir();
-		void setAngularVelocity(float);
     float getAngularVelocity();
 		Lasso* getLasso();
-		void shoot();
 		sf::Vector2f getLassoDest();
-    void decelerate();
+		
+		/* mutators */
+    void setState(ShipState);
+    void setSpd(sf::Vector2f);
+    void setOrbit(Planet*);
+    void setBaseAngVelocity(float);
+		void setAngularVelocity(float);
+    void updateOrientation();
+    void adjustSpd(int);
 		void brake();
-		void setBaseAngVelocity(float);
+    void decelerate();
+		void shoot();
 		
   private:
     ShipState _shipState;
@@ -118,7 +123,6 @@ class Ship : public CircleModel{
     sf::Texture* _textpointer;
 		Lasso* _lasso;
 		sf::Vector2f _lassoDest;
-		
 };
 
 class Cow: public CircleModel{

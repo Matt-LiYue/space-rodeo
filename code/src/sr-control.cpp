@@ -52,14 +52,15 @@ void Control::update(float timeInterval) {
 	
 	
 	
-	Planet* planet = _ship->getOrbitPlanet();
   _ship->decelerate();
+	_ship->updateOrientation();
 	
 	/* map exit */
 	sf::Vector2f pos = _ship->getPosition();
   if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) {std::cout << "screen exit\n"; exit(0);}
 	
 	/* movement */
+	Planet* planet = _ship->getOrbitPlanet();
 	if (_ship->getState() == Ship::GRAVITY && 
 	  (dot(_ship->getOrbitPlanet()->getPosition() - _ship->getPosition(),_ship->getSpd()) <= 0)) {
 			
