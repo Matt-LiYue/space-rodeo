@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include "sr-view.h"
-#include <unistd.h>
+#include "sr-models.h"
+#include <iostream>
+
 
 int main(int argc, char** argv){
   for (int i = 1 ; i < 2; i++){

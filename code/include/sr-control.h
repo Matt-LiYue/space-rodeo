@@ -1,5 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include "sr-model.h"
+#include "sr-wormhole.h"
+#include "sr-ship.h"
+#include "sr-cow.h"
+#include "sr-spaceRanch.h"
+#include "sr-orbitPlanet.h"
+#include "sr-asteroid.h"
+
+
 
 
 
