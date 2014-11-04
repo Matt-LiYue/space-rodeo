@@ -9,6 +9,8 @@ class View{
     void setController(Control&);
     bool isRun();
     void drawHUD(HUD);
+    void clear();
+    void display();
   private:
     sf::RenderWindow _view;
     sf::Event _event;

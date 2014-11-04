@@ -7,6 +7,12 @@ class HUD{
     sf::CircleShape geticon();
     void settext(std::string);
     sf::Text gettext();
+    void setlife(int);
+    void setcow(int);
+    void setburst(int);
+    int getlife();
+    int getcow();
+    int getburst();
   private:
     sf::Font _font;
     sf::CircleShape _icon;

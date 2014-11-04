@@ -63,7 +63,7 @@ void Ship::setSpd(sf::Vector2f spd){
 
 void Ship::updateOrientation(){
 	if (_shipState != REST) {
-		std::cout << "speed is: " << _spd.x << "," << _spd.y << std::endl;
+		//std::cout << "speed is: " << _spd.x << "," << _spd.y << std::endl;
 		float degrees = 180 / M_PI * atan(_spd.y/_spd.x);
 		if (fabs(_spd.x) < FLT_EPSILON) degrees = 0;
 	  if (_spd.x < 0) degrees += -180;
@@ -214,22 +214,42 @@ bool Asteroid::getExist(){
 HUD::HUD(){
   _font.loadFromFile("arial.ttf");
   _text.setFont(_font);
-    _text.setString("X 5");
   _texture.loadFromFile("cow.png");
   _textpointer = &_texture;
   _icon.setTexture(_textpointer);
-
 }
 
 void HUD::initialize(int radius, sf::Vector2f pos, int burst, int life, int cow){
   _icon.setRadius(radius);
   _icon.setPosition(pos);
-  _text.setPosition(pos + sf::Vector2f(radius,0));
+  _text.setPosition(pos + sf::Vector2f(radius*2,0));
   _text.setCharacterSize(radius);
   _burst = burst;
   _life = life;
   _cow = cow;
+  _text.setString("test");
 }
+
+
+int HUD::getcow(){
+  return _cow;
+}
+int HUD::getlife(){
+  return _life;
+}
+int HUD::getburst(){
+  return _burst;
+}
+void HUD::setcow(int cow){
+  _cow = cow;
+}
+void HUD::setlife(int life){
+  _life = life;
+}
+void HUD::setburst(int burst){
+  _burst = burst;
+}
+
 
 
 sf::CircleShape HUD::geticon(){
@@ -339,7 +359,7 @@ Animation* CircleModel::getAnimation() {
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
-  _hud.initialize(30,sf::Vector2f(700,50),3,3,3);
+  _hud.initialize(30,sf::Vector2f(650,50),3,3,3);
   if (level == 0){
     _circlemodels.push_back(new Ship(sf::Vector2f(50,300), 20, 5));
 		_circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
