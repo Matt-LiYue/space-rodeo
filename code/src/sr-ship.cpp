@@ -16,6 +16,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   setRadius(radius);
   setOrigin(radius,radius);
   rotate(90);	
+	_period = 3;
 }
 
 int Ship::getburst(){
@@ -27,6 +28,7 @@ Ship::ShipState Ship::getState(){
 }
 
 void Ship::setState(Ship::ShipState state){
+	std::cout << "Ship state " << state << std::endl;
   _shipState = state;
 }
 
@@ -49,6 +51,7 @@ void Ship::setAngularVelocity(float av) {
 }
 
 float Ship::getAngularVelocity() {
+	std::cout << "ship AngularVelocity: " << _angularVelocity << std::endl;
 	return _angularVelocity;
 }
 
@@ -58,7 +61,6 @@ void Ship::setSpd(sf::Vector2f spd){
 
 void Ship::updateOrientation(){
 	if (_shipState != REST) {
-		std::cout << "speed is: " << _spd.x << "," << _spd.y << std::endl;
 		float degrees = 180 / M_PI * atan(_spd.y/_spd.x);
 		if (fabs(_spd.x) < FLT_EPSILON) degrees = 0;
 	  if (_spd.x < 0) degrees += -180;

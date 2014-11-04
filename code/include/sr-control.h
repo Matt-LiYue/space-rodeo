@@ -1,15 +1,10 @@
 #include <SFML/Graphics.hpp>
-#include "sr-model.h"
 #include "sr-wormhole.h"
 #include "sr-ship.h"
 #include "sr-cow.h"
 #include "sr-spaceRanch.h"
 #include "sr-orbitPlanet.h"
 #include "sr-asteroid.h"
-
-
-
-
 
 class Control{
   public:
@@ -26,10 +21,12 @@ class Control{
 		Ship* _ship;
 		std::vector<Planet*> _planets;
 		std::vector<Cow*> _cows;
-                std::vector<Wormhole*> _wormholes;
-                std::vector<Asteroid*> _asteroids;
+    std::vector<Wormhole*> _wormholes;
+    std::vector<Asteroid*> _asteroids;
+		std::vector<OrbitPlanet*> _orbitPlanets;
 		SpaceRanch* _ranch;
 		
 		void _removeModel(CircleModel*);
+		void _setAngularVelocities(Planet* planet);
 		
 };

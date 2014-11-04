@@ -17,6 +17,7 @@ class Ship : public CircleModel{
       REST,
       FLY,
 			GRAVITY,
+			ORBIT_GRAVITY,
       BURST,
       ORBIT } ShipState;
 			
@@ -42,6 +43,9 @@ class Ship : public CircleModel{
 		void brake();
     void decelerate();
 		void shoot();
+		
+		float _period;
+		
 		
   private:
     ShipState _shipState;

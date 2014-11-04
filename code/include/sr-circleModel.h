@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <math.h> /* fabs */
-
+#include <iostream> /* cout dbg */
 #include "sr-animation.h"
 
 class CircleModel : public sf::CircleShape {

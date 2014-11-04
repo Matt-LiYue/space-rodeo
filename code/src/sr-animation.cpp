@@ -9,9 +9,7 @@ void Animation::setSize(float size) {
 	_size = size;
 }
 
-void Animation::addFrame(float x1, float x2, float y1, float y2) {
-	std::cout << "adding frame " << std::endl;
-	
+void Animation::addFrame(float x1, float x2, float y1, float y2) {	
 	_frameCoords.push_back(x1);
 	_frameCoords.push_back(x2);
 	_frameCoords.push_back(y1);

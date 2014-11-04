@@ -18,15 +18,18 @@ void Control::setmodels(std::vector<CircleModel*>& myModels){
 	  if (dynamic_cast<Ship*>(myModels[i]) != 0)
 			_ship = (Ship*) myModels[i];
 	  else if (dynamic_cast<SpaceRanch*>(myModels[i]) != 0)
-			_ranch = (SpaceRanch*) myModels[i];
-	  else if (dynamic_cast<Planet*>(myModels[i]) != 0)
-			_planets.push_back((Planet*) myModels[i]);
+			_ranch = (SpaceRanch*) myModels[i];	  
 	  else if (dynamic_cast<Cow*>(myModels[i]) != 0)
 			_cows.push_back((Cow*) myModels[i]);
 		else if (dynamic_cast<Wormhole*>(myModels[i]) != 0)
 			_wormholes.push_back((Wormhole*) myModels[i]);
     else if (dynamic_cast<Asteroid*>(myModels[i]) != 0)
 			_asteroids.push_back((Asteroid*) myModels[i]);
+	  else if (dynamic_cast<Planet*>(myModels[i]) != 0) {
+			_planets.push_back((Planet*) myModels[i]);
+			if (dynamic_cast<OrbitPlanet*>(myModels[i]) != 0)
+			  _orbitPlanets.push_back((OrbitPlanet*) myModels[i]);
+		}
 	}
 }
 
@@ -35,6 +38,10 @@ bool Control::getlevelfinished(){
 }
 
 void Control::update(float timeInterval) {
+	/* orbit planet */
+	for (int i=0; i < _orbitPlanets.size(); i++) {
+		_orbitPlanets[i]->updatePosition(timeInterval);
+	}
 	
 	/* begin ship movement */
 	
@@ -49,11 +56,9 @@ void Control::update(float timeInterval) {
 	2 --> 3: at point when ship orientation and line to planet are perpendicular.
 	*/
 	
-	
-	
-	
   _ship->decelerate();
-	_ship->updateOrientation();
+	
+	
 	
 	/* map exit */
 	sf::Vector2f pos = _ship->getPosition();
@@ -63,29 +68,27 @@ void Control::update(float timeInterval) {
 	Planet* planet = _ship->getOrbitPlanet();
 	if (_ship->getState() == Ship::GRAVITY && 
 	  (dot(_ship->getOrbitPlanet()->getPosition() - _ship->getPosition(),_ship->getSpd()) <= 0)) {
-			
-		_ship->setState(Ship::ORBIT);
-		float theta = sqrt(norm_sqrd(_ship->getSpd()) / norm_sqrd(planet->getPosition() - _ship->getPosition()));
-		if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
-		_ship->setAngularVelocity(theta);
-		
-		// base Angular Velocity
-		theta = 100 / norm(planet->getPosition() - _ship->getPosition());
-		if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
-		_ship->setBaseAngVelocity(theta);
-	  	
+			_setAngularVelocities(planet);
 	}
-	
-	if (_ship->getState() == Ship::ORBIT) {
 		
-	  _ship->setSpd((planet->getPosition() - _ship->getPosition() + rotate(_ship->getPosition() 
+	if (_ship->getState() == Ship::ORBIT) {
+	  /*_ship->setSpd((planet->getPosition() - _ship->getPosition() + rotate(_ship->getPosition() 
 			- planet->getPosition(), timeInterval * _ship->getAngularVelocity())) / timeInterval);
+		_ship->setSpd(_ship->getSpd() + planet->getVelocity());
 		_ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
+		*/
+		sf::Vector2f planetToShip = _ship->getPosition() - planet->getPosition();
+		planetToShip = planetToShip / norm(planetToShip) * planet->getGravityCircle().getRadius();
+		float dTheta = 2 * M_PI * timeInterval / _ship->_period;
+		sf::Vector2f newPos = planet->getPosition() + rotate(planetToShip, dTheta);
+		_ship->setSpd((newPos - _ship->getPosition()) / timeInterval);
+		_ship->setPosition(planet->getPosition() + rotate(planetToShip, dTheta));
+		
 	}
   else { // normal movement
     _ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
 	}
-	
+		
 	/* collisions */
 	for (int j=0; j < _cows.size(); j++) {
 	  Cow* cow = _cows[j];
@@ -99,14 +102,15 @@ void Control::update(float timeInterval) {
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
   }
+		
 	//Asteroid
 	for (int j = 0; j<_asteroids.size();j++){
-          Asteroid* asteroid = _asteroids[j];
-          if (_ship -> intersects(asteroid)){
-            std::cout << "ship hit asteroid\n";
-            exit(1);
-          }
-        }
+    Asteroid* asteroid = _asteroids[j];
+    if (_ship -> intersects(asteroid)){
+      std::cout << "ship hit asteroid\n";
+      exit(1);
+    }
+  }
 	// planet, gravity intersections
 	for (int j=0; j < _planets.size(); j++) {
 		Planet* planet = _planets[j];
@@ -120,17 +124,27 @@ void Control::update(float timeInterval) {
 		// gravity field
     sf::CircleShape gravity = planet->getGravityCircle();
     if (_ship->getState() == Ship::FLY && _ship->intersects(&gravity)) {
-		  _ship->setState(Ship::GRAVITY);
+			std::cout << "entering gravity field with radius " << gravity.getRadius() << std::endl;
 			_ship->setOrbit(planet);
+			/*if (dynamic_cast<OrbitPlanet*>(planet) != 0) 
+				_ship->setState(Ship::ORBIT_GRAVITY);
+			else*/
+		    _ship->setState(Ship::GRAVITY);
     }
-		else if (_ship->getState() == Ship::BURST && !_ship->intersects(&gravity)) {
-			_ship->setState(Ship::FLY);
-			_ship->setOrbit(0);
+		else if (_ship->getState() == Ship::BURST) {
+			if (!_ship->intersects(&gravity)) {
+				_ship->setState(Ship::FLY);
+				_ship->setOrbit(0);
+			}
 		}
-		
+		else if (_ship->getState() == Ship::GRAVITY && !_ship->intersects(&gravity)) {
+			std::cout << "exiting gravity field\n";
+			//_setAngularVelocities(planet);
+		}
+	_ship->updateOrientation();
 	}
 	/* end ship movement */
-	
+		
   //Wormhole
   for (int j=0; j < _wormholes.size();j++){ //Wormhole implementation
     if (_ship->intersects(_wormholes[j])){ //Run into Wormhole
@@ -160,13 +174,15 @@ void Control::update(float timeInterval) {
       _asteroids[j] -> replay(); 
     }
 		
-		// asteroid - asteroid collisions
+		/* asteroid collisions */
     for (int k = 0; k < _asteroids.size();k++){ 
       if (k != j && _asteroids[k]->intersects(_asteroids[j])){
         _asteroids[j]->setExist(false);
       }
     }
   }
+	
+
 	
 	/* lasso */
 	if (_ship->getLasso()->getState() != Lasso::HELD) {
@@ -248,4 +264,18 @@ void Control::_removeModel(CircleModel* cm) {
 			break;
 		}
 	}
+}
+
+void Control::_setAngularVelocities(Planet* planet) {
+	// initial angular velocity
+	_ship->setState(Ship::ORBIT);
+	float theta = sqrt(norm_sqrd(_ship->getSpd()) / norm_sqrd(planet->getPosition() - _ship->getPosition()));
+	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+	std::cout << "angular velocity set to " << theta << std::endl;
+	_ship->setAngularVelocity(theta);
+	
+	// base Angular Velocity
+	theta = 100 / norm(planet->getPosition() - _ship->getPosition());
+	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+	_ship->setBaseAngVelocity(theta);
 }
