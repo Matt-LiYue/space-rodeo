@@ -209,6 +209,39 @@ void Asteroid::setExist(bool exist){
 bool Asteroid::getExist(){
   return _exist;
 }
+
+//Hud Class
+HUD::HUD(){
+  _font.loadFromFile("arial.ttf");
+  _text.setFont(_font);
+    _text.setString("X 5");
+  _texture.loadFromFile("cow.png");
+  _textpointer = &_texture;
+  _icon.setTexture(_textpointer);
+
+}
+
+void HUD::initialize(int radius, sf::Vector2f pos, int burst, int life, int cow){
+  _icon.setRadius(radius);
+  _icon.setPosition(pos);
+  _text.setPosition(pos + sf::Vector2f(radius,0));
+  _text.setCharacterSize(radius);
+  _burst = burst;
+  _life = life;
+  _cow = cow;
+}
+
+
+sf::CircleShape HUD::geticon(){
+  return _icon;
+}
+void HUD::settext(std::string Str){
+  _text.setString(Str);
+}
+sf::Text HUD::gettext(){
+  return _text;
+}
+
 // Lasso Class
 Lasso::Lasso(int radius, float length) {
 	
@@ -302,8 +335,11 @@ Animation* CircleModel::getAnimation() {
 	return &_animation;
 }
 
+
+
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
+  _hud.initialize(30,sf::Vector2f(700,50),3,3,3);
   if (level == 0){
     _circlemodels.push_back(new Ship(sf::Vector2f(50,300), 20, 5));
 		_circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
@@ -321,6 +357,7 @@ Models::Models(int level){//TODO: Read from a txt file to place the elements in 
     _circlemodels.push_back(new Wormhole(sf::Vector2f(100,500),50));
     _circlemodels.push_back(new Asteroid(sf::Vector2f(850,-50),30,sf::Vector2f(-80,80)));
   }
+
 	std::cout << "Original models: " << _circlemodels.size() << std::endl;
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
@@ -344,4 +381,9 @@ std::vector<Animation*> Models::getAnimations() {
 	}
 	return v;
 }
+
+HUD Models::getHUD(){
+  return _hud;
+}
+
 

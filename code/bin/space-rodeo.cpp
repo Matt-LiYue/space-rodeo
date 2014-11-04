@@ -22,7 +22,7 @@ int main(int argc, char** argv){
 	  while (myView.isRun()){
 	    _mainclock.restart();
 	    myView.drawAll(myCirModels);
-			
+		myView.drawHUD(myModels.getHUD());
 	    _interval = _mainclock.getElapsedTime();
 	    myControl.update(_interval.asSeconds());
 	    if (myControl.getlevelfinished() == true) break;

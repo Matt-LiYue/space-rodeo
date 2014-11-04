@@ -8,10 +8,12 @@ class View{
     void drawAll(std::vector<CircleModel*>&);
     void setController(Control&);
     bool isRun();
+    void drawHUD(HUD);
   private:
     sf::RenderWindow _view;
     sf::Event _event;
     Control _controller;
     sf::Texture _bgtexture;
     sf::Sprite _bgsprite;
+    HUD _hud;
 };

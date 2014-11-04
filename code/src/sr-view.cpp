@@ -6,7 +6,6 @@ View::View(){
   _bgtexture.loadFromFile("bg.jpg");
   _bgsprite.setTexture(_bgtexture);
   _view.create(sf::VideoMode(800,600,32),"Space Rodeo");
-  std::cout << _view.isOpen();
 }
 
 
@@ -14,6 +13,11 @@ void View::setController(Control& controller){
   _controller = controller;
 }
 
+void View::drawHUD(HUD hud){
+  std::cout << "I am drawing hud";
+  _view.draw(hud.geticon());
+  _view.draw(hud.gettext());
+}
 
 void View::drawAll(std::vector<CircleModel*>& mycirmodels){
   _view.clear(sf::Color::Black);

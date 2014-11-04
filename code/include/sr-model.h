@@ -1,5 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include "sr-animation.h"
+class HUD{
+  public:
+    HUD();
+    void initialize(int, sf::Vector2f, int, int, int);
+    sf::CircleShape geticon();
+    void settext(std::string);
+    sf::Text gettext();
+  private:
+    sf::Font _font;
+    sf::CircleShape _icon;
+    sf::Text _text;
+    sf::Texture _texture;
+    sf::Texture* _textpointer;
+    int _burst;
+    int _cow;
+    int _life;
+};
 
 class CircleModel: public sf::CircleShape{
   public:
@@ -157,8 +174,10 @@ class Models{
     Models(int);
     std::vector<CircleModel*> getcirmodels();
 		std::vector<Animation*> getAnimations();
+    HUD getHUD();
   private:
     std::vector<CircleModel*> _circlemodels;
+    HUD _hud;
     int totallevel;
     int currentlevel;
 };
