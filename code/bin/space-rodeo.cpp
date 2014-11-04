@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "sr-view.h"
 #include "sr-models.h"
+#include "sr-hud.h"
 #include <iostream>
 
 
@@ -22,8 +23,11 @@ int main(int argc, char** argv){
 		
 	  while (myView.isRun()){
 	    _mainclock.restart();
+      myView.clear();
 	    myView.drawAll(myCirModels);
-	    _interval = _mainclock.getElapsedTime();			
+	    myView.drawHUD(myModels.getHUD());
+      myView.display();
+	    _interval = _mainclock.getElapsedTime();
 	    myControl.update(_interval.asSeconds());
 	    if (myControl.getlevelfinished() == true) break;
 

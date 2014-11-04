@@ -6,7 +6,6 @@ View::View(){
   _bgtexture.loadFromFile("bg.jpg");
   _bgsprite.setTexture(_bgtexture);
   _view.create(sf::VideoMode(800,600,32),"Space Rodeo");
-  std::cout << _view.isOpen();
 }
 
 
@@ -14,9 +13,19 @@ void View::setController(Control& controller){
   _controller = controller;
 }
 
+void View::drawHUD(HUD hud){
+  _view.draw(hud.geticon());
+  _view.draw(hud.gettext());
+}
+void View::clear(){
+  _view.clear(sf::Color::Black);
+}
+void View::display(){
+  _view.display();
+}
+
 
 void View::drawAll(std::vector<CircleModel*>& mycirmodels){
-  _view.clear(sf::Color::Black);
   _view.draw(_bgsprite);
   while (_view.pollEvent(_event)){//TODO: Use Control Class to handle the event
     switch (_event.type){
@@ -42,7 +51,6 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
 		}
 	}
 
-  _view.display();
 }
 
 bool View::isRun(){

@@ -8,6 +8,7 @@
 #include "sr-spaceRanch.h"
 #include "sr-orbitPlanet.h"
 #include "sr-asteroid.h"
+#include "sr-hud.h"
 #include <iostream>
 
 class Models{
@@ -15,10 +16,15 @@ class Models{
     Models(int);
     std::vector<CircleModel*> getcirmodels();
 		std::vector<Animation*> getAnimations();
+    HUD getHUD();
   private:
     std::vector<CircleModel*> _circlemodels;
+    HUD _hud;
     int totallevel;
     int currentlevel;
 };
+
+
+
 
 #endif

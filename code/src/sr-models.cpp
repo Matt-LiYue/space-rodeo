@@ -53,3 +53,8 @@ std::vector<Animation*> Models::getAnimations() {
 	}
 	return v;
 }
+
+HUD Models::getHUD(){
+  return _hud;
+}
+
