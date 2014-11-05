@@ -5,6 +5,7 @@ HUD::HUD(){
   _texture.loadFromFile("cow.png");
   _textpointer = &_texture;
   _icon.setTexture(_textpointer);
+  _text.setString("test");
 }
 void HUD::initialize(int radius, sf::Vector2f pos, int burst, int life, int cow){
   _icon.setRadius(radius);
@@ -14,7 +15,7 @@ void HUD::initialize(int radius, sf::Vector2f pos, int burst, int life, int cow)
   _burst = burst;
   _life = life;
   _cow = cow;
-  _text.setString("test");
+  _text.setString("hello");
 }
 int HUD::getcow(){
   return _cow;
