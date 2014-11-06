@@ -6,9 +6,8 @@
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
+  currentlevel = 1;
   
-  currentlevel = level;
-  std::cout << currentlevel;
   _hud.initialize(30, sf::Vector2f(650,50),3,3,0);
   parse();
   

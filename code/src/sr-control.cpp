@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <math.h>
 #include "sr-control.h"
@@ -58,7 +59,7 @@ void Control::update(float timeInterval) {
 	*/
 	
   _ship->decelerate();
-	
+
 	
 	
 	/* map exit */
@@ -97,10 +98,14 @@ void Control::update(float timeInterval) {
 			_removeModel(cow);
 			_hud->setcow(_hud->getcow()+1);
 			//cow->draw = false; //TODO: better hit cow status
+      _gsound.collect();
 		}
 	}
+  
+  
 	
 	if (_ship->intersects(_ranch)) {
+    _gsound.complete();
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
   }
@@ -119,6 +124,7 @@ void Control::update(float timeInterval) {
 		
 		// planet
 		if (_ship->intersects(planet)) {
+      _gsound.crash();
 			std::cout << "ship hit planet\n";
 			exit(1);
 		}
@@ -242,6 +248,7 @@ void Control::handleEvent(sf::Event event){
         _ship -> adjustSpd(300);
 	      _ship -> setState(Ship::BURST);
       }
+    _gsound.burst();
   }
   if (event.key.code == sf::Keyboard::Left){
     if (_ship -> getState() == Ship::REST){

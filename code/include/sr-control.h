@@ -6,6 +6,7 @@
 #include "sr-orbitPlanet.h"
 #include "sr-asteroid.h"
 #include "sr-hud.h"
+#include "sr-sound.h"
 
 class Control{
   public:
@@ -30,5 +31,6 @@ class Control{
 		void _removeModel(CircleModel*);
 		void _setAngularVelocities(Planet* planet);
 		HUD * _hud;
+    GameSound _gsound;
 		
 };
