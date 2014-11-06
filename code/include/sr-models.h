@@ -17,11 +17,14 @@ class Models{
     std::vector<CircleModel*> getcirmodels();
 		std::vector<Animation*> getAnimations();
     HUD& getHUD();
+    void parse();
+  
   private:
-    std::vector<CircleModel*> _circlemodels;
+   std::vector<CircleModel*> _circlemodels;
     HUD _hud;
     int totallevel;
     int currentlevel;
+  
 };
 
 
