@@ -9,7 +9,7 @@ class View{
     void drawAll(std::vector<CircleModel*>&);
     void setController(Control&);
     bool isRun();
-    void drawHUD(HUD);
+    void drawHUD(HUD&);
     void clear();
     void display();
   private:
@@ -18,5 +18,4 @@ class View{
     Control _controller;
     sf::Texture _bgtexture;
     sf::Sprite _bgsprite;
-    HUD _hud;
 };

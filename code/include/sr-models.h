@@ -16,7 +16,7 @@ class Models{
     Models(int);
     std::vector<CircleModel*> getcirmodels();
 		std::vector<Animation*> getAnimations();
-    HUD getHUD();
+    HUD& getHUD();
   private:
     std::vector<CircleModel*> _circlemodels;
     HUD _hud;

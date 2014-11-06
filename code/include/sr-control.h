@@ -5,6 +5,7 @@
 #include "sr-spaceRanch.h"
 #include "sr-orbitPlanet.h"
 #include "sr-asteroid.h"
+#include "sr-hud.h"
 
 class Control{
   public:
@@ -13,6 +14,7 @@ class Control{
     void setmodels(std::vector<CircleModel*>&);
     void handleEvent(sf::Event);
     bool getlevelfinished();
+    void setHUD(HUD*);
 		
   private:		
 		/* data members */
@@ -25,8 +27,8 @@ class Control{
     std::vector<Asteroid*> _asteroids;
 		std::vector<OrbitPlanet*> _orbitPlanets;
 		SpaceRanch* _ranch;
-		
 		void _removeModel(CircleModel*);
 		void _setAngularVelocities(Planet* planet);
+		HUD * _hud;
 		
 };

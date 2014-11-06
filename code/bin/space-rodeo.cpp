@@ -6,13 +6,14 @@
 
 
 int main(int argc, char** argv){
-  for (int i = 0 ; i < 3; i++){
+  for (int i = 0 ; i < 1; i++){
 	  Models myModels(i);
 	  View myView;
 	  Control myControl;
 	  sf::Time _interval;
 	  sf::Clock _mainclock;
 	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
+
 	  myControl.setmodels(myCirModels);
 		std::vector<Animation*> animations = myModels.getAnimations();	
 	  myView.setController(myControl);
@@ -23,10 +24,13 @@ int main(int argc, char** argv){
 		
 	  while (myView.isRun()){
 	    _mainclock.restart();
-      myView.clear();
-	    myView.drawAll(myCirModels);
-	    myView.drawHUD(myModels.getHUD());
-      myView.display();
+	    myControl.setHUD(&(myModels.getHUD()));
+      	myView.clear();
+	  	myView.drawAll(myCirModels);
+
+		std::cout << "main cow: " << myModels.getHUD().getcow() << std::endl;
+	 	myView.drawHUD(myModels.getHUD());
+      	myView.display();
 	    _interval = _mainclock.getElapsedTime();
 	    myControl.update(_interval.asSeconds());
 	    if (myControl.getlevelfinished() == true) break;

@@ -13,8 +13,11 @@ void View::setController(Control& controller){
   _controller = controller;
 }
 
-void View::drawHUD(HUD hud){
-  _view.draw(hud.geticon());
+void View::drawHUD(HUD& hud){
+  hud.update();
+  _view.draw(hud.getcowicon());
+  _view.draw(hud.getbursticon());
+  _view.draw(hud.getlifeicon());
   _view.draw(hud.gettext());
 }
 void View::clear(){

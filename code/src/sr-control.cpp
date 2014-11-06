@@ -7,6 +7,7 @@
 
 Control::Control(){
   _levelfinished = false;
+
 }
 
 
@@ -94,6 +95,7 @@ void Control::update(float timeInterval) {
 	  Cow* cow = _cows[j];
 		if (_ship->intersects(cow)) {
 			_removeModel(cow);
+			_hud->setcow(_hud->getcow()+1);
 			//cow->draw = false; //TODO: better hit cow status
 		}
 	}
@@ -198,6 +200,7 @@ void Control::update(float timeInterval) {
 				if (lasso->intersects(cow)) {
 					//cow->draw = false; //TODO: better hit cow status
 					_removeModel(cow);
+					_hud->setcow(_hud->getcow()+1);
 					lasso->setState(Lasso::CAUGHT);
 				}
 			}
@@ -278,4 +281,8 @@ void Control::_setAngularVelocities(Planet* planet) {
 	theta = 100 / norm(planet->getPosition() - _ship->getPosition());
 	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setBaseAngVelocity(theta);
+}
+
+void Control::setHUD(HUD* hud){
+	_hud = hud;
 }

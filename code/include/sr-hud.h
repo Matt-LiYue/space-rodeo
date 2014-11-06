@@ -8,7 +8,9 @@ class HUD{
   public:
     HUD();
     void initialize(int, sf::Vector2f, int, int, int);
-    sf::CircleShape geticon();
+    sf::CircleShape getcowicon();
+    sf::CircleShape getbursticon();
+    sf::CircleShape getlifeicon();
     void settext(std::string);
     sf::Text gettext();
     void setlife(int);
@@ -17,12 +19,16 @@ class HUD{
     int getlife();
     int getcow();
     int getburst();
+    void update();
   private:
     sf::Font _font;
-    sf::CircleShape _icon;
+    sf::CircleShape _cowicon;
+    sf::CircleShape _bursticon;
+    sf::CircleShape _lifeicon;
     sf::Text _text;
-    sf::Texture _texture;
-    sf::Texture* _textpointer;
+    sf::Texture _cowtexture;
+    sf::Texture _bursttexture;
+    sf::Texture _lifetexture;
     int _burst;
     int _cow;
     int _life;

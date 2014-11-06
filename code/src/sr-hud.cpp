@@ -2,21 +2,35 @@
 HUD::HUD(){
   _font.loadFromFile("arial.ttf");
   _text.setFont(_font);
-  _texture.loadFromFile("cow.png");
-  _textpointer = &_texture;
-  _icon.setTexture(_textpointer);
-  _text.setString("test");
+  _cowtexture.loadFromFile("cow.png");
+  _cowicon.setTexture(&_cowtexture);
+  _bursttexture.loadFromFile("burst.png");
+  _bursticon.setTexture(&_bursttexture);
+  _lifetexture.loadFromFile("rock.png");
+  _lifeicon.setTexture(&_lifetexture);
+  _text.setString("test\ntest\ntest");
 }
 void HUD::initialize(int radius, sf::Vector2f pos, int burst, int life, int cow){
-  _icon.setRadius(radius);
-  _icon.setPosition(pos);
+  _cowicon.setRadius(radius);
+  _cowicon.setPosition(pos);
+  _bursticon.setRadius(radius);
+  _bursticon.setPosition(pos + sf::Vector2f(0,radius*2));
+  _lifeicon.setRadius(radius);
+  _lifeicon.setPosition(pos + sf::Vector2f(0,radius*4));
   _text.setPosition(pos + sf::Vector2f(radius*2,0));
-  _text.setCharacterSize(radius);
+  _text.setCharacterSize(radius*1.5);
   _burst = burst;
   _life = life;
   _cow = cow;
-  _text.setString("hello");
+  _text.setString("test\ntest\ntest");
 }
+
+void HUD::update(){
+  char outstr[100];
+  sprintf(outstr, " X %d\n X %d\n X %d \n", _cow,_burst,_life);
+  _text.setString(outstr);
+}
+
 int HUD::getcow(){
   return _cow;
 }
@@ -35,8 +49,14 @@ void HUD::setlife(int life){
 void HUD::setburst(int burst){
   _burst = burst;
 }
-sf::CircleShape HUD::geticon(){
-  return _icon;
+sf::CircleShape HUD::getcowicon(){
+  return _cowicon;
+}
+sf::CircleShape HUD::getbursticon(){
+  return _bursticon;
+}
+sf::CircleShape HUD::getlifeicon(){
+  return _lifeicon;
 }
 void HUD::settext(std::string Str){
   _text.setString(Str);
