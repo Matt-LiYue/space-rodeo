@@ -13,23 +13,31 @@ Control::Control(){
 
 void Control::setmodels(std::vector<CircleModel*>& myModels){
   _cirmodels = &myModels;
-		
-	/* Store circle models as their derived classes */
-  for (int i = 0; i < myModels.size(); i++) {
-	  if (dynamic_cast<Ship*>(myModels[i]) != 0)
-			_ship = (Ship*) myModels[i];
-	  else if (dynamic_cast<SpaceRanch*>(myModels[i]) != 0)
-			_ranch = (SpaceRanch*) myModels[i];	  
-	  else if (dynamic_cast<Cow*>(myModels[i]) != 0)
-			_cows.push_back((Cow*) myModels[i]);
-		else if (dynamic_cast<Wormhole*>(myModels[i]) != 0)
-			_wormholes.push_back((Wormhole*) myModels[i]);
-    else if (dynamic_cast<Asteroid*>(myModels[i]) != 0)
-			_asteroids.push_back((Asteroid*) myModels[i]);
-	  else if (dynamic_cast<Planet*>(myModels[i]) != 0) {
-			_planets.push_back((Planet*) myModels[i]);
-			if (dynamic_cast<OrbitPlanet*>(myModels[i]) != 0)
-			  _orbitPlanets.push_back((OrbitPlanet*) myModels[i]);
+  remakemodels();
+}
+
+void Control::remakemodels(){
+	_cows.clear();
+	_wormholes.clear();
+	_asteroids.clear();
+	_planets.clear();
+	_orbitPlanets.clear();
+/* Store circle models as their derived classes */
+  for (int i = 0; i < (*_cirmodels).size(); i++) {
+	  if (dynamic_cast<Ship*>((*_cirmodels)[i]) != 0)
+			_ship = (Ship*) (*_cirmodels)[i];
+	  else if (dynamic_cast<SpaceRanch*>((*_cirmodels)[i]) != 0)
+			_ranch = (SpaceRanch*) (*_cirmodels)[i];	  
+	  else if (dynamic_cast<Cow*>((*_cirmodels)[i]) != 0)
+			_cows.push_back((Cow*) (*_cirmodels)[i]);
+		else if (dynamic_cast<Wormhole*>((*_cirmodels)[i]) != 0)
+			_wormholes.push_back((Wormhole*) (*_cirmodels)[i]);
+    else if (dynamic_cast<Asteroid*>((*_cirmodels)[i]) != 0)
+			_asteroids.push_back((Asteroid*) (*_cirmodels)[i]);
+	  else if (dynamic_cast<Planet*>((*_cirmodels)[i]) != 0) {
+			_planets.push_back((Planet*) (*_cirmodels)[i]);
+			if (dynamic_cast<OrbitPlanet*>((*_cirmodels)[i]) != 0)
+			  _orbitPlanets.push_back((OrbitPlanet*) (*_cirmodels)[i]);
 		}
 	}
 }
@@ -39,6 +47,7 @@ bool Control::getlevelfinished(){
 }
 
 void Control::update(float timeInterval) {
+	remakemodels();
 	/* orbit planet */
 	for (int i=0; i < _orbitPlanets.size(); i++) {
 		_orbitPlanets[i]->updatePosition(timeInterval);
@@ -236,11 +245,17 @@ void Control::handleEvent(sf::Event event){
         _ship -> setState(Ship::FLY);
       }
       else if (_ship -> getState() == Ship::FLY){// TODO: Need a counter
-        _ship -> adjustSpd(300);
+        if (_hud -> getburst() > 0){
+          _ship -> adjustSpd(300);
+          _hud -> setburst(_hud->getburst()-1);
+      }
       }
       else if (_ship -> getState() == Ship::ORBIT) {
-        _ship -> adjustSpd(300);
-	      _ship -> setState(Ship::BURST);
+      	if (_hud -> getburst() > 0){
+        	_ship -> adjustSpd(300);
+	      	_ship -> setState(Ship::BURST);
+	      	_hud -> setburst(_hud->getburst()-1);
+	      }
       }
   }
   if (event.key.code == sf::Keyboard::Left){
@@ -261,7 +276,7 @@ void Control::_removeModel(CircleModel* cm) {
 	
 	for (int i = 0; i < modelsRef.size(); i++) {
 		if (modelsRef[i] == cm) {
-		  modelsRef[modelsRef.size() - 1] = cm;
+		  	modelsRef[modelsRef.size() - 1] = cm;
 			modelsRef[i] = tmp;
 			modelsRef.pop_back();
 			break;

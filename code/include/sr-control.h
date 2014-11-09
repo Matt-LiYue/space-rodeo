@@ -12,6 +12,7 @@ class Control{
     Control();
     void update(float);
     void setmodels(std::vector<CircleModel*>&);
+    void remakemodels();
     void handleEvent(sf::Event);
     bool getlevelfinished();
     void setHUD(HUD*);

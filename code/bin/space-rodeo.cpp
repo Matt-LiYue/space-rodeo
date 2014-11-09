@@ -13,9 +13,9 @@ int main(int argc, char** argv){
 	  sf::Time _interval;
 	  sf::Clock _mainclock;
 	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
-
 	  myControl.setmodels(myCirModels);
 		std::vector<Animation*> animations = myModels.getAnimations();	
+	  std::cout << &myControl;
 	  myView.setController(myControl);
 		
 		std::cout << "there are " << myCirModels.size() << " circle models\n";
@@ -25,10 +25,9 @@ int main(int argc, char** argv){
 	  while (myView.isRun()){
 	    _mainclock.restart();
 	    myControl.setHUD(&(myModels.getHUD()));
+	    //std::cout << &(myModels.getHUD()) << std::endl; 
       	myView.clear();
 	  	myView.drawAll(myCirModels);
-
-		std::cout << "main cow: " << myModels.getHUD().getcow() << std::endl;
 	 	myView.drawHUD(myModels.getHUD());
       	myView.display();
 	    _interval = _mainclock.getElapsedTime();

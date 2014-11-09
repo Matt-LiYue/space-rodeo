@@ -10,7 +10,7 @@ View::View(){
 
 
 void View::setController(Control& controller){
-  _controller = controller;
+  _controller = &controller;
 }
 
 void View::drawHUD(HUD& hud){
@@ -36,7 +36,7 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
         _view.close();
         break;
       case sf::Event::KeyPressed:
-        _controller.handleEvent(_event);
+        _controller->handleEvent(_event);
 	break;
       default:
         break;
