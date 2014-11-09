@@ -22,8 +22,8 @@ class Models{
   private:
    std::vector<CircleModel*> _circlemodels;
     HUD _hud;
-    int totallevel;
-    int currentlevel;
+    int _totallevel;
+    int _currentlevel;
   
 };
 

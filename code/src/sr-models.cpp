@@ -2,11 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
-  currentlevel = 1;
+  _currentlevel = 1;
   
   _hud.initialize(30, sf::Vector2f(650,50),3,3,0);
   parse();
@@ -72,8 +73,11 @@ void Models::parse(){
   int x = 0;
   int y = 1;
   int width, height;
-  
-  std::string filename = "level" + std::to_string(currentlevel) + ".txt";
+  std::string currentlevel;
+  std::stringstream out;
+  out << _currentlevel;
+  currentlevel = out.str();
+  std::string filename = "level" + currentlevel + ".txt";
   std::ifstream input;
   input.open(filename.c_str());
   
