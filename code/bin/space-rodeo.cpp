@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "sr-view.h"
 #include "sr-models.h"
 #include "sr-hud.h"
