@@ -7,15 +7,15 @@
 
 
 int main(int argc, char** argv){
-  for (int i = 0 ; i < 1; i++){
+  View myView;
+  sf::Time _interval;
+  sf::Clock _mainclock;
+  for (int i = 0 ; i < 2; i++){
 	  Models myModels(i);
-	  View myView;
 	  Control myControl;
-	  sf::Time _interval;
-	  sf::Clock _mainclock;
 	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
 	  myControl.setmodels(myCirModels);
-		std::vector<Animation*> animations = myModels.getAnimations();	
+	  std::vector<Animation*> animations = myModels.getAnimations();	
 	  std::cout << &myControl;
 	  myView.setController(myControl);
 		
@@ -34,10 +34,22 @@ int main(int argc, char** argv){
 	    _interval = _mainclock.getElapsedTime();
 	    myControl.update(_interval.asSeconds());
 	    if (myControl.getlevelfinished() == true) break;
+	    if (myControl.getdie() == 1){//used one life
+	    	myControl.setdie(0);
+	    	myModels.restart();
+	    	myCirModels = myModels.getcirmodels(); //TODO: This is an ad-hoc solution, may need to update
+	  		myControl.setmodels(myCirModels);
+	  		myModels.getHUD().setburst(3);
+	  		myModels.getHUD().setcow(0);
+	    }
+	    else if (myControl.getdie() == 2){//life used up
+			std::cout << "0 life, game over";
+	    	exit(0);
+	    }
 
-			for (int i=0; i < animations.size(); i++) {
-					animations[i]->advanceFrame();
-			}
+		for (int j=0; j < animations.size(); j++) {
+			animations[j]->advanceFrame();
+		}
 			
 	  }
   }

@@ -17,6 +17,9 @@ class Control{
     void handleEvent(sf::Event);
     bool getlevelfinished();
     void setHUD(HUD*);
+    int getdie();
+    void setdie(int);
+    void die();
 		
   private:		
 		/* data members */
@@ -33,5 +36,6 @@ class Control{
 		void _setAngularVelocities(Planet* planet);
 		HUD * _hud;
     GameSound _gsound;
+    int _die;
 		
 };

@@ -7,8 +7,7 @@
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
-  _currentlevel = 1;
-  
+  _currentlevel = level;
   _hud.initialize(30, sf::Vector2f(650,50),3,3,0);
   parse();
   
@@ -39,14 +38,7 @@ Models::Models(int level){//TODO: Read from a txt file to place the elements in 
 //		
 //		//_circlemodels.push_back(new Planet(sf::Vector2f(500,200),20,50));
 //	}
-	
 	std::cout << "Original models: " << _circlemodels.size() << std::endl;
-  for (int i=0; i<_circlemodels.size(); i++) {
-    float r = _circlemodels[i]->getRadius();
-    sf::Vector2f center = _circlemodels[i]->getPosition();
-    _circlemodels[i]->setOrigin(sf::Vector2f(r,r));
-    _circlemodels[i]->setPosition(center);
-  }
 }
 
 std::vector<CircleModel*> Models::getcirmodels(){
@@ -62,6 +54,12 @@ std::vector<Animation*> Models::getAnimations() {
 		}
 	}
 	return v;
+}
+
+void Models::restart(){
+  std::cout << "sizebefore: " << &_circlemodels << std::endl;
+  _circlemodels.clear();
+  parse();
 }
 
 HUD& Models::getHUD(){
@@ -132,8 +130,8 @@ void Models::parse(){
         break;
       
       case 'A':
-        width = x * 100 - 50;
-        height = y * 100;
+        width = x * 100 + 100;
+        height = y * 100 + 100;
         _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),30,sf::Vector2f(-80,80)));
         break;
         
@@ -147,5 +145,10 @@ void Models::parse(){
     }
     
   }
-
+  for (int i=0; i<_circlemodels.size(); i++) {
+    float r = _circlemodels[i]->getRadius();
+    sf::Vector2f center = _circlemodels[i]->getPosition();
+    _circlemodels[i]->setOrigin(sf::Vector2f(r,r));
+    _circlemodels[i]->setPosition(center);
+  }
 }

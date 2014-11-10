@@ -49,9 +49,9 @@ class Ship : public CircleModel{
 		
   private:
     ShipState _shipState;
-    int _burst;
     float _angularVelocity;
 		float _baseAngVelocity;
+    int _burst;
     Planet* _orbiting;
     sf::Texture _texture;
     sf::Texture* _textpointer;

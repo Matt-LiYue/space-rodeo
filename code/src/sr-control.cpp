@@ -8,7 +8,7 @@
 
 Control::Control(){
   _levelfinished = false;
-
+  _die = 0;
 }
 
 
@@ -48,6 +48,8 @@ bool Control::getlevelfinished(){
 }
 
 void Control::update(float timeInterval) {
+
+  std::cout << "aftersize" << _cirmodels << std::endl;
 	remakemodels();
 	/* orbit planet */
 	for (int i=0; i < _orbitPlanets.size(); i++) {
@@ -73,7 +75,7 @@ void Control::update(float timeInterval) {
 	
 	/* map exit */
 	sf::Vector2f pos = _ship->getPosition();
-  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) {std::cout << "screen exit\n"; exit(0);}
+  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) {std::cout << "screen exit\n"; die();}
 	
 	/* movement */
 	Planet* planet = _ship->getOrbitPlanet();
@@ -124,7 +126,7 @@ void Control::update(float timeInterval) {
     Asteroid* asteroid = _asteroids[j];
     if (_ship -> intersects(asteroid)){
       std::cout << "ship hit asteroid\n";
-      exit(1);
+      die();
     }
   }
 	// planet, gravity intersections
@@ -135,7 +137,7 @@ void Control::update(float timeInterval) {
 		if (_ship->intersects(planet)) {
       _gsound.crash();
 			std::cout << "ship hit planet\n";
-			exit(1);
+			die();
 		}
 		
 		// gravity field
@@ -307,4 +309,21 @@ void Control::_setAngularVelocities(Planet* planet) {
 
 void Control::setHUD(HUD* hud){
 	_hud = hud;
+}
+
+void Control::die(){
+	_hud->setlife(_hud->getlife() - 1);
+	std::cout << _hud->getlife();
+	if (_hud->getlife() < 0){
+		_die = 2;
+	}
+	else{
+		_die = 1;
+	}
+}
+int Control::getdie(){
+	return _die;
+}
+void Control::setdie(int die){
+	_die = die;
 }
