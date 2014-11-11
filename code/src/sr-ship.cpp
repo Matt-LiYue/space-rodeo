@@ -7,7 +7,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   _textpointer = &_texture;
   setTexture(_textpointer);
   _burst = burst;
-	_lasso = new Lasso(20,100);
+  _lasso = new Lasso(20,100);
   _movable = true;
 	draw = true;
   _shipState = Ship::REST;
@@ -16,7 +16,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   setRadius(radius);
   setOrigin(radius,radius);
   rotate(90);	
-	_period = 3;
+  _period = 3;
 }
 
 int Ship::getburst(){

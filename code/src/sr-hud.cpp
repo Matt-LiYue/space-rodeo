@@ -1,4 +1,5 @@
 #include "sr-hud.h"
+#include <stdio.h>
 HUD::HUD(){
   _font.loadFromFile("arial.ttf");
   _text.setFont(_font);

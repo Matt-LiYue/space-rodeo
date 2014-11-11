@@ -1,4 +1,4 @@
-#include "sr-Models.h"
+#include "sr-models.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -57,7 +57,6 @@ std::vector<Animation*> Models::getAnimations() {
 }
 
 void Models::restart(){
-  std::cout << "sizebefore: " << &_circlemodels << std::endl;
   _circlemodels.clear();
   parse();
 }

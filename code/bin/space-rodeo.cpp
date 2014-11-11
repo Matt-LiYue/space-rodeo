@@ -16,7 +16,6 @@ int main(int argc, char** argv){
 	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
 	  myControl.setmodels(myCirModels);
 	  std::vector<Animation*> animations = myModels.getAnimations();	
-	  std::cout << &myControl;
 	  myView.setController(myControl);
 		
 		std::cout << "there are " << myCirModels.size() << " circle models\n";
@@ -39,6 +38,7 @@ int main(int argc, char** argv){
 	    	myModels.restart();
 	    	myCirModels = myModels.getcirmodels(); //TODO: This is an ad-hoc solution, may need to update
 	  		myControl.setmodels(myCirModels);
+	  		animations = myModels.getAnimations();	
 	  		myModels.getHUD().setburst(3);
 	  		myModels.getHUD().setcow(0);
 	    }

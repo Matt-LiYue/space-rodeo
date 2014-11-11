@@ -48,8 +48,6 @@ bool Control::getlevelfinished(){
 }
 
 void Control::update(float timeInterval) {
-
-  std::cout << "aftersize" << _cirmodels << std::endl;
 	remakemodels();
 	/* orbit planet */
 	for (int i=0; i < _orbitPlanets.size(); i++) {
