@@ -91,6 +91,9 @@ void Control::update(float timeInterval) {
 		sf::Vector2f planetToShip = _ship->getPosition() - planet->getPosition();
 		planetToShip = planetToShip / norm(planetToShip) * planet->getGravityCircle().getRadius();
 		float dTheta = 2 * M_PI * timeInterval / _ship->_period;
+		if (_ship->getAngularVelocity() < 0) {
+			dTheta *= -1;
+		}
 		sf::Vector2f newPos = planet->getPosition() + rotate(planetToShip, dTheta);
 		_ship->setSpd((newPos - _ship->getPosition()) / timeInterval);
 		_ship->setPosition(planet->getPosition() + rotate(planetToShip, dTheta));
