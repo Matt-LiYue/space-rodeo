@@ -126,6 +126,7 @@ void Control::update(float timeInterval) {
 	for (int j = 0; j<_asteroids.size();j++){
     Asteroid* asteroid = _asteroids[j];
     if (_ship -> intersects(asteroid)){
+      _gsound.crash();
       std::cout << "ship hit asteroid\n";
       die();
     }
@@ -216,6 +217,7 @@ void Control::update(float timeInterval) {
 			for (int j=0; j < _cows.size(); j++) {
 			  Cow* cow = _cows[j];
 				if (lasso->intersects(cow)) {
+          _gsound.collect();
 					//cow->draw = false; //TODO: better hit cow status
 					_removeModel(cow);
 					_hud->setcow(_hud->getcow()+1);
