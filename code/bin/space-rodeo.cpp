@@ -10,7 +10,7 @@ int main(int argc, char** argv){
   View myView;
   sf::Time _interval;
   sf::Clock _mainclock;
-  for (int i = 0 ; i < 4; i++){
+  for (int i = 2 ; i < 4; i++){
 	  Models myModels(i);
 	  Control myControl;
 	  std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
