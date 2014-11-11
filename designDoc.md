@@ -246,13 +246,18 @@ The lower part of this figure shows the most basic level, player simply fires th
 4 People, 3 Months
 ###__19.Changelog__
 ####__Report on Oct 23, 2014__
-* __Highlight:__ Game is now a pure puzzle game
+__Highlight:__ 
+* __Clarify:__ Game is now a pure puzzle game
 * __Work has been done:__ Build MVC framework, game playable by firing rockets to go to the space ranch. Player can collect cows by traveling through them. 
 * __Core functionality remaining:__ Lasso, and more enhancement.
+
 [click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_10_23.md)
 
+####__Report on Nov 10, 2014__
+__Highlight:__ 
+* __Game enhencement__: Added Lasso and animation, various space effect. More levels are implemented. 
+* __TODO__: More levels, space effects. Game start and game over screen, level transitions. 
 
 
-
-
+[click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_11_10.md)
 

@@ -1,4 +1,4 @@
-####__Report on Oct 23, 2014__
+###__Report on Oct 23, 2014__
 
 * __Design Clarification__
 
@@ -25,7 +25,9 @@ The game is now a pure puzzle game. Each level is stand alone. Player tries to c
 
 * __Contribution:__
   Yue: Build the MVC framework, handle user input.
+
   Michael: Collision detection, gravity force.
+  
   Kate: Art and text input.
 
 
