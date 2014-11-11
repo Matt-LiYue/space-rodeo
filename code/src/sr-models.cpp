@@ -113,7 +113,7 @@ void Models::parse(){
       case 'P':
         width = x * 100 - 50;
         height = y * 100;
-        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,70));
+        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,100));
         break;
         
       case 'R':

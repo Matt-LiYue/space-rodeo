@@ -6,6 +6,15 @@ float dot(sf::Vector2f a,sf::Vector2f b) {
 	return a.x*b.x + a.y*b.y;
 }
 
+float linedotdistance( sf::Vector2f a, sf::Vector2f b, sf::Vector2f p)
+{
+  sf::Vector2f n = b - a;
+  sf::Vector2f pa = a - p;
+  sf::Vector2f c = n * (dot( pa, n ) / dot( n, n ));
+  sf::Vector2f d = pa - c;
+  return sqrt( dot( d, d ) );
+}
+
 float norm_sqrd(sf::Vector2f v) {
 	return v.x * v.x + v.y * v.y;
 }

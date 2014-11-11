@@ -78,10 +78,10 @@ void Control::update(float timeInterval) {
 	/* movement */
 	Planet* planet = _ship->getOrbitPlanet();
 	if (_ship->getState() == Ship::GRAVITY && 
-	  (dot(_ship->getOrbitPlanet()->getPosition() - _ship->getPosition(),_ship->getSpd()) <= 0)) {
+	  linedotdistance(_ship->getPosition(), _ship->getPosition()+_ship->getSpd(), _ship->getOrbitPlanet()->getPosition()) > _ship->getRadius()+planet->getRadius()) {
 			_setAngularVelocities(planet);
 	}
-		
+
 	if (_ship->getState() == Ship::ORBIT) {
 	  /*_ship->setSpd((planet->getPosition() - _ship->getPosition() + rotate(_ship->getPosition() 
 			- planet->getPosition(), timeInterval * _ship->getAngularVelocity())) / timeInterval);
