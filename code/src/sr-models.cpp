@@ -96,7 +96,7 @@ void Models::parse(){
     }
     
     //std::cout << "x,y: " << x << "," << y << "\n";
-    /*switch (c){
+    switch (c){
       case 'S':
         width = x * 100 - 50;
         height = y * 100;
@@ -141,19 +141,11 @@ void Models::parse(){
         
       default:
         break;
-    }*/
+    }
     
 		
     
-  }
-
-  width = x * 100 - 50;
-  height = y * 100;
-  _circlemodels.push_back(new Ship(sf::Vector2f(80,80), 15, 5));
-  _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
-  _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(300,300),60,60,100,3,20,50));
-  _circlemodels.push_back(new SpaceRanch(sf::Vector2f(600,600),40));
-	
+  }	
 	
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
