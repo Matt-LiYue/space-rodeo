@@ -3,12 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <cfloat> /* epsilon */
-#include "sr-utils.h"
 #include "sr-circleModel.h"
 #include "sr-lasso.h"
 #include "sr-planet.h"
 #include <iostream>
 #include <assert.h>
+#include "sr-utils.h"
 
 
 class Ship : public CircleModel{

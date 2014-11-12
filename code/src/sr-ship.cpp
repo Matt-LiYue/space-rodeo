@@ -28,8 +28,18 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
 			break;
 		case GRAVITY:
 		  planPos = _orbiting->getPosition();
+			_relPos += deltaTime * _spd;
 		  setPosition(_relPos + planPos);
 			break;
+		case ORBIT:
+  		planPos = _orbiting->getPosition();
+		  setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
+		  _relPos += deltaTime * _spd;			
+			setPosition(_relPos + planPos);
+			break;
+		case BURST:
+		  move(deltaTime * _spd);
+			break;	
 	}
 	return getPosition();
 }
@@ -110,15 +120,16 @@ void Ship::shoot() {
 }
 
 void Ship::decelerate(){
-  if (_shipState == FLY && norm_sqrd(getSpd()) > 100*100){
+  if (_shipState == FLY && utils::norm_sqrd(getSpd()) > 100*100){
     setSpd(getSpd()*0.998f);
-    if (norm_sqrd(getSpd()) <= 100*100){
+    if (utils::norm_sqrd(getSpd()) <= 100*100){
       adjustSpd(100);
     }
   }
-	else if (_shipState == ORBIT && _angularVelocity > _baseAngVelocity) {
+	/*else if (_shipState == ORBIT && _angularVelocity > _baseAngVelocity) {
 		_angularVelocity *= .998f;
 	}
+	*/
 }
 
 /*sf::Vector2f Ship::_getRelPos() {

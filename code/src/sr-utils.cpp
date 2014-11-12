@@ -2,6 +2,8 @@
 #include <math.h>
 #include <iostream>
 
+namespace utils {
+	
 float dot(sf::Vector2f a,sf::Vector2f b) {
 	return a.x*b.x + a.y*b.y;
 }
@@ -35,4 +37,5 @@ bool within(float val, float x1, float x2) {
 bool withinBox(sf::Vector2f val, float x1, float x2, float y1, float y2) {
 	if (within(val.x,x1,x2) && within(val.y,y1,y2)) return true;
 	return false;
+}
 }

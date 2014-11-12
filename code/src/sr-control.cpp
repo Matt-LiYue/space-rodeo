@@ -74,9 +74,22 @@ void Control::update(float timeInterval) {
 	sf::Vector2f pos = _ship->updatePosition(timeInterval);
 	_ship->updateOrientation();
 	
-	
 	/* map exit */
-  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) { die(); }
+  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) { 
+		std::cout << "ran off map\n";
+		die();
+	}
+	
+	/* GRAVITY --> ORBIT state change (change when ship perpendicular to planet)*/
+	if (_ship->getState() == Ship::GRAVITY) {
+		assert(_ship->getOrbitPlanet() != NULL);
+		sf::Vector2f shipToPlanet = _ship->getOrbitPlanet()->getPosition() - _ship->getPosition();
+		if (utils::dot(shipToPlanet, _ship->getSpd()) <= 0) {
+			_ship->setState(Ship::ORBIT);
+			_setAngularVelocities(_ship->getOrbitPlanet());
+		}
+	}
+	
 	
 	/* movement */
 	/*Planet* planet = _ship->getOrbitPlanet();
@@ -143,6 +156,7 @@ void Control::update(float timeInterval) {
 		
 		// planet
 		if (_ship->intersects(planet)) {
+			std::cout << "ship hit planet\n";
       _gsound.crash();
 			die();
 		}
@@ -233,20 +247,20 @@ void Control::update(float timeInterval) {
 			
 			/* destination intersect (point-circle)*/
 			if (lasso->getState() != Lasso::CAUGHT &&
-				withinBox(lasso->getPosition(), dest.x - r, dest.x + r, dest.y - r, dest.y + r)) {
-				if (norm_sqrd(lasso->getPosition() - dest) < r*r) {
+				utils::withinBox(lasso->getPosition(), dest.x - r, dest.x + r, dest.y - r, dest.y + r)) {
+				if (utils::norm_sqrd(lasso->getPosition() - dest) < r*r) {
 					lasso->setState(Lasso::MISSED);
 				}
 			}
 		}
 		else if (lasso->getState() == Lasso::CAUGHT || lasso->getState() == Lasso::MISSED) {			
 			sf::Vector2f dir = _ship->getPosition() - lasso->getPosition(); // not normalized
-			float d_sqrd = norm_sqrd(dir);
+			float d_sqrd = utils::norm_sqrd(dir);
 			if (d_sqrd < _ship->getRadius() * _ship->getRadius()) {
 				lasso->setState(Lasso::HELD);
 				lasso->draw = false;
 			}
-			lasso->setSpd(dir / norm(dir) * lasso->getLassoSpd());
+			lasso->setSpd(dir / utils::norm(dir) * lasso->getLassoSpd());
 		}
   }
 }
@@ -304,16 +318,17 @@ void Control::_removeModel(CircleModel* cm) {
 
 void Control::_setAngularVelocities(Planet* planet) {
 	// initial angular velocity
-	_ship->setState(Ship::ORBIT);
-	float theta = sqrt(norm_sqrd(_ship->getSpd()) / norm_sqrd(planet->getPosition() - _ship->getPosition()));
-	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+	//_ship->setState(Ship::ORBIT);
+	float theta = sqrt(utils::norm_sqrd(_ship->getSpd()) / utils::norm_sqrd(planet->getPosition() - _ship->getPosition()));
+	if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	std::cout << "angular velocity set to " << theta << std::endl;
 	_ship->setAngularVelocity(theta);
 	
 	// base Angular Velocity
-	theta = 100 / norm(planet->getPosition() - _ship->getPosition());
+	/*theta = 100 / norm(planet->getPosition() - _ship->getPosition());
 	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setBaseAngVelocity(theta);
+	*/
 }
 
 void Control::setHUD(HUD* hud){
@@ -322,7 +337,6 @@ void Control::setHUD(HUD* hud){
 
 void Control::die(){
 	_hud->setlife(_hud->getlife() - 1);
-	std::cout << _hud->getlife();
 	if (_hud->getlife() < 0){
 		_die = 2;
 	}
