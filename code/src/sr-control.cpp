@@ -57,20 +57,15 @@ void Control::update(float timeInterval) {
 	/* begin ship movement */
 	
 	/* Ship States 
+	0 - REST
 	1 - not in a gravity field: state = FLY, _orbiting = 0
 	2 - in a gravity field, not yet orbiting: state = GRAVITY, _orbiting = planet*
 	3 - in orbit: state = ORBIT, _orbiting = planet*
 	4 - has burst out of orbit, still in gravity field: state = BURST, _orbiting = planet*
-	5 - not in a gravity field: state = FLY, _orbiting = 0
+  */
 	
-	State Transitions:
-	2 --> 3: at point when ship orientation and line to planet are perpendicular.
-	*/
-	
-  //_ship->decelerate();
-
-	
-	
+  //_ship->decelerate(); disabled for now, replace with brake functionality?
+		
 	sf::Vector2f pos = _ship->updatePosition(timeInterval);
 	_ship->updateOrientation();
 	
@@ -90,56 +85,32 @@ void Control::update(float timeInterval) {
 		}
 	}
 	
-	
-	/* movement */
-	/*Planet* planet = _ship->getOrbitPlanet();
-	if (_ship->getState() == Ship::GRAVITY && 
-	  linedotdistance(_ship->getPosition(), _ship->getPosition()+_ship->getSpd(), _ship->getOrbitPlanet()->getPosition()) > _ship->getRadius()+planet->getRadius()) {
-			_setAngularVelocities(planet);
-	}
-
-	if (_ship->getState() == Ship::ORBIT) {
-	  /*_ship->setSpd((planet->getPosition() - _ship->getPosition() + rotate(_ship->getPosition() 
-			- planet->getPosition(), timeInterval * _ship->getAngularVelocity())) / timeInterval);
-		_ship->setSpd(_ship->getSpd() + planet->getVelocity());
-		_ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
-		*/
-	/*	sf::Vector2f planetToShip = _ship->getPosition() - planet->getPosition();
-		planetToShip = planetToShip / norm(planetToShip) * planet->getGravityCircle().getRadius();
-		float dTheta = 2 * M_PI * timeInterval / _ship->_period;
-		if (_ship->getAngularVelocity() < 0) {
-			dTheta *= -1;
+	// BURST --> FLY state change
+	if (_ship->getState() == Ship::BURST) {
+		assert(_ship->getOrbitPlanet() != NULL);
+		sf::CircleShape gravity = _ship->getOrbitPlanet()->getGravityCircle();
+		if (!_ship->intersects(&gravity)) {
+			_ship->setState(Ship::FLY);
+			_ship->setOrbit(0);
 		}
-		sf::Vector2f newPos = planet->getPosition() + rotate(planetToShip, dTheta);
-		_ship->setSpd((newPos - _ship->getPosition()) / timeInterval);
-		_ship->setPosition(planet->getPosition() + rotate(planetToShip, dTheta));
-		
 	}
 	
-  else { // normal movement
-    _ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
-	}
-		
-	*/	
 	/* collisions */
+	//Cow
 	for (int j=0; j < _cows.size(); j++) {
 	  Cow* cow = _cows[j];
 		if (_ship->intersects(cow)) {
 			_removeModel(cow);
 			_hud->setcow(_hud->getcow()+1);
-			//cow->draw = false; //TODO: better hit cow status
       _gsound.collect();
 		}
 	}
-  
-  
-	
+	//Ranch
 	if (_ship->intersects(_ranch)) {
     _gsound.complete();
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
   }
-		
 	//Asteroid
 	for (int j = 0; j<_asteroids.size();j++){
     Asteroid* asteroid = _asteroids[j];
@@ -150,39 +121,21 @@ void Control::update(float timeInterval) {
     }
   }
 	
-	// check planet and gravity intersections
 	for (int j=0; j < _planets.size(); j++) {
 		Planet* planet = _planets[j];
-		
-		// planet
+		//Planet
 		if (_ship->intersects(planet)) {
 			std::cout << "ship hit planet\n";
       _gsound.crash();
 			die();
 		}
-		
-		// Enter gravity field
+		//Gravity
     sf::CircleShape gravity = planet->getGravityCircle();
     if (_ship->getState() == Ship::FLY && _ship->intersects(&gravity)) {
-			std::cout << "entering gravity field with radius " << gravity.getRadius() << std::endl;
 			_ship->setOrbit(planet);
 		  _ship->setState(Ship::GRAVITY);
 			_ship->setRelPos(_ship->getPosition() - planet->getPosition());
     }
-		
-		// Exit gravity field
-		else if (_ship->getState() == Ship::BURST) {
-			if (!_ship->intersects(&gravity)) {
-				_ship->setState(Ship::FLY);
-				_ship->setOrbit(0);
-			}
-		}
-		
-		// This code should not run: it is the case that we entered and exited a field w/o triggering orbiting
-		else if (_ship->getState() == Ship::GRAVITY && !_ship->intersects(&gravity)) {
-			std::cout << "UNEXPECTED: exiting gravity field w/o orbiting!\n";
-			//_setAngularVelocities(planet);
-		}
 	}
 	/* end ship movement */
 		
@@ -223,8 +176,6 @@ void Control::update(float timeInterval) {
     }
   }
 	
-
-	
 	/* lasso */
 	if (_ship->getLasso()->getState() != Lasso::HELD) {
 		Lasso* lasso = _ship->getLasso();
@@ -238,7 +189,6 @@ void Control::update(float timeInterval) {
 			  Cow* cow = _cows[j];
 				if (lasso->intersects(cow)) {
           _gsound.collect();
-					//cow->draw = false; //TODO: better hit cow status
 					_removeModel(cow);
 					_hud->setcow(_hud->getcow()+1);
 					lasso->setState(Lasso::CAUGHT);
@@ -270,12 +220,12 @@ void Control::handleEvent(sf::Event event){
   	_ship->shoot();
   }
 
-  if (event.key.code == sf::Keyboard::Up){ // Fire the rocket
+  if (event.key.code == sf::Keyboard::Up){
       if (_ship -> getState() == Ship::REST){
         _ship -> adjustSpd(100);
         _ship -> setState(Ship::FLY);
       }
-      else if (_ship -> getState() == Ship::FLY){// TODO: Need a counter
+      else if (_ship -> getState() == Ship::FLY){
         if (_hud -> getburst() > 0){
           _ship -> adjustSpd(300);
           _hud -> setburst(_hud->getburst()-1);
@@ -318,13 +268,11 @@ void Control::_removeModel(CircleModel* cm) {
 
 void Control::_setAngularVelocities(Planet* planet) {
 	// initial angular velocity
-	//_ship->setState(Ship::ORBIT);
 	float theta = sqrt(utils::norm_sqrd(_ship->getSpd()) / utils::norm_sqrd(planet->getPosition() - _ship->getPosition()));
 	if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
-	std::cout << "angular velocity set to " << theta << std::endl;
 	_ship->setAngularVelocity(theta);
 	
-	// base Angular Velocity
+	// base Angular Velocity - originally the initial velocity decayed to this. DISABLED for now
 	/*theta = 100 / norm(planet->getPosition() - _ship->getPosition());
 	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setBaseAngVelocity(theta);

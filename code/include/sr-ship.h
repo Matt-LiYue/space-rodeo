@@ -19,9 +19,8 @@ class Ship : public CircleModel{
       REST,
       FLY,
 			GRAVITY,
-			ORBIT_GRAVITY,
-      BURST,
-      ORBIT } ShipState;
+      ORBIT,
+		  BURST } ShipState;
 			
     Ship(sf::Vector2f, int, int);
 		
