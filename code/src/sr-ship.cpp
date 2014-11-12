@@ -19,6 +19,26 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   _period = 3;
 }
 
+sf::Vector2f Ship::updatePosition(float deltaTime) {
+	sf::Vector2f planPos;
+	switch (_shipState) {
+		case REST: break;		
+		case FLY:
+		  move(deltaTime * _spd);
+			break;
+		case GRAVITY:
+		  planPos = _orbiting->getPosition();
+		  setPosition(_relPos + planPos);
+			break;
+	}
+	return getPosition();
+}
+
+void Ship::setRelPos(sf::Vector2f relPos) {
+	assert(_orbiting);
+	_relPos = relPos;
+}
+
 int Ship::getburst(){
   return _burst;
 }
@@ -100,3 +120,10 @@ void Ship::decelerate(){
 		_angularVelocity *= .998f;
 	}
 }
+
+/*sf::Vector2f Ship::_getRelPos() {
+	assert(_orbiting);
+	return getPosition() - _orbiting->getPosition(); // planet --> ship
+}
+*/
+

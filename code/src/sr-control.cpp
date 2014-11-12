@@ -67,16 +67,19 @@ void Control::update(float timeInterval) {
 	2 --> 3: at point when ship orientation and line to planet are perpendicular.
 	*/
 	
-  _ship->decelerate();
+  //_ship->decelerate();
 
 	
 	
+	sf::Vector2f pos = _ship->updatePosition(timeInterval);
+	_ship->updateOrientation();
+	
+	
 	/* map exit */
-	sf::Vector2f pos = _ship->getPosition();
-  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) {std::cout << "screen exit\n"; die();}
+  if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) { die(); }
 	
 	/* movement */
-	Planet* planet = _ship->getOrbitPlanet();
+	/*Planet* planet = _ship->getOrbitPlanet();
 	if (_ship->getState() == Ship::GRAVITY && 
 	  linedotdistance(_ship->getPosition(), _ship->getPosition()+_ship->getSpd(), _ship->getOrbitPlanet()->getPosition()) > _ship->getRadius()+planet->getRadius()) {
 			_setAngularVelocities(planet);
@@ -88,7 +91,7 @@ void Control::update(float timeInterval) {
 		_ship->setSpd(_ship->getSpd() + planet->getVelocity());
 		_ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
 		*/
-		sf::Vector2f planetToShip = _ship->getPosition() - planet->getPosition();
+	/*	sf::Vector2f planetToShip = _ship->getPosition() - planet->getPosition();
 		planetToShip = planetToShip / norm(planetToShip) * planet->getGravityCircle().getRadius();
 		float dTheta = 2 * M_PI * timeInterval / _ship->_period;
 		if (_ship->getAngularVelocity() < 0) {
@@ -99,10 +102,12 @@ void Control::update(float timeInterval) {
 		_ship->setPosition(planet->getPosition() + rotate(planetToShip, dTheta));
 		
 	}
+	
   else { // normal movement
     _ship->setPosition(_ship->getPosition() + _ship->getSpd() * timeInterval);
 	}
 		
+	*/	
 	/* collisions */
 	for (int j=0; j < _cows.size(); j++) {
 	  Cow* cow = _cows[j];
@@ -131,38 +136,39 @@ void Control::update(float timeInterval) {
       die();
     }
   }
-	// planet, gravity intersections
+	
+	// check planet and gravity intersections
 	for (int j=0; j < _planets.size(); j++) {
 		Planet* planet = _planets[j];
 		
 		// planet
 		if (_ship->intersects(planet)) {
       _gsound.crash();
-			std::cout << "ship hit planet\n";
 			die();
 		}
 		
-		// gravity field
+		// Enter gravity field
     sf::CircleShape gravity = planet->getGravityCircle();
     if (_ship->getState() == Ship::FLY && _ship->intersects(&gravity)) {
 			std::cout << "entering gravity field with radius " << gravity.getRadius() << std::endl;
 			_ship->setOrbit(planet);
-			/*if (dynamic_cast<OrbitPlanet*>(planet) != 0) 
-				_ship->setState(Ship::ORBIT_GRAVITY);
-			else*/
-		    _ship->setState(Ship::GRAVITY);
+		  _ship->setState(Ship::GRAVITY);
+			_ship->setRelPos(_ship->getPosition() - planet->getPosition());
     }
+		
+		// Exit gravity field
 		else if (_ship->getState() == Ship::BURST) {
 			if (!_ship->intersects(&gravity)) {
 				_ship->setState(Ship::FLY);
 				_ship->setOrbit(0);
 			}
 		}
+		
+		// This code should not run: it is the case that we entered and exited a field w/o triggering orbiting
 		else if (_ship->getState() == Ship::GRAVITY && !_ship->intersects(&gravity)) {
-			std::cout << "exiting gravity field\n";
+			std::cout << "UNEXPECTED: exiting gravity field w/o orbiting!\n";
 			//_setAngularVelocities(planet);
 		}
-	_ship->updateOrientation();
 	}
 	/* end ship movement */
 		

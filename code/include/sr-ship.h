@@ -8,6 +8,8 @@
 #include "sr-lasso.h"
 #include "sr-planet.h"
 #include <iostream>
+#include <assert.h>
+
 
 class Ship : public CircleModel{
 	
@@ -33,6 +35,8 @@ class Ship : public CircleModel{
 		sf::Vector2f getLassoDest();
 		
 		/* mutators */
+		sf::Vector2f updatePosition(float deltaTime);
+		void setRelPos(sf::Vector2f); // sets relative position to planet
     void setState(ShipState);
     void setSpd(sf::Vector2f);
     void setOrbit(Planet*);
@@ -57,6 +61,9 @@ class Ship : public CircleModel{
     sf::Texture* _textpointer;
 		Lasso* _lasso;
 		sf::Vector2f _lassoDest;
+		sf::Vector2f _relPos;
+		
+		//sf::Vector2f _getRelPos();     // gets position relative to planet
 };
 
 #endif

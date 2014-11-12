@@ -8,7 +8,6 @@
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){//TODO: Read from a txt file to place the elements in map
   _currentlevel = level;
-  std::cout << "LEVEL: " << _currentlevel;
   _hud.initialize(30, sf::Vector2f(650,50),3,3,0);
   parse();
   
@@ -97,11 +96,11 @@ void Models::parse(){
     }
     
     //std::cout << "x,y: " << x << "," << y << "\n";
-    switch (c){
+    /*switch (c){
       case 'S':
         width = x * 100 - 50;
         height = y * 100;
-        _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
+        _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 30, 5));
         _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
         break;
         
@@ -114,7 +113,7 @@ void Models::parse(){
       case 'P':
         width = x * 100 - 50;
         height = y * 100;
-        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),70,100));
+        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,100));
         break;
         
       case 'R':
@@ -142,9 +141,20 @@ void Models::parse(){
         
       default:
         break;
-    }
+    }*/
+    
+		
     
   }
+
+  width = x * 100 - 50;
+  height = y * 100;
+  _circlemodels.push_back(new Ship(sf::Vector2f(80,80), 15, 5));
+  _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
+  _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(300,300),60,60,100,3,20,50));
+  _circlemodels.push_back(new SpaceRanch(sf::Vector2f(600,600),40));
+	
+	
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
     sf::Vector2f center = _circlemodels[i]->getPosition();
