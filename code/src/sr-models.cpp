@@ -100,7 +100,7 @@ void Models::parse(){
       case 'S':
         width = x * 100 - 50;
         height = y * 100;
-        _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 30, 5));
+        _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
         _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
         break;
         
@@ -113,7 +113,7 @@ void Models::parse(){
       case 'P':
         width = x * 100 - 50;
         height = y * 100;
-        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,100));
+        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,50));
         break;
         
       case 'R':

@@ -10,7 +10,8 @@ class CircleModel : public sf::CircleShape {
   public:
     bool _movable;
 		bool draw;
-    bool intersects(sf::CircleShape *other);
+    bool intersects(sf::CircleShape *);
+    bool intersects(sf::CircleShape *,float);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
 		Animation* getAnimation();

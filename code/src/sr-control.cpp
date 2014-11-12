@@ -99,14 +99,14 @@ void Control::update(float timeInterval) {
 	//Cow
 	for (int j=0; j < _cows.size(); j++) {
 	  Cow* cow = _cows[j];
-		if (_ship->intersects(cow)) {
+		if (_ship->intersects(cow, cow->getRadius())) {
 			_removeModel(cow);
 			_hud->setcow(_hud->getcow()+1);
       _gsound.collect();
 		}
 	}
 	//Ranch
-	if (_ship->intersects(_ranch)) {
+	if (_ship->intersects(_ranch,_ranch->getRadius())) {
     _gsound.complete();
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
@@ -141,7 +141,7 @@ void Control::update(float timeInterval) {
 		
   //Wormhole
   for (int j=0; j < _wormholes.size();j++){ //Wormhole implementation
-    if (_ship->intersects(_wormholes[j])){ //Run into Wormhole
+    if (_ship->intersects(_wormholes[j], _wormholes[j]->getRadius())){ //Run into Wormhole
       if (_wormholes[j]->getOpen() == true){
         _wormholes[j]->setOpen(false);
         int target;
@@ -187,7 +187,7 @@ void Control::update(float timeInterval) {
 			/* cow intersect */
 			for (int j=0; j < _cows.size(); j++) {
 			  Cow* cow = _cows[j];
-				if (lasso->intersects(cow)) {
+				if (lasso->intersects(cow, cow->getRadius())) {
           _gsound.collect();
 					_removeModel(cow);
 					_hud->setcow(_hud->getcow()+1);
