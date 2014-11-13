@@ -2,21 +2,21 @@
 
 //Ship class
 Ship::Ship(sf::Vector2f pos, int radius, int burst){
-  _texture.loadFromFile("rock.png");
+	_texture.loadFromFile("rock.png");
 	hasAnimation = false;
-  _textpointer = &_texture;
-  setTexture(_textpointer);
-  _burst = burst;
-  _lasso = new Lasso(20,100);
-  _movable = true;
+	_textpointer = &_texture;
+	setTexture(_textpointer);
+	_burst = burst;
+	_lasso = new Lasso(20,100);
+	_movable = true;
 	draw = true;
-  _shipState = Ship::REST;
+	_shipState = Ship::REST;
 	_orbiting = 0;
-  setPosition(pos);
-  setRadius(radius);
-  setOrigin(radius,radius);
-  rotate(90);	
-  _period = 3;
+	setPosition(pos);
+	setRadius(radius);
+	setOrigin(radius,radius);
+	rotate(90);	
+	_period = 3;
 }
 
 sf::Vector2f Ship::updatePosition(float deltaTime) {
@@ -24,22 +24,22 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
 	switch (_shipState) {
 		case REST: break;		
 		case FLY:
-		  move(deltaTime * _spd);
-			break;
+		move(deltaTime * _spd);
+		break;
 		case GRAVITY:
-		  planPos = _orbiting->getPosition();
-			_relPos += deltaTime * _spd;
-		  setPosition(_relPos + planPos);
-			break;
+		planPos = _orbiting->getPosition();
+		_relPos += deltaTime * _spd;
+		setPosition(_relPos + planPos);
+		break;
 		case ORBIT:
-  		planPos = _orbiting->getPosition();
-		  setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
-		  _relPos += deltaTime * _spd;			
-			setPosition(_relPos + planPos);
-			break;
+		planPos = _orbiting->getPosition();
+		setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
+		_relPos += deltaTime * _spd;			
+		setPosition(_relPos + planPos);
+		break;
 		case BURST:
-		  move(deltaTime * _spd);
-			break;	
+		move(deltaTime * _spd);
+		break;	
 	}
 	return getPosition();
 }
@@ -50,20 +50,20 @@ void Ship::setRelPos(sf::Vector2f relPos) {
 }
 
 int Ship::getburst(){
-  return _burst;
+	return _burst;
 }
 
 Ship::ShipState Ship::getState(){
-  return _shipState;
+	return _shipState;
 }
 
 void Ship::setState(Ship::ShipState state){
 	std::cout << "Ship state " << state << std::endl;
-  _shipState = state;
+	_shipState = state;
 }
 
 void Ship::adjustSpd(int spd){
-  setSpd(sf::Vector2f(spd * cos(getDir()*M_PI/180), spd * sin(getDir()*M_PI/180)));
+	setSpd(sf::Vector2f(spd * cos(getDir()*M_PI/180), spd * sin(getDir()*M_PI/180)));
 }
 
 void Ship::setOrbit(Planet* planet) {
@@ -73,7 +73,7 @@ void Ship::setOrbit(Planet* planet) {
 float Ship::getDir() { return getRotation() - 90; }
 
 Planet* Ship::getOrbitPlanet() {
-  return _orbiting;	
+	return _orbiting;	
 }
 
 void Ship::setAngularVelocity(float av) {
@@ -86,14 +86,14 @@ float Ship::getAngularVelocity() {
 }
 
 void Ship::setSpd(sf::Vector2f spd){
-  _spd = spd;
+	_spd = spd;
 }
 
 void Ship::updateOrientation(){
 	if (_shipState != REST) {
 		float degrees = 180 / M_PI * atan(_spd.y/_spd.x);
 		if (fabs(_spd.x) < FLT_EPSILON) degrees = 0;
-	  if (_spd.x < 0) degrees += -180;
+		if (_spd.x < 0) degrees += -180;
 		setRotation(degrees + 90);
 	}
 }
@@ -120,12 +120,12 @@ void Ship::shoot() {
 }
 
 void Ship::decelerate(){
-  if (_shipState == FLY && utils::norm_sqrd(getSpd()) > 100*100){
-    setSpd(getSpd()*0.998f);
-    if (utils::norm_sqrd(getSpd()) <= 100*100){
-      adjustSpd(100);
-    }
-  }
+	if (_shipState == FLY && utils::norm_sqrd(getSpd()) > 100*100){
+		setSpd(getSpd()*0.998f);
+		if (utils::norm_sqrd(getSpd()) <= 100*100){
+			adjustSpd(100);
+		}
+	}
 	/*else if (_shipState == ORBIT && _angularVelocity > _baseAngVelocity) {
 		_angularVelocity *= .998f;
 	}

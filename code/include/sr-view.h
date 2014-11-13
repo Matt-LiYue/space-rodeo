@@ -5,7 +5,14 @@
 
 class View{
   public:
+    typedef enum {
+      START,
+      EXIT,
+      NEXTLEVEL,
+      RETRY,
+      RESTART,} transtate;
     View();
+    int transitionscreen(int,int,bool);
     void drawAll(std::vector<CircleModel*>&);
     void setController(Control&);
     bool isRun();

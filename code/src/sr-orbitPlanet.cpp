@@ -2,14 +2,13 @@
 #include <iostream>
 
 OrbitPlanet::OrbitPlanet(sf::Vector2f center, float xRad, float yRad, int numPoints, float period, int planetRad, int gravity) : 
-	Planet(sf::Vector2f(center.x + xRad, center.y), planetRad, gravity) {
-		
-		std::cout << "creating orbit planet\n";
+Planet(sf::Vector2f(center.x + xRad, center.y), planetRad, gravity) {
+	
+	std::cout << "creating orbit planet\n";
 	_ellipse = new Ellipse(xRad, yRad, numPoints);
 	_ellipse->setOrigin(xRad, yRad);
 	_ellipse->setPosition(center);
   //_star = new Star(center, min(xRad,yRad)/2);
-
 	_curTheta = 0;
 	_prevTheta = 0;
 	_dTime = 0;
@@ -32,7 +31,7 @@ void OrbitPlanet::updatePosition(float dTime) {
 	sf::Vector2f oldRelPos = getPosition() - _ellipse->getPosition();
 	
 	float theta = atan2(oldRelPos.y, oldRelPos.x) + dTheta;
-  sf::Vector2f newRelPos = sf::Vector2f(a * cos(theta), b * sin(theta));
+	sf::Vector2f newRelPos = sf::Vector2f(a * cos(theta), b * sin(theta));
 	//std::cout << "dTheta: " << dTheta << std::endl;
 	//std::cout << "theta: " << theta << std::endl;
 	//std::cout << "relPos: " << newRelPos.x << "," << newRelPos.y << std::endl;
