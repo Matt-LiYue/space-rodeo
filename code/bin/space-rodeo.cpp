@@ -12,13 +12,11 @@ int main(int argc, char** argv){
 	sf::Clock _mainclock;
 	int totallevel = 4;
 	bool die = false;
-	for (int i = 0 ; i <= totallevel; i++){//i<=totallevel is just for displaying game finished screen
-		if (myView.isRun()){
-			i += myView.transitionscreen(i,totallevel,die);
-			die = false;
+	bool insufcow = false;
+	for (int i = 0 ; i < totallevel; i++){//i<=totallevel is just for displaying game finished screen
+		if (i == 0 && myView.isRun()){// Start Screen
+			i += myView.transitionscreen(i,totallevel,die,insufcow);
 		}
-		if (i>= totallevel)
-			exit(0);
 		Models myModels(i);
 		Control myControl;
 		std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
@@ -57,6 +55,15 @@ int main(int argc, char** argv){
 	    }
 
 	}
+	if (myView.isRun()){
+		if (myModels.getcowno() != myModels.getHUD().getcow())
+			insufcow = true;
+		i+= myView.transitionscreen(i+1,totallevel,die,insufcow);
+		die = false;
+		insufcow = false;
+	}
+	if (i>= totallevel)
+		exit(0);
 }
 return 0;
 }

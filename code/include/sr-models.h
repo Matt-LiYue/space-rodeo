@@ -19,11 +19,11 @@ class Models{
     HUD& getHUD();
     void parse();
     void restart();
-  
+    int getcowno();
   private:
-   std::vector<CircleModel*> _circlemodels;
+    std::vector<CircleModel*> _circlemodels;
     HUD _hud;
-    int _totallevel;
+    int _totalcow;
     int _currentlevel;
   
 };

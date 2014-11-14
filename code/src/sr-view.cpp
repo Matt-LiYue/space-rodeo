@@ -63,7 +63,7 @@ bool View::isRun(){
     return false;
 }
 
-int View::transitionscreen(int i, int totallevel, bool die){
+int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   sf::Event event;
   sf::CircleShape icon(30);
   sf::Texture texture;
@@ -84,7 +84,12 @@ int View::transitionscreen(int i, int totallevel, bool die){
   int result;
     //START SCREEN
   if (die){
-    text2.setString("You failed this level!");
+    text2.setString("You die!\nLevel failed");
+    state = RETRY;
+    text.setString("RETRY\n\nEXIT GAME");
+  }
+  else if (insufcow){
+    text2.setString("Capture all cows to finish the level!");
     state = RETRY;
     text.setString("RETRY\n\nEXIT GAME");
   }
@@ -97,7 +102,7 @@ int View::transitionscreen(int i, int totallevel, bool die){
     else if (i == totallevel){
       text2.setString("Congratulations!\n You complete this game!");
       state = RESTART;
-      text.setString("RESTART GAME\n\nEXIT GAME");
+      text.setString("MAIN SCEME\n\nEXIT GAME");
     }
     else {
       text2.setString("You finished this level!");

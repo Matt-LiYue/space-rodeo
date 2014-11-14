@@ -65,11 +65,16 @@ HUD& Models::getHUD(){
   return _hud;
 }
 
+int Models::getcowno(){
+  return _totalcow;
+}
+
 void Models::parse(){
   char c;
   int x = 0;
   int y = 1;
   int width, height;
+  _totalcow = 0;
   std::string currentlevel;
   std::stringstream out;
   out << _currentlevel;
@@ -103,19 +108,20 @@ void Models::parse(){
       _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
       _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
       break;
-      
+
       case 'C':
       width = x * 100 - 50;
       height = y * 100;
       _circlemodels.push_back(new Cow(sf::Vector2f(width,height),20));
+      _totalcow++;
       break;
-      
+
       case 'P':
       width = x * 100 - 50;
       height = y * 100;
       _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,50));
       break;
-      
+
       case 'R':
       width = x * 100 - 50;
       height = y * 100;
@@ -133,20 +139,20 @@ void Models::parse(){
       height = y * 100 + 100;
       _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),30,sf::Vector2f(-80,80)));
       break;
-      
+
       case 'O':
       width = x * 100 - 50;
       height = y * 100;
       _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),60,60,100,3,20,50));
-      
+
       default:
       break;
     }
     
-    
+
     
   }	
-  
+
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
     sf::Vector2f center = _circlemodels[i]->getPosition();
