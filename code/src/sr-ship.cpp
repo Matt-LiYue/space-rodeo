@@ -2,25 +2,54 @@
 
 //Ship class
 Ship::Ship(sf::Vector2f pos, int radius, int burst){
-  _texture.loadFromFile("rock.png");
-	hasAnimation = false;
-  _textpointer = &_texture;
-  setTexture(_textpointer);
-  _burst = burst;
+	// tweakable params
   _lasso = new Lasso(20,100);
+	_lowSpd = 10;
+	_baseSpd = 100;
+	_boostSpd = 300;
+	_brakeMagnitude = 300;
+	
+	// private vars
+	hasAnimation = false;
   _movable = true;
-	draw = true;
-  _shipState = Ship::REST;
 	_orbiting = 0;
+  _burst = burst;
+  _shipState = Ship::REST;
+  _texture.loadFromFile("rock.png");
+  _textpointer = &_texture;
+	_accel = sf::Vector2f(0,0);
+	
+	draw = true;
+  setTexture(_textpointer);
   setPosition(pos);
   setRadius(radius);
   setOrigin(radius,radius);
   rotate(90);	
-  _period = 3;
 }
 
 sf::Vector2f Ship::updatePosition(float deltaTime) {
 	sf::Vector2f planPos;
+	
+	// update velocity
+	sf::Vector2f newVelocity = _spd + _accel * deltaTime;
+	if (utils::norm(newVelocity) > _baseSpd && utils::norm(_spd) <= _baseSpd) { // don't accel past base spd
+	  _spd = _baseSpd * _spd / utils::norm(_spd);
+		_accel *= 0.f;
+	}
+	else {
+		sf::Vector2f lowVelocity = _lowSpd * _spd / utils::norm(_spd);
+		if (utils::dot(lowVelocity, newVelocity) < _lowSpd * _lowSpd)
+			_spd = lowVelocity;
+		else
+			_spd = newVelocity;
+  }
+	
+	if (_shipState == ORBIT) {
+	  float orbitRadius = utils::norm(getPosition() - _orbiting->getPosition());
+	  _angularVelocity = utils::norm(_spd) / orbitRadius;
+  }
+
+  // update position
 	switch (_shipState) {
 		case REST: break;		
 		case FLY:
@@ -42,6 +71,18 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
 			break;	
 	}
 	return getPosition();
+}
+
+float Ship::getBaseSpd() {
+	return _baseSpd;
+}
+
+float Ship::getLowSpd() {
+	return _lowSpd;
+}
+
+float Ship::getBoostSpd() {
+	return _boostSpd;
 }
 
 void Ship::setRelPos(sf::Vector2f relPos) {
@@ -98,13 +139,23 @@ void Ship::updateOrientation(){
 	}
 }
 
-void Ship::brake() {
-
+void Ship::brake(bool on) {
+	if (utils::norm(_spd) == 0) return; // avoid divide by 0
+	if (on) {
+	  _accel = -1.0f * _spd * _brakeMagnitude / utils::norm(_spd);
+		std::cout << "braking, accel set to " << utils::norm(_accel) << std::endl;
+	}
+	else {
+		_accel = _spd * _brakeMagnitude / utils::norm(_spd);
+		std::cout << "brake off, accel set to " << utils::norm(_accel) << std::endl;
+	}
 }
 
+/* deprecated
 void Ship::setBaseAngVelocity(float theta) {
 	_baseAngVelocity = theta;
 }
+*/
 
 Lasso* Ship::getLasso() { return _lasso; }
 sf::Vector2f Ship::getLassoDest() {return _lassoDest; }
@@ -115,15 +166,15 @@ void Ship::shoot() {
 	_lasso->setSpd(dir * _lasso->getLassoSpd());
 	_lasso->setPosition(getPosition() + dir * offset);
 	_lassoDest = sf::Vector2f(_lasso->getPosition() + dir * _lasso->getLength());
-	_lasso->draw = true;
 	_lasso->setState(Lasso::SHOT);
+	_lasso->draw = true;
 }
 
 void Ship::decelerate(){
-  if (_shipState == FLY && utils::norm_sqrd(getSpd()) > 100*100){
+  if (_shipState == FLY && utils::norm_sqrd(getSpd()) > _baseSpd*_baseSpd){
     setSpd(getSpd()*0.998f);
-    if (utils::norm_sqrd(getSpd()) <= 100*100){
-      adjustSpd(100);
+    if (utils::norm_sqrd(getSpd()) <= _baseSpd*_baseSpd){
+      adjustSpd(_baseSpd);
     }
   }
 	/*else if (_shipState == ORBIT && _angularVelocity > _baseAngVelocity) {

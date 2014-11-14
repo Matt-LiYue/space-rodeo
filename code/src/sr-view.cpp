@@ -32,12 +32,19 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
   _view.draw(_bgsprite);
   while (_view.pollEvent(_event)){//TODO: Use Control Class to handle the event
     switch (_event.type){
+			
       case sf::Event::Closed:
         _view.close();
         break;
+				
       case sf::Event::KeyPressed:
         _controller->handleEvent(_event);
-	break;
+        break;
+				
+      case sf::Event::KeyReleased:
+        _controller->handleEvent(_event);
+        break;
+				
       default:
         break;
 				

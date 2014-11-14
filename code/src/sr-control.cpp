@@ -65,7 +65,6 @@ void Control::update(float timeInterval) {
   */
 	
   //_ship->decelerate(); disabled for now, replace with brake functionality?
-		
 	sf::Vector2f pos = _ship->updatePosition(timeInterval);
 	_ship->updateOrientation();
 	
@@ -216,40 +215,51 @@ void Control::update(float timeInterval) {
 }
 	
 void Control::handleEvent(sf::Event event){
-  if (event.key.code == sf::Keyboard::Space) {
-  	_ship->shoot();
-  }
+	if (event.type == sf::Event::KeyPressed) {
+	  if (event.key.code == sf::Keyboard::Space) {
+	  	_ship->shoot();
+	  }
 
-  if (event.key.code == sf::Keyboard::Up){
-      if (_ship -> getState() == Ship::REST){
-        _ship -> adjustSpd(100);
-        _ship -> setState(Ship::FLY);
-      }
-      else if (_ship -> getState() == Ship::FLY){
-        if (_hud -> getburst() > 0){
-          _ship -> adjustSpd(300);
-          _hud -> setburst(_hud->getburst()-1);
-      }
-      }
-      else if (_ship -> getState() == Ship::ORBIT) {
-      	if (_hud -> getburst() > 0){
-        	_ship -> adjustSpd(300);
-	      	_ship -> setState(Ship::BURST);
-	      	_hud -> setburst(_hud->getburst()-1);
+	  else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
+	      if (_ship -> getState() == Ship::REST){
+	        _ship -> adjustSpd(_ship->getBaseSpd());
+	        _ship -> setState(Ship::FLY);
 	      }
-      }
-    _gsound.burst();
+	      else if (_ship -> getState() == Ship::FLY){
+	        if (_hud -> getburst() > 0){
+	          _ship -> adjustSpd(_ship->getBoostSpd());
+	          _hud -> setburst(_hud->getburst()-1);
+	        }
+	      }
+	      else if (_ship -> getState() == Ship::ORBIT) {
+	      	if (_hud -> getburst() > 0){
+	        	_ship -> adjustSpd(_ship->getBoostSpd());
+		      	_ship -> setState(Ship::BURST);
+		      	_hud -> setburst(_hud->getburst()-1);
+		      }
+	      }
+	    _gsound.burst();
+	  }
+	  else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A){
+	    if (_ship -> getState() == Ship::REST){
+	      _ship -> rotate(-3); 
+	    }
+	  }
+	  else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D){
+	    if (_ship -> getState() == Ship::REST){
+	      _ship -> rotate(3);
+	    }
+	  } 
+		else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
+			_ship->brake(true);	
+		}
   }
-  if (event.key.code == sf::Keyboard::Left){
-    if (_ship -> getState() == Ship::REST){
-      _ship -> rotate(-3); 
-    }
-  }
-  if (event.key.code == sf::Keyboard::Right){
-    if (_ship -> getState() == Ship::REST){
-      _ship -> rotate(3);
-    }
-  } 
+	
+  else if (event.type == sf::Event::KeyReleased) {
+		if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
+		  _ship->brake(false);
+	  }
+	}
 }
 
 void Control::_removeModel(CircleModel* cm) {
@@ -272,9 +282,9 @@ void Control::_setAngularVelocities(Planet* planet) {
 	if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setAngularVelocity(theta);
 	
-	// base Angular Velocity - originally the initial velocity decayed to this. DISABLED for now
-	/*theta = 100 / norm(planet->getPosition() - _ship->getPosition());
-	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+	// base Angular Velocity -  the initial velocity decayed to this.
+	/*theta = _ship->getBaseSpd() / utils::norm(planet->getPosition() - _ship->getPosition());
+	if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setBaseAngVelocity(theta);
 	*/
 }

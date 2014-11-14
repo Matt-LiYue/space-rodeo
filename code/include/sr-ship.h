@@ -32,6 +32,9 @@ class Ship : public CircleModel{
     float getAngularVelocity();
 		Lasso* getLasso();
 		sf::Vector2f getLassoDest();
+		float getLowSpd();
+		float getBaseSpd();
+		float getBoostSpd();
 		
 		/* mutators */
 		sf::Vector2f updatePosition(float deltaTime);
@@ -39,11 +42,11 @@ class Ship : public CircleModel{
     void setState(ShipState);
     void setSpd(sf::Vector2f);
     void setOrbit(Planet*);
-    void setBaseAngVelocity(float);
+    //void setBaseAngVelocity(float); deprecated
 		void setAngularVelocity(float);
     void updateOrientation();
     void adjustSpd(int);
-		void brake();
+		void brake(bool on);
     void decelerate();
 		void shoot();
 		
@@ -53,16 +56,19 @@ class Ship : public CircleModel{
   private:
     ShipState _shipState;
     float _angularVelocity;
-		float _baseAngVelocity;
+		//float _baseAngVelocity; deprecated
+		float _lowSpd;
+		float _baseSpd;
+		float _boostSpd;
+		float _brakeMagnitude;
     int _burst;
     Planet* _orbiting;
+		Lasso* _lasso;
     sf::Texture _texture;
     sf::Texture* _textpointer;
-		Lasso* _lasso;
 		sf::Vector2f _lassoDest;
 		sf::Vector2f _relPos;
-		
-		//sf::Vector2f _getRelPos();     // gets position relative to planet
+		sf::Vector2f _accel;
 };
 
 #endif
