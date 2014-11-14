@@ -4,7 +4,8 @@
 #include "sr-models.h"
 #include "sr-hud.h"
 #include <iostream>
-
+int WINDOW_WIDTH = 1024;
+int WINDOW_HEIGHT = 768;
 
 int main(int argc, char** argv){
 	View myView;
@@ -16,6 +17,8 @@ int main(int argc, char** argv){
 	for (int i = 0 ; i < totallevel; i++){//i<=totallevel is just for displaying game finished screen
 		if (i == 0 && myView.isRun()){// Start Screen
 			i += myView.transitionscreen(i,totallevel,die,insufcow);
+			if (i >= totallevel)
+				exit(0);
 		}
 		Models myModels(i);
 		Control myControl;

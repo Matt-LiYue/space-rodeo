@@ -70,8 +70,7 @@ void Control::update(float timeInterval) {
 	_ship->updateOrientation();
 	
 	/* map exit */
-	if (pos.x < 0 || pos.y < 0 || pos.x > 800 || pos.y > 600) { 
-		std::cout << "ran off map\n";
+	if (pos.x < 0 || pos.y < 0 || pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT) { 
 		die();
 	}
 	
@@ -161,7 +160,7 @@ void Control::update(float timeInterval) {
 for (int j = 0; j < _asteroids.size(); j++){
 	sf::Vector2f pos = _asteroids[j]->getPosition();
 	_asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
-	if (pos.x < -200 || pos.x > 1000 || pos.y < -200 || pos.y>800){
+	if (pos.x < -200 || pos.x > WINDOW_WIDTH+200 || pos.y < -200 || pos.y>WINDOW_HEIGHT+200){
 		_asteroids[j]->setExist(false);
 	}
 	if (_asteroids[j] -> getExist() == false){

@@ -3,9 +3,9 @@
   #include <iostream>
 
 View::View(){
-  _bgtexture.loadFromFile("bg.jpg");
+  _bgtexture.loadFromFile("bg.jpeg");
   _bgsprite.setTexture(_bgtexture);
-  _view.create(sf::VideoMode(800,600,32),"Space Rodeo");
+  _view.create(sf::VideoMode(WINDOW_WIDTH,WINDOW_HEIGHT,32),"Space Rodeo");
 }
 
 
@@ -76,36 +76,47 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   text2.setFont(font);
   texture.loadFromFile("rock.png");
   icon.setTexture(&texture);
-  icon.setPosition(200,300);
-  text.setPosition(300,300);
-  text2.setPosition(250,200);
+  icon.setPosition(300,350);
+  text.setPosition(400,350);
+  text2.setPosition(350,150);
   text.setCharacterSize(45);
   View::transtate state;
   int result;
     //START SCREEN
   if (die){
-    text2.setString("You die!\nLevel failed");
+    text2.setCharacterSize(50);
+    text2.setString("  You die!  \nLevel failed");
+    text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
     state = RETRY;
     text.setString("RETRY\n\nEXIT GAME");
   }
   else if (insufcow){
+    text2.setCharacterSize(50);
     text2.setString("Capture all cows to finish the level!");
+    text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
     state = RETRY;
     text.setString("RETRY\n\nEXIT GAME");
   }
   else{
     if (i == 0){
+
+      text2.setCharacterSize(60);
       text2.setString("SPACE RODEO");
+      text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = START;
       text.setString("START GAME\n\nEXIT GAME");
     }
     else if (i == totallevel){
-      text2.setString("Congratulations!\n You complete this game!");
+      text2.setCharacterSize(45);
+      text2.setString("    Congratulations!\nYou complete this game!");
+      text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = RESTART;
       text.setString("MAIN SCEME\n\nEXIT GAME");
     }
     else {
+      text2.setCharacterSize(50);
       text2.setString("You finished this level!");
+      text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = NEXTLEVEL;
       text.setString("NEXT LEVEL\n\nEXIT GAME");}
     }
@@ -146,11 +157,11 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       }
     }
     if (state == EXIT){
-      icon.setPosition(200,400);
+      icon.setPosition(300,450);
       result = totallevel;
     }
     else{
-      icon.setPosition(200,300);
+      icon.setPosition(300,350);
     }
     if (state == START)
       result = 0;
