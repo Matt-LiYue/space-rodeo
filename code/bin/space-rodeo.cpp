@@ -10,7 +10,7 @@ int main(int argc, char** argv){
 	View myView;
 	sf::Time _interval;
 	sf::Clock _mainclock;
-	int totallevel = 1;
+	int totallevel = 4;
 	bool die = false;
 	for (int i = 0 ; i <= totallevel; i++){//i<=totallevel is just for displaying game finished screen
 		if (myView.isRun()){

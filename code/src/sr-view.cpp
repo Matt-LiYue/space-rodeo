@@ -68,32 +68,39 @@ int View::transitionscreen(int i, int totallevel, bool die){
   sf::CircleShape icon(30);
   sf::Texture texture;
   sf::Text text;
+  sf::Text text2;
   sf::Font font;
   bool select = false;
   font.loadFromFile("arial.ttf");
   text.setFont(font);
+  text2.setFont(font);
   texture.loadFromFile("rock.png");
   icon.setTexture(&texture);
-  icon.setPosition(300,300);
-  text.setPosition(400,300);
+  icon.setPosition(200,300);
+  text.setPosition(300,300);
+  text2.setPosition(250,200);
   text.setCharacterSize(45);
   View::transtate state;
   int result;
     //START SCREEN
   if (die){
+    text2.setString("You failed this level!");
     state = RETRY;
     text.setString("RETRY\n\nEXIT GAME");
   }
   else{
     if (i == 0){
+      text2.setString("SPACE RODEO");
       state = START;
       text.setString("START GAME\n\nEXIT GAME");
     }
     else if (i == totallevel){
+      text2.setString("Congratulations!\n You complete this game!");
       state = RESTART;
       text.setString("RESTART GAME\n\nEXIT GAME");
     }
     else {
+      text2.setString("You finished this level!");
       state = NEXTLEVEL;
       text.setString("NEXT LEVEL\n\nEXIT GAME");}
     }
@@ -134,11 +141,11 @@ int View::transitionscreen(int i, int totallevel, bool die){
       }
     }
     if (state == EXIT){
-      icon.setPosition(300,400);
+      icon.setPosition(200,400);
       result = totallevel;
     }
     else{
-      icon.setPosition(300,300);
+      icon.setPosition(200,300);
     }
     if (state == START)
       result = 0;
@@ -151,6 +158,7 @@ int View::transitionscreen(int i, int totallevel, bool die){
 
     _view.clear();
     _view.draw(text);
+    _view.draw(text2);
     _view.draw(icon);
     _view.display();
   }

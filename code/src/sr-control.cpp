@@ -99,7 +99,7 @@ void Control::update(float timeInterval) {
 	//Cow
 	for (int j=0; j < _cows.size(); j++) {
 		Cow* cow = _cows[j];
-		if (_ship->intersects(cow, cow->getRadius())) {
+		if (_ship->intersects(cow, cow->getRadius() + _ship->getRadius()*0.25)) {
 			_removeModel(cow);
 			_hud->setcow(_hud->getcow()+1);
 			_gsound.collect();
