@@ -45,30 +45,32 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
   }
 	
 	if (_shipState == ORBIT) {
+		int sign = 1;
+		if (_angularVelocity < 0) sign = -1;
 	  float orbitRadius = utils::norm(getPosition() - _orbiting->getPosition());
-	  _angularVelocity = utils::norm(_spd) / orbitRadius;
+	  _angularVelocity = sign * utils::norm(_spd) / orbitRadius;
   }
 
   // update position
 	switch (_shipState) {
 		case REST: break;		
 		case FLY:
-		move(deltaTime * _spd);
-		break;
+		  move(deltaTime * _spd);
+		  break;
 		case GRAVITY:
-		planPos = _orbiting->getPosition();
-		_relPos += deltaTime * _spd;
-		setPosition(_relPos + planPos);
-		break;
+		  planPos = _orbiting->getPosition();
+		  _relPos += deltaTime * _spd;
+		  setPosition(_relPos + planPos);
+		  break;
 		case ORBIT:
-		planPos = _orbiting->getPosition();
-		setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
-		_relPos += deltaTime * _spd;			
-		setPosition(_relPos + planPos);
-		break;
+		  planPos = _orbiting->getPosition();
+		  setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
+		  _relPos += deltaTime * _spd;			
+		  setPosition(_relPos + planPos);
+		  break;
 		case BURST:
-		move(deltaTime * _spd);
-		break;	
+		  move(deltaTime * _spd);
+		  break;	
 	}
 	return getPosition();
 }
