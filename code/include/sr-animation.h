@@ -5,17 +5,17 @@
 
 class Animation : public sf::Sprite {
   public:
-		Animation();
-	  void advanceFrame();
-		void setSize(float);
-		void addFrame(float,float,float,float);
-		
+    Animation();
+    void advanceFrame();
+    void setSize(float);
+    void addFrame(float,float,float,float);
+    
   private:
-		sf::Texture _texture;
-		int _curFrame;
-		float _size;
-		std::vector<float> _frameCoords;
-		void _setFrame(int);
+    sf::Texture _texture;
+    int _curFrame;
+    float _size;
+    std::vector<float> _frameCoords;
+    void _setFrame(int);
 };
 
 

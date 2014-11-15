@@ -9,18 +9,18 @@
 class CircleModel : public sf::CircleShape {
   public:
     bool _movable;
-		bool draw;
+    bool draw;
     bool intersects(sf::CircleShape *);
     bool intersects(sf::CircleShape *,float);
     sf::Vector2f getSpd();
     void setSpd(sf::Vector2f);
-		Animation* getAnimation();
-		void setPosition(sf::Vector2f);
-		bool hasAnimation;
-		
+    Animation* getAnimation();
+    void setPosition(sf::Vector2f);
+    bool hasAnimation;
+    
   protected:
     sf::Vector2f _spd;
-		Animation _animation;
+    Animation _animation;
 };
 
 #endif

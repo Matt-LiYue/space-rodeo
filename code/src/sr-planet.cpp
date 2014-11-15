@@ -2,13 +2,13 @@
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity){
-	std::cout << "creating planet\n";
-	
-	hasAnimation = false;
+  std::cout << "creating planet\n";
+  
+  hasAnimation = false;
   _texture.loadFromFile("planet.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
-	draw = true;
+  draw = true;
   _movable = false;
   _gravitybound = gravity; 
   setPosition(pos);
@@ -16,11 +16,11 @@ Planet::Planet(sf::Vector2f pos, int radius, int gravity){
 }
 
 sf::CircleShape Planet::getGravityCircle() {
-	sf::CircleShape cs = sf::CircleShape(_gravitybound + getRadius());
-	cs.setPosition(getPosition());
-	return cs;
+  sf::CircleShape cs = sf::CircleShape(_gravitybound + getRadius());
+  cs.setPosition(getPosition());
+  return cs;
 }
 
 sf::Vector2f Planet::getVelocity() {
-	return sf::Vector2f(0,0);
+  return sf::Vector2f(0,0);
 }

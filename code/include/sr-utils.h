@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace utils {
-	
+
 float dot(sf::Vector2f,sf::Vector2f);
 float norm_sqrd(sf::Vector2f v);
 float norm(sf::Vector2f v);

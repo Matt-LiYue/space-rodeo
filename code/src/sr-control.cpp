@@ -277,12 +277,6 @@ void Control::_setAngularVelocities(Planet* planet) {
   float theta = sqrt(utils::norm_sqrd(_ship->getSpd()) / utils::norm_sqrd(planet->getPosition() - _ship->getPosition()));
   if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
   _ship->setAngularVelocity(theta);
-  
-  // base Angular Velocity -  the initial velocity decayed to this.
-  /*theta = _ship->getBaseSpd() / utils::norm(planet->getPosition() - _ship->getPosition());
-  if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
-  _ship->setBaseAngVelocity(theta);
-  */
 }
 
 void Control::setHUD(HUD* hud){

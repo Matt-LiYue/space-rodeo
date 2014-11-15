@@ -15,7 +15,7 @@ class Models{
   public:
     Models(int);
     std::vector<CircleModel*> getcirmodels();
-		std::vector<Animation*> getAnimations();
+    std::vector<Animation*> getAnimations();
     HUD& getHUD();
     void parse();
     void restart();
