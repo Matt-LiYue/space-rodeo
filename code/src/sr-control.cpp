@@ -7,14 +7,14 @@
 
 
 Control::Control(){
-	_levelfinished = false;
-	_die = 0;
+  _levelfinished = false;
+  _die = 0;
 }
 
 
 void Control::setmodels(std::vector<CircleModel*>& myModels){
-	_cirmodels = &myModels;
-	remakemodels();
+  _cirmodels = &myModels;
+  remakemodels();
 }
 
 void Control::remakemodels(){
@@ -24,12 +24,12 @@ void Control::remakemodels(){
 	_planets.clear();
 	_orbitPlanets.clear();
 /* Store circle models as their derived classes */
-	for (int i = 0; i < (*_cirmodels).size(); i++) {
-		if (dynamic_cast<Ship*>((*_cirmodels)[i]) != 0)
+  for (int i = 0; i < (*_cirmodels).size(); i++) {
+	  if (dynamic_cast<Ship*>((*_cirmodels)[i]) != 0)
 			_ship = (Ship*) (*_cirmodels)[i];
-		else if (dynamic_cast<SpaceRanch*>((*_cirmodels)[i]) != 0)
+	  else if (dynamic_cast<SpaceRanch*>((*_cirmodels)[i]) != 0)
 			_ranch = (SpaceRanch*) (*_cirmodels)[i];	  
-		else if (dynamic_cast<Cow*>((*_cirmodels)[i]) != 0)
+	  else if (dynamic_cast<Cow*>((*_cirmodels)[i]) != 0)
 			_cows.push_back((Cow*) (*_cirmodels)[i]);
 		else if (dynamic_cast<Wormhole*>((*_cirmodels)[i]) != 0)
 			_wormholes.push_back((Wormhole*) (*_cirmodels)[i]);
@@ -38,13 +38,13 @@ void Control::remakemodels(){
 		else if (dynamic_cast<Planet*>((*_cirmodels)[i]) != 0) {
 			_planets.push_back((Planet*) (*_cirmodels)[i]);
 			if (dynamic_cast<OrbitPlanet*>((*_cirmodels)[i]) != 0)
-				_orbitPlanets.push_back((OrbitPlanet*) (*_cirmodels)[i]);
+			  _orbitPlanets.push_back((OrbitPlanet*) (*_cirmodels)[i]);
 		}
 	}
 }
 
 bool Control::getlevelfinished(){
-	return _levelfinished;
+  return _levelfinished;
 }
 
 void Control::update(float timeInterval) {
@@ -65,7 +65,6 @@ void Control::update(float timeInterval) {
   */
 	
   //_ship->decelerate(); disabled for now, replace with brake functionality?
-
 	sf::Vector2f pos = _ship->updatePosition(timeInterval);
 	_ship->updateOrientation();
 	
@@ -137,44 +136,44 @@ void Control::update(float timeInterval) {
 		}
 	}
 	/* end ship movement */
-
+		
   //Wormhole
   for (int j=0; j < _wormholes.size();j++){ //Wormhole implementation
     if (_ship->intersects(_wormholes[j], _wormholes[j]->getRadius())){ //Run into Wormhole
-    	if (_wormholes[j]->getOpen() == true){
-    		_wormholes[j]->setOpen(false);
-    		int target;
-    		if (j % 2 == 0)
-    			target = j+1;
-    		else
-    			target = j-1;
-    		_wormholes[target] -> setOpen(false);
-    		_ship -> setPosition(_wormholes[target]->getPosition());
-    	}
+      if (_wormholes[j]->getOpen() == true){
+        _wormholes[j]->setOpen(false);
+        int target;
+        if (j % 2 == 0)
+          target = j+1;
+        else
+          target = j-1;
+        _wormholes[target] -> setOpen(false);
+        _ship -> setPosition(_wormholes[target]->getPosition());
+      }
     }
     else
-    	_wormholes[j] -> setOpen(true);
-}
-
+      _wormholes[j] -> setOpen(true);
+  }
+  
 	/* Asteroid movement */	
-for (int j = 0; j < _asteroids.size(); j++){
-	sf::Vector2f pos = _asteroids[j]->getPosition();
-	_asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
-	if (pos.x < -200 || pos.x > WINDOW_WIDTH+200 || pos.y < -200 || pos.y>WINDOW_HEIGHT+200){
-		_asteroids[j]->setExist(false);
-	}
-	if (_asteroids[j] -> getExist() == false){
-		_asteroids[j] -> replay(); 
-	}
-
+  for (int j = 0; j < _asteroids.size(); j++){
+    sf::Vector2f pos = _asteroids[j]->getPosition();
+    _asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
+    if (pos.x < -200 || pos.x > 1000 || pos.y < -200 || pos.y>800){
+      _asteroids[j]->setExist(false);
+    }
+    if (_asteroids[j] -> getExist() == false){
+      _asteroids[j] -> replay(); 
+    }
+		
 		/* asteroid collisions */
-	for (int k = 0; k < _asteroids.size();k++){ 
-		if (k != j && _asteroids[k]->intersects(_asteroids[j])){
-			_asteroids[j]->setExist(false);
-		}
-	}
-}
-
+    for (int k = 0; k < _asteroids.size();k++){ 
+      if (k != j && _asteroids[k]->intersects(_asteroids[j])){
+        _asteroids[j]->setExist(false);
+      }
+    }
+  }
+	
 	/* lasso */
 if (_ship->getLasso()->getState() != Lasso::HELD) {
 	Lasso* lasso = _ship->getLasso();
@@ -201,8 +200,7 @@ if (_ship->getLasso()->getState() != Lasso::HELD) {
 				lasso->setState(Lasso::MISSED);
 			}
 		}
-	}
-	else if (lasso->getState() == Lasso::CAUGHT || lasso->getState() == Lasso::MISSED) {			
+		else if (lasso->getState() == Lasso::CAUGHT || lasso->getState() == Lasso::MISSED) {			
 			sf::Vector2f dir = _ship->getPosition() - lasso->getPosition(); // not normalized
 			float d_sqrd = utils::norm_sqrd(dir);
 			if (d_sqrd < _ship->getRadius() * _ship->getRadius()) {
@@ -211,45 +209,56 @@ if (_ship->getLasso()->getState() != Lasso::HELD) {
 			}
 			lasso->setSpd(dir / utils::norm(dir) * lasso->getLassoSpd());
 		}
-	}
+  }
 }
 
 void Control::handleEvent(sf::Event event){
-	if (event.key.code == sf::Keyboard::Space) {
-		_ship->shoot();
-	}
-	if (event.key.code == sf::Keyboard::Up){
-		if (_ship -> getState() == Ship::REST){
-			_ship -> adjustSpd(100);
-			_ship -> setState(Ship::FLY);
-		}
-		else if (_ship -> getState() == Ship::FLY){
-			if (_hud -> getburst() > 0){
-				_ship -> adjustSpd(200);
-				_hud -> setburst(_hud->getburst()-1);
-			}
-		}
-		else if (_ship -> getState() == Ship::ORBIT) {
-			if (_hud -> getburst() > 0){
-				_ship -> adjustSpd(200);
-				_ship -> setState(Ship::BURST);
-				_hud -> setburst(_hud->getburst()-1);
-			}
-		}
-		_gsound.burst();
-	}
-	if (event.key.code == sf::Keyboard::Left){
-		if (_ship -> getState() == Ship::REST){
-			_ship -> rotate(-3); 
-		}
-	}
-	if (event.key.code == sf::Keyboard::Right){
-		if (_ship -> getState() == Ship::REST){
-			_ship -> rotate(3);
-		}
-	} 
-}
+	if (event.type == sf::Event::KeyPressed) {
+	  if (event.key.code == sf::Keyboard::Space) {
+	  	_ship->shoot();
+	  }
 
+	  else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
+	      if (_ship -> getState() == Ship::REST){
+	        _ship -> adjustSpd(_ship->getBaseSpd());
+	        _ship -> setState(Ship::FLY);
+	      }
+	      else if (_ship -> getState() == Ship::FLY){
+	        if (_hud -> getburst() > 0){
+	          _ship -> adjustSpd(_ship->getBoostSpd());
+	          _hud -> setburst(_hud->getburst()-1);
+	        }
+	      }
+	      else if (_ship -> getState() == Ship::ORBIT) {
+	      	if (_hud -> getburst() > 0){
+	        	_ship -> adjustSpd(_ship->getBoostSpd());
+		      	_ship -> setState(Ship::BURST);
+		      	_hud -> setburst(_hud->getburst()-1);
+		      }
+	      }
+	    _gsound.burst();
+	  }
+	  else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A){
+	    if (_ship -> getState() == Ship::REST){
+	      _ship -> rotate(-3); 
+	    }
+	  }
+	  else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D){
+	    if (_ship -> getState() == Ship::REST){
+	      _ship -> rotate(3);
+	    }
+	  } 
+		else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
+			_ship->brake(true);	
+		}
+  }
+	
+  else if (event.type == sf::Event::KeyReleased) {
+		if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
+		  _ship->brake(false);
+	  }
+	}
+}
 
 void Control::_removeModel(CircleModel* cm) {
 	std::vector<CircleModel*>& modelsRef = *_cirmodels;
@@ -271,9 +280,9 @@ void Control::_setAngularVelocities(Planet* planet) {
 	if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setAngularVelocity(theta);
 	
-	// base Angular Velocity - originally the initial velocity decayed to this. DISABLED for now
-	/*theta = 100 / norm(planet->getPosition() - _ship->getPosition());
-	if (dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+	// base Angular Velocity -  the initial velocity decayed to this.
+	/*theta = _ship->getBaseSpd() / utils::norm(planet->getPosition() - _ship->getPosition());
+	if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
 	_ship->setBaseAngVelocity(theta);
 	*/
 }

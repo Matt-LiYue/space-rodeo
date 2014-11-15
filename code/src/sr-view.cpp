@@ -1,6 +1,6 @@
-  #include <SFML/Graphics.hpp>
-  #include "sr-view.h"
-  #include <iostream>
+#include <SFML/Graphics.hpp>
+#include "sr-view.h"
+#include <iostream>
 
 View::View(){
   _bgtexture.loadFromFile("bg.jpeg");
@@ -36,11 +36,16 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels){
       _view.close();
       break;
       case sf::Event::KeyPressed:
-      _controller->handleEvent(_event);
-      break;
+        _controller->handleEvent(_event);
+        break;
+				
+      case sf::Event::KeyReleased:
+        _controller->handleEvent(_event);
+        break;
+				
       default:
-      break;
-
+        break;
+				
     }
   }
   for (int i = 0; i < mycirmodels.size(); i++) {

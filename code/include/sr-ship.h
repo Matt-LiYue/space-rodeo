@@ -32,6 +32,9 @@ public:
 		float getAngularVelocity();
 		Lasso* getLasso();
 		sf::Vector2f getLassoDest();
+		float getLowSpd();
+		float getBaseSpd();
+		float getBoostSpd();
 		
 		/* mutators */
 		sf::Vector2f updatePosition(float deltaTime);
