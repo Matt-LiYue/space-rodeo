@@ -23,6 +23,7 @@ void Control::remakemodels(){
   _asteroids.clear();
   _planets.clear();
   _orbitPlanets.clear();
+  
 /* Store circle models as their derived classes */
   for (int i = 0; i < (*_cirmodels).size(); i++) {
     if (dynamic_cast<Ship*>((*_cirmodels)[i]) != 0)
@@ -67,6 +68,7 @@ void Control::update(float timeInterval) {
   //_ship->decelerate(); disabled for now, replace with brake functionality?
   sf::Vector2f pos = _ship->updatePosition(timeInterval);
   _ship->updateOrientation();
+  _ship->updateGuideline(true);
   
   /* map exit */
   if (pos.x < 0 || pos.y < 0 || pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT) { 

@@ -23,17 +23,18 @@ int main(int argc, char** argv){
     Models myModels(i);
     Control myControl;
     std::vector<CircleModel*> myCirModels = myModels.getcirmodels();
+    std::vector<Animation*> animations = myModels.getAnimations();
+		std::vector<sf::Drawable*> drawables = myModels.getDrawables();
     myControl.setmodels(myCirModels);
-    std::vector<Animation*> animations = myModels.getAnimations();  
     myView.setController(myControl);
-    //std::cout << "there are " << myCirModels.size() << " circle models\n";
-    //std::cout << "there are " << animations.size() << " animations\n";
+    
+
+
     while (myView.isRun()){
       _mainclock.restart();
       myControl.setHUD(&(myModels.getHUD()));
-      //std::cout << &(myModels.getHUD()) << std::endl; 
       myView.clear();
-      myView.drawAll(myCirModels);
+      myView.drawAll(myCirModels, drawables);
       myView.drawHUD(myModels.getHUD());
       myView.display();
       _interval = _mainclock.getElapsedTime();
@@ -43,8 +44,9 @@ int main(int argc, char** argv){
         myControl.setdie(0);
         myModels.restart();
         myCirModels = myModels.getcirmodels(); //TODO: This is an ad-hoc solution, may need to update
-        myControl.setmodels(myCirModels);
-        animations = myModels.getAnimations();  
+        animations = myModels.getAnimations(); 
+        drawables = myModels.getDrawables();
+				myControl.setmodels(myCirModels); 
         myModels.getHUD().setburst(3);
         myModels.getHUD().setcow(0);
       }

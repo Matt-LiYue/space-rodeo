@@ -4,6 +4,7 @@
 Ship::Ship(sf::Vector2f pos, int radius, int burst){
   // tweakable params
   _lasso = new Lasso(20,100);
+	_guideline = new Guideline();
   _lowSpd = 10;
   _baseSpd = 100;
   _boostSpd = 300;
@@ -160,6 +161,9 @@ void Ship::setBaseAngVelocity(float theta) {
 */
 
 Lasso* Ship::getLasso() { return _lasso; }
+
+Guideline* Ship::getGuideLine() { return _guideline; }
+
 sf::Vector2f Ship::getLassoDest() {return _lassoDest; }
 
 void Ship::shoot() {
@@ -172,6 +176,13 @@ void Ship::shoot() {
   _lasso->draw = true;
 }
 
+void Ship::updateGuideline(bool on) {
+	draw = on;
+	float theta = getDir() * M_PI / 180;
+	_guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)));
+}
+
+/* deprecated
 void Ship::decelerate(){
   if (_shipState == FLY && utils::norm_sqrd(getSpd()) > _baseSpd*_baseSpd){
     setSpd(getSpd()*0.998f);
@@ -179,15 +190,8 @@ void Ship::decelerate(){
       adjustSpd(_baseSpd);
     }
   }
-  /*else if (_shipState == ORBIT && _angularVelocity > _baseAngVelocity) {
-    _angularVelocity *= .998f;
-  }
-  */
-}
-
-/*sf::Vector2f Ship::_getRelPos() {
-  assert(_orbiting);
-  return getPosition() - _orbiting->getPosition(); // planet --> ship
 }
 */
+
+
 

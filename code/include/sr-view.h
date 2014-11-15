@@ -13,7 +13,7 @@ class View{
       RESTART,} transtate;
     View();
     int transitionscreen(int,int,bool,bool);
-    void drawAll(std::vector<CircleModel*>&);
+    void drawAll(std::vector<CircleModel*>&, std::vector<sf::Drawable*>&);
     void setController(Control&);
     bool isRun();
     void drawHUD(HUD&);

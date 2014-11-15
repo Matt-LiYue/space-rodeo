@@ -16,16 +16,17 @@ class Models{
     Models(int);
     std::vector<CircleModel*> getcirmodels();
     std::vector<Animation*> getAnimations();
+    std::vector<sf::Drawable*> getDrawables();
     HUD& getHUD();
     void parse();
     void restart();
     int getcowno();
   private:
     std::vector<CircleModel*> _circlemodels;
+    std::vector<sf::Drawable*> _drawables;
     HUD _hud;
     int _totalcow;
     int _currentlevel;
-  
 };
 
 

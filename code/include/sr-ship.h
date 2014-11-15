@@ -5,6 +5,7 @@
 #include <cfloat> /* epsilon */
 #include "sr-circleModel.h"
 #include "sr-lasso.h"
+#include "sr-guideline.h"
 #include "sr-planet.h"
 #include <iostream>
 #include <assert.h>
@@ -31,10 +32,12 @@ public:
     float getDir();
     float getAngularVelocity();
     Lasso* getLasso();
+    Guideline* getGuideLine();
     sf::Vector2f getLassoDest();
     float getLowSpd();
     float getBaseSpd();
     float getBoostSpd();
+    
     
     /* mutators */
     sf::Vector2f updatePosition(float deltaTime);
@@ -47,8 +50,9 @@ public:
     void updateOrientation();
     void adjustSpd(int);
     void brake(bool on);
-    void decelerate();
+    //void decelerate(); deprecated
     void shoot();
+    void updateGuideline(bool on);
     
     //float _period;
     
@@ -64,6 +68,7 @@ public:
     int _burst;
     Planet* _orbiting;
     Lasso* _lasso;
+    Guideline* _guideline;
     sf::Texture _texture;
     sf::Texture* _textpointer;
     sf::Vector2f _lassoDest;

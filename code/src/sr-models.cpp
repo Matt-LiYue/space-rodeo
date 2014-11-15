@@ -46,6 +46,8 @@ std::vector<CircleModel*> Models::getcirmodels(){
 }
 
 std::vector<Animation*> Models::getAnimations() {
+  /* IMPORTANT: getAnimations relies on _circleModels being in a good state */
+  
   std::vector<Animation*> v;
   for(int i=0; i < _circlemodels.size(); i++) {
     CircleModel* c = _circlemodels[i];
@@ -56,8 +58,13 @@ std::vector<Animation*> Models::getAnimations() {
   return v;
 }
 
+std::vector<sf::Drawable*> Models::getDrawables() {
+  return _drawables;
+}
+
 void Models::restart(){
   _circlemodels.clear();
+  _drawables.clear();
   parse();
 }
 
@@ -107,6 +114,7 @@ void Models::parse(){
       height = y * 100;
       _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
       _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
+      _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideLine());
       break;
 
       case 'C':
