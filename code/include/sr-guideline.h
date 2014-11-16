@@ -3,6 +3,10 @@
 
 #include "SFML/Graphics.hpp"
 #include "sr-utils.h"
+#include "sr-planet.h"
+#include "sr-wormhole.h"
+#include "sr-cow.h"
+#include "sr-asteroid.h"
 #include <iostream>
 
 class Guideline : public sf::VertexArray {
@@ -11,11 +15,15 @@ class Guideline : public sf::VertexArray {
     bool draw;
     float length;
     void setLine(sf::Vector2f start, sf::Vector2f dir);
-    
+    void applyEffects(std::vector<Planet*>, std::vector<Wormhole*>,
+		                  std::vector<Asteroid*>, std::vector<Cow*>);
 
   private:
     int _segments;
-    float _length;
+		bool _gravityAim;
+		float _fullLength;
+    float _curLength;
+		sf::VertexArray _fullLine;
     
 };
 

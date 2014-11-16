@@ -114,7 +114,7 @@ void Models::parse(){
       height = y * 100;
       _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
       _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
-      _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideLine());
+      _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
       break;
 
       case 'C':

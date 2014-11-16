@@ -38,4 +38,30 @@ bool withinBox(sf::Vector2f val, float x1, float x2, float y1, float y2) {
   if (within(val.x,x1,x2) && within(val.y,y1,y2)) return true;
   return false;
 }
+
+bool intersects(sf::Vector2f p1, sf::Vector2f p2, sf::CircleShape cs) {
+	sf::Vector2f c = cs.getPosition();
+	float length = utils::dot(c - p1, p2 - p1) / utils::norm(p2-p1);
+	sf::Vector2f scaledLine = p1 + (p2 - p1) / utils::norm(p2-p1) * length;
+	sf::Vector2f perp = scaledLine - c;
+	if (utils::norm(perp) <= cs.getRadius()) return true;
+	else return false;
+}
+
+float getLenToIntersect(sf::Vector2f p1, sf::Vector2f p2, sf::CircleShape cs) {
+	sf::Vector2f c = cs.getPosition();
+	float r = cs.getRadius();
+	float length = utils::dot(c - p1, p2 - p1) / utils::norm(p2-p1);
+	sf::Vector2f scaledLine = p1 + (p2 - p1) / utils::norm(p2-p1) * length;
+	float perpNorm = utils::norm(scaledLine - c);
+	float d = length - sqrt(r*r - perpNorm*perpNorm);
+	return d;
+
+}
+
+float getLenToPerp(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3) {
+	// returns  length of line from p1 through p2 stopping at point perpendicular to p3
+	return utils::dot(p3 - p1, p2 - p1) / utils::norm(p2-p1);
+}
+
 }

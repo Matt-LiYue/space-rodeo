@@ -50,11 +50,12 @@ bool Control::getlevelfinished(){
 
 void Control::update(float timeInterval) {
   remakemodels();
+	
   /* orbit planet */
   for (int i=0; i < _orbitPlanets.size(); i++) {
     _orbitPlanets[i]->updatePosition(timeInterval);
-  }
-  
+  }	
+	
   /* begin ship movement */
   
   /* Ship States 
@@ -69,6 +70,7 @@ void Control::update(float timeInterval) {
   sf::Vector2f pos = _ship->updatePosition(timeInterval);
   _ship->updateOrientation();
   _ship->updateGuideline(true);
+	_ship->getGuideline()->applyEffects(_planets,_wormholes,_asteroids,_cows);
   
   /* map exit */
   if (pos.x < 0 || pos.y < 0 || pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT) { 

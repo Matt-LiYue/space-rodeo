@@ -32,7 +32,7 @@ public:
     float getDir();
     float getAngularVelocity();
     Lasso* getLasso();
-    Guideline* getGuideLine();
+    Guideline* getGuideline();
     sf::Vector2f getLassoDest();
     float getLowSpd();
     float getBaseSpd();

@@ -162,7 +162,7 @@ void Ship::setBaseAngVelocity(float theta) {
 
 Lasso* Ship::getLasso() { return _lasso; }
 
-Guideline* Ship::getGuideLine() { return _guideline; }
+Guideline* Ship::getGuideline() { return _guideline; }
 
 sf::Vector2f Ship::getLassoDest() {return _lassoDest; }
 

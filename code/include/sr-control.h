@@ -1,3 +1,6 @@
+#ifndef _SR_CONTROL_H_
+#define _SR_CONTROL_H_
+
 #include <SFML/Graphics.hpp>
 #include "sr-wormhole.h"
 #include "sr-ship.h"
@@ -9,6 +12,7 @@
 #include "sr-sound.h"
 extern int WINDOW_WIDTH;
 extern int WINDOW_HEIGHT;
+
 class Control{
   public:
     Control();
@@ -40,3 +44,4 @@ class Control{
     int _die;
     
 };
+#endif
