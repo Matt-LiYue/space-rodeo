@@ -176,10 +176,10 @@ void Ship::shoot() {
   _lasso->draw = true;
 }
 
-void Ship::updateGuideline(bool on) {
-	draw = on;
+void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> wormholes) {
 	float theta = getDir() * M_PI / 180;
-	_guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)));
+	std::cout << "getDir: " << theta<< std::endl;
+	_guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes);
 }
 
 /* deprecated

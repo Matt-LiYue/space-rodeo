@@ -69,8 +69,8 @@ void Control::update(float timeInterval) {
   //_ship->decelerate(); disabled for now, replace with brake functionality?
   sf::Vector2f pos = _ship->updatePosition(timeInterval);
   _ship->updateOrientation();
-  _ship->updateGuideline(true);
-	_ship->getGuideline()->applyEffects(_planets,_wormholes,_asteroids,_cows);
+  _ship->updateGuideline(_planets, _wormholes);
+	//_ship->getGuideline()->applyEffects(_planets,_wormholes,_asteroids,_cows);
   
   /* map exit */
   if (pos.x < 0 || pos.y < 0 || pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT) { 

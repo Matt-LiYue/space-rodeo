@@ -41,6 +41,8 @@ bool withinBox(sf::Vector2f val, float x1, float x2, float y1, float y2) {
 
 bool intersects(sf::Vector2f p1, sf::Vector2f p2, sf::CircleShape cs) {
 	sf::Vector2f c = cs.getPosition();
+  if (utils::dot(p2 - p1, c - p1) < 0) return false;
+	
 	float length = utils::dot(c - p1, p2 - p1) / utils::norm(p2-p1);
 	sf::Vector2f scaledLine = p1 + (p2 - p1) / utils::norm(p2-p1) * length;
 	sf::Vector2f perp = scaledLine - c;

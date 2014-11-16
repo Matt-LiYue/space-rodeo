@@ -52,7 +52,7 @@ public:
     void brake(bool on);
     //void decelerate(); deprecated
     void shoot();
-    void updateGuideline(bool on);
+    void updateGuideline(std::vector<Planet*>, std::vector<Wormhole*>);
     
     //float _period;
     
