@@ -2,8 +2,9 @@
 
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity){
-  std::cout << "creating planet\n";
-  
+  /* tweakable */  
+	_gravMag = 5;
+	
   hasAnimation = false;
   _texture.loadFromFile("planet.png");
   _textpointer = &_texture;
@@ -24,3 +25,5 @@ sf::CircleShape Planet::getGravityCircle() {
 sf::Vector2f Planet::getVelocity() {
   return sf::Vector2f(0,0);
 }
+
+float Planet::getGravMag() { return _gravMag; }

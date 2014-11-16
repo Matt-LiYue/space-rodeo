@@ -66,6 +66,7 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
     case ORBIT:
       planPos = _orbiting->getPosition();
       setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
+			setSpd(_spd - _orbiting->getGravMag() * _relPos / utils::norm(_relPos));
       _relPos += deltaTime * _spd;      
       setPosition(_relPos + planPos);
       break;

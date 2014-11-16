@@ -10,8 +10,11 @@ class Planet : public CircleModel{
     Planet(sf::Vector2f,int,int);
     sf::CircleShape getGravityCircle();
     sf::Vector2f getVelocity();
+		float getGravMag();
+		
   private:
     int _gravitybound;
+		float _gravMag;
     sf::Texture _texture;
     sf::Texture* _textpointer;
   
