@@ -178,7 +178,6 @@ void Ship::shoot() {
 
 void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> wormholes) {
 	float theta = getDir() * M_PI / 180;
-	std::cout << "getDir: " << theta<< std::endl;
 	_guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes);
 }
 

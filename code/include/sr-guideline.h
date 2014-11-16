@@ -22,16 +22,9 @@ class Guideline : public sf::Drawable {
 		float _fullLength;
 		std::vector<sf::VertexArray> _vArrays;
 		std::vector<sf::Vector2f> _linePoints;
-		
-		/*
-    int _segments;
-		bool _gravityAim;
-    float _curLength;
-		sf::VertexArray _fullLine;
-		*/
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
-		void _addLinearDotted(sf::Vector2f start, sf::Vector2f end);
-    void _addCircleDotted();
+		void _addLinearDotted(sf::Vector2f start, sf::Vector2f end, sf::Vector2f  dir);
+    void _addCircleDotted(sf::Vector2f center, float radius);
 };
 
 

@@ -63,7 +63,6 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Drawa
   for (int i = 0; i < drawables.size(); i++) {
     sf::Drawable* d = drawables[i];
     if (dynamic_cast<Guideline*>(d) != 0 && ((Guideline*) d)->showLine) {
-			std::cout << "calling draw\n";
       _view.draw(*d);
     }
   }

@@ -4,21 +4,11 @@ Guideline::Guideline() {
   /* tweakables */
   _segLength = 5;
   _fullLength = 1000;
-  
-	
-  showLine = true;
+  showLine = false;
 
-	//_gravityAim = false;
-	//_curLength = _fullLength;
-  //setPrimitiveType(sf::LinesStrip);
-  //resize(_segments + 1);
-	//_fullLine.setPrimitiveType(sf::Lines);
-	//_fullLine.resize(2);
 }
 
 void Guideline::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	std::cout << "guideline drawing\n";
-	//target.draw(_fullLine, states);
 	for (int i=0; i < _vArrays.size(); i++) {
 		target.draw(_vArrays[i]);
 	}
@@ -29,10 +19,10 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
                         std::vector<Planet*> planets, std::vector<Wormhole*> wormholes) {
 													// startPointNdx should be 0 unless called within this fn
 													
-													std::cout << "start: " << start.x << "," << start.y << std::endl;
 	
 	int n = startPointNdx;
-  float segments = _fullLength / _segLength;
+	if (n > 20) return;
+	
   if (utils::norm(dir) != 1) dir = dir / utils::norm(dir); // normalize dir
 	
 	if (n == 0) {
@@ -51,7 +41,6 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
 		if (wormholes[i]->getOpen() && utils::intersects(_linePoints[n], _linePoints[n+1], *wormholes[i])) {
 			/* line will now have two segments due to wormhole, so update representation
 			   and call setLine again on the second segment */
-			std::cout << "wormhole intersection\n";
 	    int destNdx;
 	    if (i % 2 == 0) destNdx = i+1;
 	    else destNdx = i-1;
@@ -64,22 +53,50 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
 			_linePoints.push_back(secondStart);
 			_linePoints.push_back(secondEnd);
 			setLine(start, dir, n + 2, planets, wormholes);
-			break;
+			return;
 		}
 	}
-	std::cout << _linePoints.size() / 2 << " points:\n ";
-	for (int i=0; i < _linePoints.size(); i = i+2) {
-		_addLinearDotted(_linePoints[i], _linePoints[i+1]);
-		std::cout << _linePoints[i].x << "," << _linePoints[i].y << "-->" << 
-			_linePoints[i+1].x << "," << _linePoints[i+1].y << std::endl << " ";
+	
+	sf::CircleShape gravity;
+  for (int i=0; i < planets.size(); i++) {
+	  gravity = planets[i]->getGravityCircle();
+		if (utils::intersects(_linePoints[n], _linePoints[n+1], *planets[i])) {
+		  float d = utils::getLenToIntersect(_linePoints[n], _linePoints[n+1], *planets[i]);
+			_linePoints[n+1] = _linePoints[n] + dir * d;
+		}
+		else if (utils::intersects(_linePoints[n], _linePoints[n+1], gravity)) {
+		  float d = utils::getLenToPerp(_linePoints[n], _linePoints[n+1], gravity.getPosition());
+			_linePoints[n+1] = _linePoints[n] + dir * d;
+			_addCircleDotted(gravity.getPosition(), utils::norm(_linePoints[n+1] - gravity.getPosition()));
+			
+		}
 	}
-	std::cout << std::endl;
+	
+	for (int i=0; i < _linePoints.size(); i = i+2) {
+		_addLinearDotted(_linePoints[i], _linePoints[i+1], dir);
+	}
 }
-void Guideline::_addLinearDotted(sf::Vector2f start, sf::Vector2f end) {
+
+void Guideline::_addCircleDotted(sf::Vector2f center, float r) {
 	sf::VertexArray var;
 	var.setPrimitiveType(sf::Lines);
-  var.append(sf::Vertex(start));
-	var.append(sf::Vertex(end));
+	float circum = r * M_PI * 2;
+	float segs = circum / _segLength;
+	for (int i=0; i < segs; i++) {
+		float theta = 2 * M_PI * i / segs;
+		var.append(sf::Vertex(center + sf::Vector2f(r * cos(theta), r * sin(theta))));
+	}
+	_vArrays.push_back(var);
+}
+
+void Guideline::_addLinearDotted(sf::Vector2f start, sf::Vector2f end, sf::Vector2f dir) {
+	sf::VertexArray var;
+	var.setPrimitiveType(sf::Lines);
+	float length = utils::norm(end - start);
+	float segs = length / _segLength;
+	for (int i=0; i < segs; i++) {
+		var.append(sf::Vertex(start + dir * (float) i / segs * length));
+	}
 	_vArrays.push_back(var);
 }
   /*

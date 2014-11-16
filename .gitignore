@@ -1,2 +1,14 @@
 .DS_Store
 materials/.DS_Store
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+code/a.out
+code/art/level4.psd
+code/cmake_install.cmake
+code/space-rodeo
+code/test.cpp
+design-doc-5to7.odt
+pong.zip
+
