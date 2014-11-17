@@ -167,9 +167,9 @@ Guideline* Ship::getGuideline() { return _guideline; }
 
 sf::Vector2f Ship::getLassoDest() {return _lassoDest; }
 
-void Ship::shoot() {
+void Ship::shoot(int direction) {
   float offset = getRadius()+_lasso->getRadius();
-  sf::Vector2f dir = sf::Vector2f(cos(getDir()* M_PI/180),sin(getDir()* M_PI / 180)) ;
+  sf::Vector2f dir = sf::Vector2f(cos((getDir()+direction*90)* M_PI/180),sin((getDir()+direction*90)* M_PI / 180)) ;
   _lasso->setSpd(dir * _lasso->getLassoSpd());
   _lasso->setPosition(getPosition() + dir * offset);
   _lassoDest = sf::Vector2f(_lasso->getPosition() + dir * _lasso->getLength());

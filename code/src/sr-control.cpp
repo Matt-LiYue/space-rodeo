@@ -219,9 +219,6 @@ void Control::update(float timeInterval) {
 void Control::handleEvent(sf::Event event){
   if (event.type == sf::Event::KeyPressed) {
     if (event.key.code == sf::Keyboard::Space) {
-      _ship->shoot();
-    }
-    else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
       if (_ship -> getState() == Ship::REST){
         _ship -> adjustSpd(_ship->getBaseSpd());
         _ship -> setState(Ship::FLY);
@@ -241,14 +238,23 @@ void Control::handleEvent(sf::Event event){
       }
       _gsound.burst();
     }
+    else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
+      _ship->shoot(0);
+    }
     else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A){
       if (_ship -> getState() == Ship::REST){
         _ship -> rotate(-3); 
+      }
+      else{
+        _ship -> shoot(-1);
       }
     }
     else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D){
       if (_ship -> getState() == Ship::REST){
         _ship -> rotate(3);
+      }
+      else{
+        _ship -> shoot(1);
       }
     } 
     else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
