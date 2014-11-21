@@ -38,18 +38,28 @@ int main(int argc, char** argv){
       myView.drawHUD(myModels.getHUD());
       myView.display();
       _interval = _mainclock.getElapsedTime();
-      myControl.update(_interval.asSeconds());
+      
       if (myControl.getlevelfinished() == true) break;
       if (myControl.getdie() == 1){//used one life
+        if (myControl.getcrash() == true){
+          myView.drawcrash(*myCirModels, *drawables, myModels.getHUD());
+          myControl.setcrash(false);
+        }
         myControl.setdie(0);
         myModels.restart();
         myModels.getHUD().setburst(3);
         myModels.getHUD().setcow(0);
       }
       else if (myControl.getdie() == 2){//life used up
+        if (myControl.getcrash() == true){
+          myView.drawcrash(*myCirModels, *drawables, myModels.getHUD());
+          myControl.setcrash(false);
+        }
         die = true;
         break;
       }
+      else
+        myControl.update(_interval.asSeconds());
 
       for (int j=0; j < animations->size(); j++) {
         (*animations)[j]->advanceFrame();

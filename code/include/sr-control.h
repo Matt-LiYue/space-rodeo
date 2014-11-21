@@ -25,10 +25,14 @@ class Control{
     int getdie();
     void setdie(int);
     void die();
+    bool getcrash();
+    void setcrash(bool);
+
     
   private:    
     /* data members */
     bool _levelfinished;
+    bool _crash;
     std::vector<CircleModel*>* _cirmodels;
     Ship* _ship;
     std::vector<Planet*> _planets;

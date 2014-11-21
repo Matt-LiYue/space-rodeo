@@ -8,6 +8,7 @@
 
 Control::Control(){
   _levelfinished = false;
+  _crash=false;
   _die = 0;
 }
 
@@ -119,6 +120,7 @@ void Control::update(float timeInterval) {
     if (_ship -> intersects(asteroid)){
       _gsound.crash();
       std::cout << "ship hit asteroid\n";
+      setcrash(true);
       die();
     }
   }
@@ -129,6 +131,7 @@ void Control::update(float timeInterval) {
     if (_ship->intersects(planet)) {
       std::cout << "ship hit planet\n";
       _gsound.crash();
+      setcrash(true);
       die();
     }
     //Gravity
@@ -311,4 +314,10 @@ int Control::getdie(){
 }
 void Control::setdie(int die){
   _die = die;
+}
+bool Control::getcrash(){
+  return _crash;
+}
+void Control::setcrash(bool crash){
+  _crash = crash;
 }

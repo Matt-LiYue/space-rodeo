@@ -28,8 +28,37 @@ void View::clear(){
 void View::display(){
   _view.display();
 }
+void View::drawcrash(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Drawable*>& drawables,HUD& hud){
+  sf::Texture texture;
+  Ship * ship;
+  sf::Clock explodclock;
+  sf::Time interval;
+  explodclock.restart();
+  for (int i = 0; i < (mycirmodels).size(); i++) {
+    if (dynamic_cast<Ship*>((mycirmodels)[i]) != 0)
+      ship = (Ship*) (mycirmodels)[i];
+  }
+  sf::CircleShape explode(30);
+  int frameno = 10;
 
-
+  interval = explodclock.getElapsedTime();
+  while (interval.asSeconds()<1){
+    std::string frame;
+    std::stringstream out;
+    out << int(interval.asSeconds()*10)+1;
+    frame = out.str();
+    texture.loadFromFile("./explosion/"+frame+".png");
+    explode.setTexture(&texture);
+    explode.setPosition(ship->getPosition()-sf::Vector2f(ship->getRadius(),ship->getRadius()));
+    _view.clear(sf::Color::Black);
+    drawAll(mycirmodels,drawables);
+    drawHUD(hud);
+    _view.draw(explode);
+    _view.display();
+    interval = explodclock.getElapsedTime();
+  }
+  
+}
 void View::drawAll(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Drawable*>& drawables){
   _view.draw(_bgsprite);
   while (_view.pollEvent(_event)){//TODO: Use Control Class to handle the event
@@ -38,16 +67,16 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Drawa
       _view.close();
       break;
       case sf::Event::KeyPressed:
-        _controller->handleEvent(_event);
-        break;
-        
+      _controller->handleEvent(_event);
+      break;
+
       case sf::Event::KeyReleased:
-        _controller->handleEvent(_event);
-        break;
-        
+      _controller->handleEvent(_event);
+      break;
+
       default:
-        break;
-        
+      break;
+
     }
   }
   for (int i = 0; i < mycirmodels.size(); i++) {

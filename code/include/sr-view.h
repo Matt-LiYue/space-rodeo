@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include "sr-control.h"
 #include "sr-hud.h"
-
+#include <fstream>
+#include <string>
+#include <sstream>
 
 class View{
   public:
@@ -14,6 +16,7 @@ class View{
     View();
     int transitionscreen(int,int,bool,bool);
     void drawAll(std::vector<CircleModel*>&, std::vector<sf::Drawable*>&);
+    void drawcrash(std::vector<CircleModel*>&, std::vector<sf::Drawable*>&,HUD& hud);
     void setController(Control&);
     bool isRun();
     void drawHUD(HUD&);
