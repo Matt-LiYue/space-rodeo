@@ -14,9 +14,9 @@
 class Models{
   public:
     Models(int);
-    std::vector<CircleModel*> getcirmodels();
-    std::vector<Animation*> getAnimations();
-    std::vector<sf::Drawable*> getDrawables();
+    std::vector<CircleModel*>* getcirmodels();
+    std::vector<Animation*>* getAnimations();
+    std::vector<sf::Drawable*>* getDrawables();
     HUD& getHUD();
     void parse();
     void restart();
@@ -24,6 +24,7 @@ class Models{
   private:
     std::vector<CircleModel*> _circlemodels;
     std::vector<sf::Drawable*> _drawables;
+    std::vector<Animation*> _animations;
     HUD _hud;
     int _totalcow;
     int _currentlevel;

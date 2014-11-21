@@ -41,25 +41,17 @@ Models::Models(int level){//TODO: Read from a txt file to place the elements in 
   std::cout << "Original models: " << _circlemodels.size() << std::endl;
 }
 
-std::vector<CircleModel*> Models::getcirmodels(){
-  return _circlemodels;
+std::vector<CircleModel*>* Models::getcirmodels(){
+  return &_circlemodels;
 }
 
-std::vector<Animation*> Models::getAnimations() {
+std::vector<Animation*>* Models::getAnimations() {
   /* IMPORTANT: getAnimations relies on _circleModels being in a good state */
-  
-  std::vector<Animation*> v;
-  for(int i=0; i < _circlemodels.size(); i++) {
-    CircleModel* c = _circlemodels[i];
-    if (c->hasAnimation) {
-      v.push_back(c->getAnimation());
-    }
-  }
-  return v;
+  return &_animations;
 }
 
-std::vector<sf::Drawable*> Models::getDrawables() {
-  return _drawables;
+std::vector<sf::Drawable*>* Models::getDrawables() {
+  return &_drawables;
 }
 
 void Models::restart(){
@@ -155,16 +147,19 @@ void Models::parse(){
 
       default:
       break;
-    }
-    
-
-    
-  }  
-
+    } 
+  }
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
     sf::Vector2f center = _circlemodels[i]->getPosition();
     _circlemodels[i]->setOrigin(sf::Vector2f(r,r));
     _circlemodels[i]->setPosition(center);
+  }
+
+  for(int i=0; i < _circlemodels.size(); i++) {
+    CircleModel* c = _circlemodels[i];
+    if (c->hasAnimation) {
+      _animations.push_back(c->getAnimation());
+    }
   }
 }
