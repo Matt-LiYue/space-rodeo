@@ -264,14 +264,17 @@ void Control::handleEvent(sf::Event event){
       _ship->brake(true);  
     }
 		else if (event.key.code == sf::Keyboard::LShift) {
-			if (_ship->getGuideline()->showLine) _ship->getGuideline()->showLine = false;
-			else _ship->getGuideline()->showLine = true;
+			_ship->getGuideline()->showLine = true;
 		}
+		
   }
   else if (event.type == sf::Event::KeyReleased) {
     if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
       _ship->brake(false);
     }
+		else if (event.key.code == sf::Keyboard::LShift) {
+			_ship->getGuideline()->showLine = false;
+		}
   }
 }
 
