@@ -38,7 +38,7 @@ void Control::remakemodels(){
       _asteroids.push_back((Asteroid*) (*_cirmodels)[i]);
     else if (dynamic_cast<Planet*>((*_cirmodels)[i]) != 0) {
       _planets.push_back((Planet*) (*_cirmodels)[i]);
-      if (dynamic_cast<OrbitPlanet*>((*_cirmodels)[i]) != 0)
+    if (dynamic_cast<OrbitPlanet*>((*_cirmodels)[i]) != 0)
         _orbitPlanets.push_back((OrbitPlanet*) (*_cirmodels)[i]);
     }
   }
@@ -163,7 +163,7 @@ void Control::update(float timeInterval) {
   for (int j = 0; j < _asteroids.size(); j++){
     sf::Vector2f pos = _asteroids[j]->getPosition();
     _asteroids[j]->setPosition(_asteroids[j]->getPosition() + _asteroids[j]->getSpd() * timeInterval);
-    if (pos.x < -200 || pos.x > 1000 || pos.y < -200 || pos.y>800){
+    if (pos.x < -200 || pos.x > WINDOW_WIDTH+200 || pos.y < -200 || pos.y>WINDOW_WIDTH+200){
       _asteroids[j]->setExist(false);
     }
     if (_asteroids[j] -> getExist() == false){

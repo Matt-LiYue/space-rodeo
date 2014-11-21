@@ -10,8 +10,8 @@
 #include "sr-asteroid.h"
 #include "sr-hud.h"
 #include "sr-sound.h"
-extern int WINDOW_WIDTH;
-extern int WINDOW_HEIGHT;
+extern const int WINDOW_WIDTH;
+extern const int WINDOW_HEIGHT;
 
 class Control{
   public:

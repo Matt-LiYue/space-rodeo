@@ -4,8 +4,8 @@
 #include "sr-models.h"
 #include "sr-hud.h"
 #include <iostream>
-int WINDOW_WIDTH = 1024;
-int WINDOW_HEIGHT = 768;
+const int WINDOW_WIDTH = 1024;
+const int WINDOW_HEIGHT = 768;
 
 int main(int argc, char** argv){
   View myView;
