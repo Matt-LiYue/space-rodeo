@@ -4,7 +4,7 @@
 Ship::Ship(sf::Vector2f pos, int radius, int burst){
   // tweakable params
   _lasso = new Lasso(20,100);
-	_guideline = new Guideline();
+  _guideline = new Guideline();
   _lowSpd = 10;
   _baseSpd = 100;
   _boostSpd = 300;
@@ -31,6 +31,8 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
 sf::Vector2f Ship::updatePosition(float deltaTime) {
   sf::Vector2f planPos;
   
+  //std::cout << "accel: " << _accel.x << "," << _accel.y << std::endl;
+  
   // update velocity
   sf::Vector2f newVelocity = _spd + _accel * deltaTime;
   if (utils::norm(newVelocity) > _baseSpd && utils::norm(_spd) <= _baseSpd) { // don't accel past base spd
@@ -44,6 +46,8 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
     else
       _spd = newVelocity;
   }
+  std::cout << "velocity: " << _spd.x << "," << _spd.y << std::endl;
+	
   
   if (_shipState == ORBIT) {
     int sign = 1;
@@ -66,7 +70,7 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
     case ORBIT:
       planPos = _orbiting->getPosition();
       setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
-			setSpd(_spd - _orbiting->getGravMag() * _relPos / utils::norm(_relPos));
+      setSpd(_spd - _orbiting->getGravMag() * _relPos / utils::norm(_relPos));
       _relPos += deltaTime * _spd;      
       setPosition(_relPos + planPos);
       break;
@@ -143,15 +147,24 @@ void Ship::updateOrientation(){
   }
 }
 
+void Ship::resetAccel() {
+	_accel = sf::Vector2f(0,0);
+}
+
 void Ship::brake(bool on) {
   if (utils::norm(_spd) == 0) return; // avoid divide by 0
   if (on) {
     _accel = -1.0f * _spd * _brakeMagnitude / utils::norm(_spd);
-    std::cout << "braking, accel set to " << utils::norm(_accel) << std::endl;
+    //std::cout << "braking, accel set to " << utils::norm(_accel) << std::endl;
   }
   else {
-    _accel = _spd * _brakeMagnitude / utils::norm(_spd);
-    std::cout << "brake off, accel set to " << utils::norm(_accel) << std::endl;
+    if (utils::norm(_spd) < _baseSpd) { // accel back to to base speed
+      _accel = _spd * _brakeMagnitude / utils::norm(_spd);
+    }
+		else {
+			_accel *= 0.f;
+		}
+    //std::cout << "brake off, accel set to " << utils::norm(_accel) << std::endl;
   }
 }
 
@@ -178,8 +191,8 @@ void Ship::shoot(int direction) {
 }
 
 void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> wormholes) {
-	float theta = getDir() * M_PI / 180;
-	_guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes);
+  float theta = getDir() * M_PI / 180;
+  _guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes);
 }
 
 /* deprecated

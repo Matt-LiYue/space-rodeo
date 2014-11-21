@@ -53,6 +53,7 @@ public:
     //void decelerate(); deprecated
     void shoot(int);
     void updateGuideline(std::vector<Planet*>, std::vector<Wormhole*>);
+		void resetAccel();
     
     //float _period;
     

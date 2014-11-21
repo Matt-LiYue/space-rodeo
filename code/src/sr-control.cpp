@@ -235,6 +235,7 @@ void Control::handleEvent(sf::Event event){
       else if (_ship -> getState() == Ship::ORBIT) {
         if (_hud -> getburst() > 0){
           _ship -> adjustSpd(_ship->getBoostSpd());
+					_ship -> resetAccel();
           _ship -> setState(Ship::BURST);
           _hud -> setburst(_hud->getburst()-1);
         }
