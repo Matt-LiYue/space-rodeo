@@ -9,11 +9,11 @@ void Animation::setSize(float size) {
 	_size = size;
 }
 
-void Animation::addFrame(float x1, float x2, float y1, float y2) {	
+void Animation::addFrame(int x1, int y1, int dx, int dy) {	
 	_frameCoords.push_back(x1);
-	_frameCoords.push_back(x2);
 	_frameCoords.push_back(y1);
-	_frameCoords.push_back(y2);
+	_frameCoords.push_back(dx);
+	_frameCoords.push_back(dy);
 }
 
 void Animation::advanceFrame() {
@@ -21,16 +21,16 @@ void Animation::advanceFrame() {
 		return;
 	}
 	_curFrame = (_curFrame + 1) % (_frameCoords.size()/4);
-	_setFrame(_curFrame);
+	setFrame(_curFrame);
 }
 
-void Animation::_setFrame(int i) {
-	float x1 = _frameCoords[4*i];
-	float y1 = _frameCoords[4*i+1];
-	float x2 = _frameCoords[4*i+2];
-	float y2 = _frameCoords[4*i+3];
-
-	setTextureRect(sf::IntRect(x1,y1,x2,y2));
-	setScale(_size/(x2-x1), _size/(y2-y1));
-	setOrigin((x2-x1)/2.0, (y2-y1)/2.0);
+void Animation::setFrame(int i) {
+	int x1 = _frameCoords[4*i];
+	int y1 = _frameCoords[4*i+1];
+	int dx = _frameCoords[4*i+2];
+	int dy = _frameCoords[4*i+3];
+	
+	setTextureRect(sf::IntRect(x1, y1, dx, dy));
+	setScale(_size/dx, _size/dy);
+	setOrigin(dx/2.0, dy/2.0);
 }

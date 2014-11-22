@@ -14,8 +14,8 @@ Lasso::Lasso(int radius, float length) {
 	_animation.setSize(radius*2);
 	_animation.setTexture(_texture);
 	_animation.addFrame(0,0,160,145);
-	_animation.addFrame(160,0,305,160);
-	_animation.addFrame(0,140,160,300);
+	_animation.addFrame(160,0,145,160);
+	_animation.addFrame(0,140,160,160);
 }
 
 Lasso::LassoState Lasso::getState() {

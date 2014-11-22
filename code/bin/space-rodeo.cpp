@@ -61,9 +61,11 @@ int main(int argc, char** argv){
       else
         myControl.update(_interval.asSeconds());
 
+			/*
       for (int j=0; j < animations->size(); j++) {
         (*animations)[j]->advanceFrame();
       }
+			*/
 
   }
   if (myView.isRun()){

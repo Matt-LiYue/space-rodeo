@@ -3,29 +3,37 @@
 //Ship class
 Ship::Ship(sf::Vector2f pos, int radius, int burst){
   // tweakable params
-  _lasso = new Lasso(20,100);
-  _guideline = new Guideline();
   _lowSpd = 10;
   _baseSpd = 100;
   _boostSpd = 300;
   _brakeMagnitude = 300;
   
-  // private vars
-  hasAnimation = false;
+  _lasso = new Lasso(20,100);
+	_lasso->getAnimation()->advanceFrame(); // hack for unset texture bug
+  _guideline = new Guideline();
+  hasAnimation = true;
   _movable = true;
   _orbiting = 0;
+	_restAngle = 0;
   _burst = burst;
   _shipState = Ship::REST;
-  _texture.loadFromFile("rock.png");
-  _textpointer = &_texture;
+  //_textpointer = &_texture;
   _accel = sf::Vector2f(0,0);
-  
   draw = true;
-  setTexture(_textpointer);
+  //setTexture(_textpointer);
+	
   setPosition(pos);
   setRadius(radius);
   setOrigin(radius,radius);
   rotate(90);  
+	
+  _texture.loadFromFile("art/goat_ship8.png");
+	_animation.setSize(radius*2);
+	_animation.setTexture(_texture);
+	for (int i=0; i < 8; i++) {
+		_animation.addFrame(64*(i%4), 64*floor(i/4), 64, 64);
+	}
+	_animation.setFrame(1);
 }
 
 sf::Vector2f Ship::updatePosition(float deltaTime) {
@@ -46,7 +54,7 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
     else
       _spd = newVelocity;
   }
-  std::cout << "velocity: " << _spd.x << "," << _spd.y << std::endl;
+  //std::cout << "velocity: " << _spd.x << "," << _spd.y << std::endl;
 	
   
   if (_shipState == ORBIT) {
@@ -60,7 +68,7 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
   switch (_shipState) {
     case REST: break;    
     case FLY:
-      move(deltaTime * _spd);
+      setPosition(getPosition() + deltaTime * _spd);
       break;
     case GRAVITY:
       planPos = _orbiting->getPosition();
@@ -75,7 +83,7 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
       setPosition(_relPos + planPos);
       break;
     case BURST:
-      move(deltaTime * _spd);
+      setPosition(getPosition() + deltaTime * _spd);
       break;  
   }
   return getPosition();
@@ -143,8 +151,17 @@ void Ship::updateOrientation(){
     float degrees = 180 / M_PI * atan(_spd.y/_spd.x);
     if (fabs(_spd.x) < FLT_EPSILON) degrees = 0;
     if (_spd.x < 0) degrees += -180;
-    setRotation(degrees + 90);
+    getAnimation()->setRotation(degrees);
+		setRotation(degrees + 90);
   }
+	else {
+		getAnimation()->setRotation(_restAngle);
+		setRotation(_restAngle + 90);
+	}
+}
+
+void Ship::updateOrientation(int degrees){
+		_restAngle += degrees;
 }
 
 void Ship::resetAccel() {
@@ -190,11 +207,30 @@ void Ship::shoot(int direction) {
   _lasso->draw = true;
 }
 
+void Ship::setFrame(int frame) { _animation.setFrame(frame); }
+
 void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> wormholes) {
   float theta = getDir() * M_PI / 180;
   _guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes);
 }
 
+void Ship::updateAnimation() {
+	if (_lasso->getState() != Lasso::HELD) {
+		setFrame(THROW_R);
+	}
+	else if (utils::norm(_spd) <= _baseSpd) {
+		setFrame(REST_R);
+		std::cout <<"rest\n";
+	}
+	else if (utils::norm(_spd) > _boostSpd - 50) {
+		setFrame(BURST2_R);
+		std::cout << "burst2\n";
+	}
+	else {
+		std::cout << "burst1\n";
+		setFrame(BURST1_R);
+	}
+}
 /* deprecated
 void Ship::decelerate(){
   if (_shipState == FLY && utils::norm_sqrd(getSpd()) > _baseSpd*_baseSpd){

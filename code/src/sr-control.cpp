@@ -71,6 +71,7 @@ void Control::update(float timeInterval) {
   sf::Vector2f pos = _ship->updatePosition(timeInterval);
   _ship->updateOrientation();
   _ship->updateGuideline(_planets, _wormholes);
+	_ship->updateAnimation();
 	//_ship->getGuideline()->applyEffects(_planets,_wormholes,_asteroids,_cows);
   
   /* map exit */
@@ -184,6 +185,7 @@ void Control::update(float timeInterval) {
   /* lasso */
   if (_ship->getLasso()->getState() != Lasso::HELD) {
     Lasso* lasso = _ship->getLasso();
+		lasso->getAnimation()->advanceFrame();
     lasso->setPosition(lasso->getPosition() + lasso->getSpd() * timeInterval);
     if (lasso->getState() == Lasso::SHOT) {
       sf::Vector2f dest = _ship->getLassoDest();
@@ -247,7 +249,7 @@ void Control::handleEvent(sf::Event event){
     }
     else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A){
       if (_ship -> getState() == Ship::REST){
-        _ship -> rotate(-3); 
+        _ship -> updateOrientation(-3); 
       }
       else{
         _ship -> shoot(-1);
@@ -255,7 +257,7 @@ void Control::handleEvent(sf::Event event){
     }
     else if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D){
       if (_ship -> getState() == Ship::REST){
-        _ship -> rotate(3);
+        _ship -> updateOrientation(3);
       }
       else{
         _ship -> shoot(1);
