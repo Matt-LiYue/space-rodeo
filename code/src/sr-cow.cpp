@@ -2,7 +2,7 @@
 
 //Cow Class
 Cow::Cow(sf::Vector2f pos, int radius) {
-  _texture.loadFromFile("cow.png");
+  _texture.loadFromFile("./art/cow.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
 	draw = true;

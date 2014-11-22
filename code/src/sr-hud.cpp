@@ -1,13 +1,13 @@
 #include "sr-hud.h"
 #include <stdio.h>
 HUD::HUD(){
-  _font.loadFromFile("arial.ttf");
+  _font.loadFromFile("./arial.ttf");
   _text.setFont(_font);
-  _cowtexture.loadFromFile("cow.png");
+  _cowtexture.loadFromFile("./art/cow.png");
   _cowicon.setTexture(&_cowtexture);
-  _bursttexture.loadFromFile("burst.png");
+  _bursttexture.loadFromFile("./art/burst.png");
   _bursticon.setTexture(&_bursttexture);
-  _lifetexture.loadFromFile("rock.png");
+  _lifetexture.loadFromFile("./art/rock.png");
   _lifeicon.setTexture(&_lifetexture);
   _text.setString("test\ntest\ntest");
 }

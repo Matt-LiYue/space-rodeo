@@ -6,7 +6,7 @@ Planet::Planet(sf::Vector2f pos, int radius, int gravity){
 	_gravMag = 2;
 	
   hasAnimation = false;
-  _texture.loadFromFile("planet.png");
+  _texture.loadFromFile("./art/planet.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
   draw = true;

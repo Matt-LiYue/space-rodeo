@@ -2,7 +2,7 @@
 
 //Asteroid Class
 Asteroid::Asteroid(sf::Vector2f pos, int radius, sf::Vector2f spd){
-  _texture.loadFromFile("asteroid.png");
+  _texture.loadFromFile("./art/asteroid.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
   draw = true;

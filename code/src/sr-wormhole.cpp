@@ -2,7 +2,7 @@
 
 //Wormhole Class
 Wormhole::Wormhole(sf::Vector2f pos, int radius){
-  _texture.loadFromFile("wormhole.png");
+  _texture.loadFromFile("./art/wormhole.png");
   _textpointer = &_texture;
   setTexture(_textpointer);
   draw = true;

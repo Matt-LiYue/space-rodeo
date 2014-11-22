@@ -10,7 +10,7 @@ Lasso::Lasso(int radius, float length) {
   setRadius(radius);
 	_lassoSpd = 300;
 	
-  _texture.loadFromFile("art/lasso.png");
+  _texture.loadFromFile("./art/lasso.png");
 	_animation.setSize(radius*2);
 	_animation.setTexture(_texture);
 	_animation.addFrame(0,0,160,145);

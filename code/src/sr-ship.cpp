@@ -11,17 +11,15 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   _lasso = new Lasso(20,100);
 	_lasso->getAnimation()->advanceFrame(); // hack for unset texture bug
   _guideline = new Guideline();
-  hasAnimation = true;
   _movable = true;
   _orbiting = 0;
 	_restAngle = 0;
   _burst = burst;
   _shipState = Ship::REST;
-  //_textpointer = &_texture;
   _accel = sf::Vector2f(0,0);
   draw = true;
-  //setTexture(_textpointer);
-	
+  hasAnimation = true;
+
   setPosition(pos);
   setRadius(radius);
   setOrigin(radius,radius);
@@ -45,8 +43,6 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
 sf::Vector2f Ship::updatePosition(float deltaTime) {
   sf::Vector2f planPos;
   
-  //std::cout << "accel: " << _accel.x << "," << _accel.y << std::endl;
-  
   // update velocity
   sf::Vector2f newVelocity = _spd + _accel * deltaTime;
   if (utils::norm(newVelocity) > _baseSpd && utils::norm(_spd) <= _baseSpd) { // don't accel past base spd
@@ -60,8 +56,6 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
     else
       _spd = newVelocity;
   }
-  //std::cout << "velocity: " << _spd.x << "," << _spd.y << std::endl;
-	
   
   if (_shipState == ORBIT) {
     int sign = 1;
@@ -191,12 +185,6 @@ void Ship::brake(bool on) {
   }
 }
 
-/* deprecated
-void Ship::setBaseAngVelocity(float theta) {
-  _baseAngVelocity = theta;
-}
-*/
-
 Lasso* Ship::getLasso() { return _lasso; }
 
 Guideline* Ship::getGuideline() { return _guideline; }
@@ -225,15 +213,10 @@ void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> 
 void Ship::updateAnimation() {
 	if (_lasso->getState() != Lasso::HELD) {
 		setFrame(THROW_R);
-		
 		sf::Vector2f ropeVec = _lasso->getPosition() - getPosition();
 		float ropeLength = utils::norm(ropeVec);
 		sf::IntRect ir (sf::IntRect(0,0,ropeLength - _lasso->getRadius() - getRadius(),8));
 		_rope.setPosition(getPosition() + getRadius() * (ropeVec / ropeLength));
-		
-		
-		//float angle = M_PI / 180 * getDir();
-		//_rope.setPosition(getPosition() + getRadius() * sf::Vector2f(cos(angle), sin(angle)));
 		_rope.setTextureRect(ir);
 		_rope.setRotation(180 / M_PI * atan2(ropeVec.y, ropeVec.x));
 		return;
@@ -255,16 +238,3 @@ void Ship::updateAnimation() {
 sf::Drawable* Ship::getRope() {
 	return (Drawable*) &_rope;
 }
-/* deprecated
-void Ship::decelerate(){
-  if (_shipState == FLY && utils::norm_sqrd(getSpd()) > _baseSpd*_baseSpd){
-    setSpd(getSpd()*0.998f);
-    if (utils::norm_sqrd(getSpd()) <= _baseSpd*_baseSpd){
-      adjustSpd(_baseSpd);
-    }
-  }
-}
-*/
-
-
-
