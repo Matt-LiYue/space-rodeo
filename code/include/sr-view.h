@@ -4,7 +4,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-
+extern const int WINDOW_WIDTH;
+extern const int WINDOW_HEIGHT;
 class View{
   public:
     typedef enum {
@@ -28,4 +29,6 @@ class View{
     Control* _controller;
     sf::Texture _bgtexture;
     sf::Sprite _bgsprite;
+    sf::Sprite _mainsprite;
+    sf::Texture _maintexture;
 };

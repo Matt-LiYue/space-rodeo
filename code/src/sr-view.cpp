@@ -7,6 +7,10 @@ View::View(){
   _bgsprite.setTexture(_bgtexture);
   sf::ContextSettings settings;
   settings.antialiasingLevel = 8;
+
+  _maintexture.loadFromFile("./bg/frame_0.jpg");
+  _mainsprite.setTexture(_maintexture);
+  _mainsprite.scale(float(WINDOW_WIDTH)/600,float(WINDOW_HEIGHT)/365);
   _view.create(sf::VideoMode(WINDOW_WIDTH,WINDOW_HEIGHT,32),"Space Rodeo", sf::Style::Default, settings);
 }
 
@@ -113,7 +117,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   sf::Text text2;
   sf::Font font;
   bool select = false;
-  font.loadFromFile("arial.ttf");
+  font.loadFromFile("AstronBoyWonder.ttf");
   text.setFont(font);
   text2.setFont(font);
   texture.loadFromFile("rock.png");
@@ -162,6 +166,9 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       state = NEXTLEVEL;
       text.setString("NEXT LEVEL\n\nEXIT GAME");}
     }
+    sf::Clock spriteclock;
+    sf::Time interval;
+    spriteclock.restart();
     while (_view.isOpen() && !select){
       while (_view.pollEvent(event)){
         switch (event.type){
@@ -214,7 +221,15 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
     if (state == RETRY)
       result = -1;
 
+    std::string frame;
+    std::stringstream out;
+    interval = spriteclock.getElapsedTime();
+    out << int((21*150+interval.asMilliseconds())/150) % 42; // start from frame 21
+    frame = out.str();
+    _maintexture.loadFromFile("./bg/frame_"+frame+".jpg");
+    _mainsprite.setTexture(_maintexture);
     _view.clear();
+    _view.draw(_mainsprite);
     _view.draw(text);
     _view.draw(text2);
     _view.draw(icon);
