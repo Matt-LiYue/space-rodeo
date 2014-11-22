@@ -16,7 +16,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   _orbiting = 0;
   _burst = burst;
   _shipState = Ship::REST;
-  _texture.loadFromFile("rock.png");
+  _texture.loadFromFile("./art/rock.png");
   _textpointer = &_texture;
   _accel = sf::Vector2f(0,0);
   

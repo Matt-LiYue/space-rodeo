@@ -3,7 +3,7 @@
 #include <iostream>
 
 View::View(){
-  _bgtexture.loadFromFile("bg.jpeg");
+  _bgtexture.loadFromFile("./art/bg.jpeg");
   _bgsprite.setTexture(_bgtexture);
   sf::ContextSettings settings;
   settings.antialiasingLevel = 8;
@@ -120,7 +120,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   font.loadFromFile("AstronBoyWonder.ttf");
   text.setFont(font);
   text2.setFont(font);
-  texture.loadFromFile("rock.png");
+  texture.loadFromFile("./art/rock.png");
   icon.setTexture(&texture);
   icon.setPosition(300,350);
   text.setPosition(400,350);
