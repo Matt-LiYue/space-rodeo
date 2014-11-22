@@ -47,6 +47,7 @@ public:
   float getLowSpd();
   float getBaseSpd();
   float getBoostSpd();
+	sf::Drawable* getRope();
   
   
   /* mutators */
@@ -71,21 +72,22 @@ public:
 private:
   ShipState _shipState;
   float _angularVelocity;
-  //float _baseAngVelocity; deprecated
   float _lowSpd;
   float _baseSpd;
   float _boostSpd;
   float _brakeMagnitude;
   int _burst;
 	int _restAngle;
+	int _shootDir;	
   Planet* _orbiting;
   Lasso* _lasso;
   Guideline* _guideline;
   sf::Texture _texture;
-  sf::Texture* _textpointer;
   sf::Vector2f _lassoDest;
   sf::Vector2f _relPos;
   sf::Vector2f _accel;
+	sf::Sprite _rope;
+	sf::Texture _ropeTexture;
 };
 
 #endif

@@ -18,13 +18,13 @@ class Lasso : public CircleModel {
 		float getLength();
 		LassoState getState();
 		void setState(LassoState);
-		float getLassoSpd();		
+		float getLassoSpd();
 		
 	private:
 		float _length;
 		float _lassoSpd;
     LassoState _lassoState;
-    sf::Texture _texture;		
+    sf::Texture _texture;	
 		
 };
 

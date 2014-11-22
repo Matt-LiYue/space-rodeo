@@ -94,6 +94,9 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Drawa
     if (dynamic_cast<Guideline*>(d) != 0 && ((Guideline*) d)->showLine) {
       _view.draw(*d);
     }
+		else if (dynamic_cast<Guideline*>(d) == 0) {
+			_view.draw(*d);
+		}
   }
   
 }

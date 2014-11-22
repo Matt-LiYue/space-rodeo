@@ -34,7 +34,13 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
 		_animation.addFrame(64*(i%4), 64*floor(i/4), 64, 64);
 	}
 	_animation.setFrame(1);
+	
+	_ropeTexture.loadFromFile("art/rope.png");
+	_ropeTexture.setRepeated(true);
+	_rope = sf::Sprite(_ropeTexture);
+	
 }
+
 
 sf::Vector2f Ship::updatePosition(float deltaTime) {
   sf::Vector2f planPos;
@@ -205,6 +211,8 @@ void Ship::shoot(int direction) {
   _lassoDest = sf::Vector2f(_lasso->getPosition() + dir * _lasso->getLength());
   _lasso->setState(Lasso::SHOT);
   _lasso->draw = true;
+	_rope.setPosition(getPosition() + sf::Vector2f(getRadius(),0));
+	_shootDir = direction;
 }
 
 void Ship::setFrame(int frame) { _animation.setFrame(frame); }
@@ -217,19 +225,35 @@ void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> 
 void Ship::updateAnimation() {
 	if (_lasso->getState() != Lasso::HELD) {
 		setFrame(THROW_R);
+		
+		sf::Vector2f ropeVec = _lasso->getPosition() - getPosition();
+		float ropeLength = utils::norm(ropeVec);
+		sf::IntRect ir (sf::IntRect(0,0,ropeLength - _lasso->getRadius() - getRadius(),8));
+		_rope.setPosition(getPosition() + getRadius() * (ropeVec / ropeLength));
+		
+		
+		//float angle = M_PI / 180 * getDir();
+		//_rope.setPosition(getPosition() + getRadius() * sf::Vector2f(cos(angle), sin(angle)));
+		_rope.setTextureRect(ir);
+		_rope.setRotation(180 / M_PI * atan2(ropeVec.y, ropeVec.x));
+		return;
 	}
-	else if (utils::norm(_spd) <= _baseSpd) {
+	else {
+		_rope.setTextureRect(sf::IntRect(0,0,0,0));
+	}
+	if (utils::norm(_spd) <= _baseSpd) {
 		setFrame(REST_R);
-		std::cout <<"rest\n";
 	}
 	else if (utils::norm(_spd) > _boostSpd - 50) {
 		setFrame(BURST2_R);
-		std::cout << "burst2\n";
 	}
 	else {
-		std::cout << "burst1\n";
 		setFrame(BURST1_R);
 	}
+}
+
+sf::Drawable* Ship::getRope() {
+	return (Drawable*) &_rope;
 }
 /* deprecated
 void Ship::decelerate(){
