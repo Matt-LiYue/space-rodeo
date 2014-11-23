@@ -123,8 +123,9 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   font.loadFromFile("AstronBoyWonder.ttf");
   text.setFont(font);
   text2.setFont(font);
-  texture.loadFromFile("./art/rock.png");
+  texture.loadFromFile("art/goat_ship8.png");
   icon.setTexture(&texture);
+	icon.setTextureRect(sf::IntRect(126,0,66,66));
   icon.setPosition(300,350);
   text.setPosition(400,350);
   text2.setPosition(350,150);
