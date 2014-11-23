@@ -99,29 +99,31 @@ void Models::parse(){
    std::strcpy(type,s0.c_str());
     
     std::string s1 = tokens[1];
-    int width = stringToInt(s1);
-    std::cout << width;
-
+    int width = strToInt(s1);
     
-   // std::string s1 = tokens[1];
-   // int width = std::stoi(s1);
     std::string s2 = tokens[2];
-    int height = std::stoi(s2);
+    int height = strToInt(s2);
+    
     std::string s3 = tokens[3];
-    int radius = std::stoi(s3);
+    int radius = strToInt(s3);
+    
     std::string s4 = tokens[4];
-    int gravity = std::stoi(s4);
+    int gravity = strToInt(s4);
+
     std::string s5 = tokens[5];
-    int burst = std::stoi(s5);
+    int burst = strToInt(s5);
+
     std::string s6 = tokens[6];
-    int x = std::stoi(s6);
+    int x = strToInt(s6);
+
     std::string s7 = tokens[7];
-    int y = std::stoi(s7);
+    int y = strToInt(s7);
+
     std::string s8 = tokens[8];
-    int point = std::stoi(s8);
+    int point = strToInt(s8);
+    
     std::string s9 = tokens[9];
-    int period = std::stoi(s9);
-  
+    int period = strToInt(s9);
 
     
     
