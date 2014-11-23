@@ -20,6 +20,8 @@ int main(int argc, char** argv){
       if (i >= totallevel)
         exit(0);
     }
+    if (!myView.isRun()) 
+      exit(0);
     Models myModels(i);
     Control myControl;
     std::vector<CircleModel*>* myCirModels = myModels.getcirmodels();

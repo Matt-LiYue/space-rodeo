@@ -98,11 +98,11 @@ void View::drawAll(std::vector<CircleModel*>& mycirmodels, std::vector<sf::Drawa
     if (dynamic_cast<Guideline*>(d) != 0 && ((Guideline*) d)->showLine) {
       _view.draw(*d);
     }
-		else if (dynamic_cast<Guideline*>(d) == 0) {
-			_view.draw(*d);
-		}
-  }
-  
+    else if (dynamic_cast<Guideline*>(d) == 0) {
+     _view.draw(*d);
+   }
+ }
+
 }
 
 bool View::isRun(){
@@ -111,6 +111,8 @@ bool View::isRun(){
   else
     return false;
 }
+
+
 
 int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   sf::Event event;
@@ -125,7 +127,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   text2.setFont(font);
   texture.loadFromFile("art/goat_ship8.png");
   icon.setTexture(&texture);
-	icon.setTextureRect(sf::IntRect(126,0,66,66));
+  icon.setTextureRect(sf::IntRect(126,0,66,66));
   icon.setPosition(300,350);
   text.setPosition(400,350);
   text2.setPosition(350,150);
@@ -154,7 +156,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       text2.setString("SPACE RODEO");
       text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = START;
-      text.setString("START GAME\n\nEXIT GAME");
+      text.setString("START GAME\nHELP\nCREDIT\nEXIT GAME");
     }
     else if (i == totallevel){
       text2.setCharacterSize(45);
@@ -168,66 +170,120 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       text2.setString("You finished this level!");
       text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = NEXTLEVEL;
-      text.setString("NEXT LEVEL\n\nEXIT GAME");}
+      text.setString("NEXT LEVEL\n\nEXIT GAME");
     }
-    sf::Clock spriteclock;
-    sf::Time interval;
-    spriteclock.restart();
-    while (_view.isOpen() && !select){
-      while (_view.pollEvent(event)){
-        switch (event.type){
-         case sf::Event::Closed:
-         _view.close();
-         break;
-         case sf::Event::KeyPressed:
-         if (event.key.code == sf::Keyboard::Down){
-          if (state == START || state == NEXTLEVEL || state == RESTART || state == RETRY){
-            state = EXIT;
-          }
+  }
+  sf::Clock spriteclock;
+  sf::Time interval;
+  spriteclock.restart();
+  while (_view.isOpen() && !select){
+    while (_view.pollEvent(event)){
+      switch (event.type){
+       case sf::Event::Closed:
+       _view.close();
+       break;
+       case sf::Event::KeyPressed:
+       if (event.key.code == sf::Keyboard::Down){
+        if (state == NEXTLEVEL || state == RESTART || state == RETRY){
+          state = EXIT;
         }
-        if (event.key.code == sf::Keyboard::Up){
-          std::cout <<"pressed";
-          if (die && state == EXIT){
-            state = RETRY;
-          }
-          if (!die && state == EXIT && i == 0){
-            state = START;
-          }
-          if (!die && state == EXIT && i == totallevel){
-            state = RESTART;
-          }
-          if (!die && state == EXIT && i!=0 && i!=totallevel){
-            state = NEXTLEVEL;
-          }
+        else if(state == CREDIT){
+          state = QUIT;
         }
-
-        if (event.key.code == sf::Keyboard::Space){
-          select = true;
+        else if (state == START){
+          state = GUIDE;
         }
-        break;
-        default:
-        break;
+        else if (state == GUIDE){
+          state = CREDIT;
+        }
       }
-    }
-    if (state == EXIT){
-      icon.setPosition(300,450);
-      result = totallevel;
-    }
-    else{
-      icon.setPosition(300,350);
-    }
-    if (state == START)
-      result = 0;
-    if (state == RESTART)
-      result = -i;
-    if (state == NEXTLEVEL)
-      result = 0;
-    if (state == RETRY)
-      result = -1;
+      if (event.key.code == sf::Keyboard::Up){
+        std::cout <<"pressed";
+        if (die && state == EXIT){
+          state = RETRY;
+        }
+        else if (!die && state == EXIT && i == totallevel){
+          state = RESTART;
+        }
+        else if (!die && state == EXIT && i!=0 && i!=totallevel){
+          state = NEXTLEVEL;
+        }
+        else if (state == QUIT){
+          state = CREDIT;
+        }
+        else if (state == CREDIT){
+          state = GUIDE;
+        }
+        else if (state == GUIDE){
+          state = START;
+        }
+      }
 
-    std::string frame;
-    std::stringstream out;
-    interval = spriteclock.getElapsedTime();
+      if (event.key.code == sf::Keyboard::Space){
+        if (state == GUIDE){
+          text2.setCharacterSize(40);
+          text2.setString("HELP\nINSTRUCTIONS GOES HERE");
+          text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
+          state = BACK;
+          text.setString("BACK");
+          text.setPosition(400, 580);}
+          else if (state == CREDIT){
+            text2.setCharacterSize(40);
+            text2.setString("CREDIT GOES HERE");
+            text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
+            state = BACK;
+            text.setString("BACK");
+            text.setPosition(400, 580);
+          }
+            else if (state == BACK){
+              text2.setCharacterSize(60);
+              text2.setString("SPACE RODEO");
+              text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
+              state = START;
+              text.setString("START GAME\nHELP\nCREDIT\nEXIT GAME");
+              text.setPosition(400,350);
+            }
+              else{
+                select = true;
+              }
+            }
+            break;
+            default:
+            break;
+          }
+        }
+        if (state == EXIT){
+          icon.setPosition(300,450);
+        }
+        else if (state == QUIT) {
+          icon.setPosition(300,500);
+        }
+        else if (state == CREDIT){
+          icon.setPosition(300,450);
+        }
+        else if (state == GUIDE){
+          icon.setPosition(300,400);
+        }
+        else if (state == BACK){
+          icon.setPosition(300, 580);
+        }
+        else 
+          icon.setPosition(300,350);//START RETRY RESTART
+
+        if (state == START)
+          result = 0;
+        if (state == RESTART)
+          result = -i;
+        if (state == NEXTLEVEL)
+          result = 0;
+        if (state == RETRY)
+          result = -1;
+        if (state == EXIT || state == QUIT){
+          result = totallevel;
+        }
+        std::string frame;
+        std::stringstream out;
+        interval = spriteclock.getElapsedTime();
     out << int((21*150+interval.asMilliseconds())/150) % 42; // start from frame 21
     frame = out.str();
     _maintexture.loadFromFile("./bg/frame_"+frame+".jpg");
@@ -241,3 +297,5 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   }
   return result;
 }
+
+

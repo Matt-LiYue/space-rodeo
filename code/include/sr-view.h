@@ -11,9 +11,13 @@ class View{
     typedef enum {
       START,
       EXIT,
+      QUIT, //only for the main theme
+      GUIDE,
+      CREDIT,
       NEXTLEVEL,
       RETRY,
-      RESTART,} transtate;
+      RESTART,
+      BACK} transtate;
     View();
     int transitionscreen(int,int,bool,bool);
     void drawAll(std::vector<CircleModel*>&, std::vector<sf::Drawable*>&);
