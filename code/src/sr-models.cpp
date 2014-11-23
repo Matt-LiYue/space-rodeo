@@ -75,7 +75,7 @@ void Models::parse(){
   std::stringstream out;
   out << _currentlevel;
   currentlevel = out.str();
-  std::string filename = "level" + currentlevel + ".txt";
+  std::string filename = "./levels/level" + currentlevel + ".txt";
   std::ifstream input;
   input.open(filename.c_str());
   
