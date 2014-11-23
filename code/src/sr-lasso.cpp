@@ -5,6 +5,7 @@ Lasso::Lasso(int radius, float length) {
 	
 	hasAnimation = true;
 	draw = false;
+	_lassoState = HELD;
 	_movable = true;
 	_length = length;
   setRadius(radius);

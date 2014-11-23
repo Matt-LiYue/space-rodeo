@@ -160,7 +160,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       text2.setString("    Congratulations!\nYou complete this game!");
       text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = RESTART;
-      text.setString("MAIN SCEME\n\nEXIT GAME");
+      text.setString("MAIN SCREEN\n\nEXIT GAME");
     }
     else {
       text2.setCharacterSize(50);
