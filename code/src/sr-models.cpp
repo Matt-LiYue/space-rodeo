@@ -68,111 +68,17 @@ int Models::getcowno(){
   return _totalcow;
 }
 
-//void Models::parse(){
-//  char c;
-//  int x = 0;
-//  int y = 1;
-//  int width, height;
-//  _totalcow = 0;
-//  std::string currentlevel;
-//  std::stringstream out;
-//  out << _currentlevel;
-//  currentlevel = out.str();
-//  std::string filename = "./levels/level" + currentlevel + ".txt";
-//  std::ifstream input;
-//  input.open(filename.c_str());
-//  
-//  if(input.fail()){
-//    std::cout << "ERROR: File did not open";
-//    exit(1);
-//  }
-//  
-//  while (input.good()) {
-//    c = input.get();
-//    //std::cout << c;
-//    
-//    if (c == '\n'){
-//      y += 1;
-//      x = 0;
-//    }
-//    else {
-//      x += 1;
-//    }
-//    
-//    //std::cout << "x,y: " << x << "," << y << "\n";
-//    switch (c){
-//      case 'S':
-//      width = x * 100 - 50;
-//      height = y * 100;
-//      _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
-//      _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
-//      _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
-//			_drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getRope());
-//      break;
-//
-//      case 'C':
-//      width = x * 100 - 50;
-//      height = y * 100;
-//      _circlemodels.push_back(new Cow(sf::Vector2f(width,height),20));
-//      _totalcow++;
-//      break;
-//
-//      case 'P':
-//      width = x * 100 - 50;
-//      height = y * 100;
-//      _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,50));
-//      break;
-//
-//      case 'R':
-//      width = x * 100 - 50;
-//      height = y * 100;
-//      _circlemodels.push_back(new SpaceRanch(sf::Vector2f(width,height),70));
-//      break;
-//      
-//      case 'W':
-//      width = x * 100 - 50;
-//      height = y * 100;
-//      _circlemodels.push_back(new Wormhole(sf::Vector2f(width,height),50));
-//      break;
-//      
-//      case 'A':
-//      width = x * 100 + 100;
-//      height = y * 100 + 100;
-//      _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),30,sf::Vector2f(-80,80)));
-//      break;
-//
-//      case 'O':
-//      width = x * 100 - 50;
-//      height = y * 100;
-//      _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),60,60,100,3,20,50));
-//
-//      default:
-//      break;
-//    } 
-//  }
-//  for (int i=0; i<_circlemodels.size(); i++) {
-//    float r = _circlemodels[i]->getRadius();
-//    sf::Vector2f center = _circlemodels[i]->getPosition();
-//    _circlemodels[i]->setOrigin(sf::Vector2f(r,r));
-//    _circlemodels[i]->setPosition(center);
-//  }
-//
-//  for(int i=0; i < _circlemodels.size(); i++) {
-//    CircleModel* c = _circlemodels[i];
-//    if (c->hasAnimation) {
-//      _animations.push_back(c->getAnimation());
-//    }
-//  }
-//}
-
 void Models::parse(){
-  std::string line;
-  
+  char c;
+  int x = 0;
+  int y = 1;
+  int width, height;
+  _totalcow = 0;
   std::string currentlevel;
   std::stringstream out;
   out << _currentlevel;
   currentlevel = out.str();
-  std::string filename = "./levels/arguments" + currentlevel + ".txt";
+  std::string filename = "./levels/level" + currentlevel + ".txt";
   std::ifstream input;
   input.open(filename.c_str());
   
@@ -181,50 +87,68 @@ void Models::parse(){
     exit(1);
   }
   
-  while (std::getline(input, line)) {
-    std::istringstream iss(line);
-    char type;
-    int height, width, radius, gravity, burst, start, end, x, y, point, period;
-    if(!(iss >> type >> height >> width >> radius >> gravity >> burst >> x >> y >> point >> period)){
-      std::cout << "ERROR";
+  while (input.good()) {
+    c = input.get();
+    //std::cout << c;
+    
+    if (c == '\n'){
+      y += 1;
+      x = 0;
+    }
+    else {
+      x += 1;
     }
     
-    switch (type) {
+    //std::cout << "x,y: " << x << "," << y << "\n";
+    switch (c){
       case 'S':
-        _circlemodels.push_back(new Ship(sf::Vector2f(width,height), radius, burst));
-        _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
-        _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
-        _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getRope());
-        break;
-        
+      width = x * 100 - 50;
+      height = y * 100;
+      _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
+      _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
+      _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
+			_drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getRope());
+      break;
+
       case 'C':
-        _circlemodels.push_back(new Cow(sf::Vector2f(width,height),radius));
-        _totalcow++;
-        break;
-        
+      width = x * 100 - 50;
+      height = y * 100;
+      _circlemodels.push_back(new Cow(sf::Vector2f(width,height),20));
+      _totalcow++;
+      break;
+
       case 'P':
-        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),radius,gravity));
-        break;
-        
+      width = x * 100 - 50;
+      height = y * 100;
+      _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,50));
+      break;
+
       case 'R':
-        _circlemodels.push_back(new SpaceRanch(sf::Vector2f(width,height),radius));
-        break;
-        
+      width = x * 100 - 50;
+      height = y * 100;
+      _circlemodels.push_back(new SpaceRanch(sf::Vector2f(width,height),70));
+      break;
+      
       case 'W':
-        _circlemodels.push_back(new Wormhole(sf::Vector2f(width,height),radius));
-        break;
-        
+      width = x * 100 - 50;
+      height = y * 100;
+      _circlemodels.push_back(new Wormhole(sf::Vector2f(width,height),50));
+      break;
+      
       case 'A':
-        _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),radius,sf::Vector2f(x,y)));
-        break;
-        
+      width = x * 100 + 100;
+      height = y * 100 + 100;
+      _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),30,sf::Vector2f(-80,80)));
+      break;
+
       case 'O':
-        _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),x,y,point,period,radius,gravity));
-        
+      width = x * 100 - 50;
+      height = y * 100;
+      _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),60,60,100,3,20,50));
+
       default:
-        break;
-    }
-    
+      break;
+    } 
   }
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
@@ -232,13 +156,11 @@ void Models::parse(){
     _circlemodels[i]->setOrigin(sf::Vector2f(r,r));
     _circlemodels[i]->setPosition(center);
   }
-  
+
   for(int i=0; i < _circlemodels.size(); i++) {
     CircleModel* c = _circlemodels[i];
     if (c->hasAnimation) {
       _animations.push_back(c->getAnimation());
     }
   }
-
-  
 }
