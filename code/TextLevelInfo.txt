@@ -1,0 +1,11 @@
+How to write a level
+
+In the new level editor, there are 11 values per line.Each of these can be used as parameters for the objects placed on a map. If a value is not used for an object, simply use a zero for the parameter. Each parameter is separated by a single space. An example with the parameters is below.
+
+Object Width Height Radius Gravity Burst X Y Point Period
+S 300 100 30 5 0 0 0 0 0 0
+C 400 100 20 0 0 0 0 0 0 0
+R 500 100 50 0 0 0 0 0 0 0
+A 200 100 20 10 0 -5 5 10 10
+
+Please see level0.txt as an example.

@@ -21,6 +21,8 @@ class Models{
     void parse();
     void restart();
     int getcowno();
+    void tokenizer(const std::string& str, std::vector<std::string>& tokens, std::string& delimiters);
+  
   private:
     std::vector<CircleModel*> _circlemodels;
     std::vector<sf::Drawable*> _drawables;

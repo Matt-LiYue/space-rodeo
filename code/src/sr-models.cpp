@@ -69,16 +69,15 @@ int Models::getcowno(){
 }
 
 void Models::parse(){
-  char c;
-  int x = 0;
-  int y = 1;
-  int width, height;
-  _totalcow = 0;
+  
+  
+  std::string line;
+  std::string s = " ";
   std::string currentlevel;
   std::stringstream out;
   out << _currentlevel;
   currentlevel = out.str();
-  std::string filename = "./levels/level" + currentlevel + ".txt";
+  std::string filename = "level" + currentlevel + ".txt";
   std::ifstream input;
   input.open(filename.c_str());
   
@@ -87,68 +86,73 @@ void Models::parse(){
     exit(1);
   }
   
-  while (input.good()) {
-    c = input.get();
-    //std::cout << c;
+  while (std::getline(input,line)) {
+    std::vector<std::string> tokens;
+    tokenizer(line, tokens, s);
+    //std::cout << line << "\n";
+//    for (int i=0; i<tokens.size(); i++) {
+//      std::cout << tokens[i] << "\n";
+//    }
+//    std::cout << "end";
     
-    if (c == '\n'){
-      y += 1;
-      x = 0;
-    }
-    else {
-      x += 1;
-    }
     
-    //std::cout << "x,y: " << x << "," << y << "\n";
-    switch (c){
+    std::string s0 = tokens[0];
+    char type[s0.size()];
+    std::strcpy(type,s0.c_str());
+    std::string s1 = tokens[1];
+    int width = std::stoi(s1);
+    std::string s2 = tokens[2];
+    int height = std::stoi(s2);
+    std::string s3 = tokens[3];
+    int radius = std::stoi(s3);
+    std::string s4 = tokens[4];
+    int gravity = std::stoi(s4);
+    std::string s5 = tokens[5];
+    int burst = std::stoi(s5);
+    std::string s6 = tokens[6];
+    int x = std::stoi(s6);
+    std::string s7 = tokens[7];
+    int y = std::stoi(s7);
+    std::string s8 = tokens[8];
+    int point = std::stoi(s8);
+    std::string s9 = tokens[9];
+    int period = std::stoi(s9);
+    
+    switch (*type) {
       case 'S':
-      width = x * 100 - 50;
-      height = y * 100;
-      _circlemodels.push_back(new Ship(sf::Vector2f(width,height), 20, 5));
-      _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
-      _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
-			_drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getRope());
-      break;
-
+        _circlemodels.push_back(new Ship(sf::Vector2f(width,height), radius, burst));
+        _circlemodels.push_back(((Ship*) _circlemodels.back())->getLasso());
+        _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
+        _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getRope());
+        break;
+        
       case 'C':
-      width = x * 100 - 50;
-      height = y * 100;
-      _circlemodels.push_back(new Cow(sf::Vector2f(width,height),20));
-      _totalcow++;
-      break;
-
+        _circlemodels.push_back(new Cow(sf::Vector2f(width,height),radius));
+         _totalcow++;
+        break;
+        
       case 'P':
-      width = x * 100 - 50;
-      height = y * 100;
-      _circlemodels.push_back(new Planet(sf::Vector2f(width,height),30,50));
-      break;
-
+        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),radius,gravity));
+        break;
+        
       case 'R':
-      width = x * 100 - 50;
-      height = y * 100;
-      _circlemodels.push_back(new SpaceRanch(sf::Vector2f(width,height),70));
-      break;
-      
+        _circlemodels.push_back(new SpaceRanch(sf::Vector2f(width,height),radius));
+        break;
+        
       case 'W':
-      width = x * 100 - 50;
-      height = y * 100;
-      _circlemodels.push_back(new Wormhole(sf::Vector2f(width,height),50));
-      break;
-      
+        _circlemodels.push_back(new Wormhole(sf::Vector2f(width,height),radius));
+        break;
+        
       case 'A':
-      width = x * 100 + 100;
-      height = y * 100 + 100;
-      _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),30,sf::Vector2f(-80,80)));
-      break;
-
+        _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),radius,sf::Vector2f(x,y)));
+        break;
+        
       case 'O':
-      width = x * 100 - 50;
-      height = y * 100;
-      _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),60,60,100,3,20,50));
-
+        _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),x,y,point,period,radius,gravity));
+        
       default:
-      break;
-    } 
+        break;
+    }
   }
   for (int i=0; i<_circlemodels.size(); i++) {
     float r = _circlemodels[i]->getRadius();
@@ -164,3 +168,17 @@ void Models::parse(){
     }
   }
 }
+
+void Models::tokenizer(const std::string& str, std::vector<std::string>& tokens, std::string& delimiters){
+  
+  std::string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+  std::string::size_type pos     = str.find_first_of(delimiters, lastPos);
+  
+  while (std::string::npos != pos || std::string::npos != lastPos){
+    tokens.push_back(str.substr(lastPos, pos - lastPos));
+    lastPos = str.find_first_not_of(delimiters, pos);
+    pos = str.find_first_of(delimiters, lastPos);
+  }
+  
+}
+
