@@ -191,7 +191,7 @@ void Models::tokenizer(const std::string& str, std::vector<std::string>& tokens,
   
 }
 
-int Models::stringToInt(const std::string& str){
+int Models::strToInt(const std::string& str){
   int result;
   std::istringstream ss(str);
   ss.imbue(std::locale::classic());
