@@ -22,6 +22,7 @@ class Models{
     void restart();
     int getcowno();
     void tokenizer(const std::string& str, std::vector<std::string>& tokens, std::string& delimiters);
+    int strToInt(const std::string& str);
   
   private:
     std::vector<CircleModel*> _circlemodels;

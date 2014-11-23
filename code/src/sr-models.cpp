@@ -69,8 +69,6 @@ int Models::getcowno(){
 }
 
 void Models::parse(){
-  
-  
   std::string line;
   std::string s = " ";
   std::string currentlevel;
@@ -96,11 +94,17 @@ void Models::parse(){
 //    std::cout << "end";
     
     
-    std::string s0 = tokens[0];
+   std::string s0 = tokens[0];
     char type[s0.size()];
-    std::strcpy(type,s0.c_str());
+   std::strcpy(type,s0.c_str());
+    
     std::string s1 = tokens[1];
-    int width = std::stoi(s1);
+    int width = stringToInt(s1);
+    std::cout << width;
+
+    
+   // std::string s1 = tokens[1];
+   // int width = std::stoi(s1);
     std::string s2 = tokens[2];
     int height = std::stoi(s2);
     std::string s3 = tokens[3];
@@ -117,6 +121,9 @@ void Models::parse(){
     int point = std::stoi(s8);
     std::string s9 = tokens[9];
     int period = std::stoi(s9);
+  
+
+    
     
     switch (*type) {
       case 'S':
@@ -182,3 +189,11 @@ void Models::tokenizer(const std::string& str, std::vector<std::string>& tokens,
   
 }
 
+int Models::stringToInt(const std::string& str){
+  int result;
+  std::istringstream ss(str);
+  ss.imbue(std::locale::classic());
+  ss >> result;
+  // return !ss.fail() && ss.eof();
+  return result;
+}
