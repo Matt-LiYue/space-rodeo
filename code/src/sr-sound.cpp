@@ -24,14 +24,14 @@ void GameSound::burst(){
 }
 void GameSound::collect(){
   if (!_buffer.loadFromFile("./resources/collect.wav")){
-    std::cout <<"ERROR: burst file did not load";
+    std::cout <<"ERROR: collect file did not load";
   }
   _sound.setBuffer(_buffer);
   _sound.play();
 }
 void GameSound::crash(){
   if (!_buffer.loadFromFile("./resources/crash.wav")){
-    std::cout <<"ERROR: burst file did not load";
+    std::cout <<"ERROR: crash file did not load";
   }
   
   _sound.setBuffer(_buffer);
@@ -40,7 +40,7 @@ void GameSound::crash(){
 }
 void GameSound::complete(){
   if (!_buffer.loadFromFile("./resources/complete.wav")){
-    std::cout <<"ERROR: burst file did not load";
+    std::cout <<"ERROR: complete file did not load";
   }
   
   _sound.setBuffer(_buffer);

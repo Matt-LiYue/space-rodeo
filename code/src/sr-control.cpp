@@ -5,6 +5,10 @@
 #include "sr-control.h"
 #include "sr-utils.h"
 
+sf::Music music;
+if(!music.openFromFile("./resources/song.wav")){
+  std::cout <<"ERROR: song file did not load";
+  }
 
 Control::Control(){
   _levelfinished = false;
@@ -269,6 +273,13 @@ void Control::handleEvent(sf::Event event){
 		else if (event.key.code == sf::Keyboard::LShift) {
 			_ship->getGuideline()->showLine = true;
 		}
+    else if (event.key.code == sf::Keyboard::M){
+      music.setLoop(true);
+      music.play();
+    }
+    else if(event.key.code == sf::Keyboard::N){
+      music.stop();
+    }
 		
   }
   else if (event.type == sf::Event::KeyReleased) {
