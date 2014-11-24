@@ -6,9 +6,8 @@
 #include "sr-utils.h"
 
 sf::Music music;
-if(!music.openFromFile("./resources/song.wav")){
-  std::cout <<"ERROR: song file did not load";
-  }
+sf::Sound sound;
+sf::SoundBuffer buffer;
 
 Control::Control(){
   _levelfinished = false;
@@ -110,21 +109,40 @@ void Control::update(float timeInterval) {
     if (_ship->intersects(cow, cow->getRadius() + _ship->getRadius()*0.25)) {
       _removeModel(cow);
       _hud->setcow(_hud->getcow()+1);
-      _gsound.collect();
+      
+      if (!buffer.loadFromFile("./resources/collect.wav")){
+        std::cout <<"ERROR: collect file did not load";
+      }
+      sound.setBuffer(buffer);
+      sound.play();
+      
     }
   }
   //Ranch
   if (_ship->intersects(_ranch,_ranch->getRadius())) {
-    _gsound.complete();
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
+    
+    if (!buffer.loadFromFile("./resources/complete.wav")){
+      std::cout <<"ERROR: complete file did not load";
+    }
+    sound.setBuffer(buffer);
+    sound.play();
+    
+    
   }
   //Asteroid
   for (int j = 0; j<_asteroids.size();j++){
     Asteroid* asteroid = _asteroids[j];
     if (_ship -> intersects(asteroid)){
-      _gsound.crash();
       std::cout << "ship hit asteroid\n";
+      
+      if (!buffer.loadFromFile("./resources/crash.wav")){
+        std::cout <<"ERROR: crash file did not load";
+      }
+      sound.setBuffer(buffer);
+      sound.play();
+
       setcrash(true);
       die();
     }
@@ -135,7 +153,13 @@ void Control::update(float timeInterval) {
     //Planet
     if (_ship->intersects(planet)) {
       std::cout << "ship hit planet\n";
-      _gsound.crash();
+      
+      if (!buffer.loadFromFile("./resources/crash.wav")){
+        std::cout <<"ERROR: crash file did not load";
+      }
+      sound.setBuffer(buffer);
+      sound.play();
+      
       setcrash(true);
       die();
     }
@@ -199,10 +223,15 @@ void Control::update(float timeInterval) {
       for (int j=0; j < _cows.size(); j++) {
         Cow* cow = _cows[j];
         if (lasso->intersects(cow, cow->getRadius())) {
-          _gsound.collect();
           _removeModel(cow);
           _hud->setcow(_hud->getcow()+1);
           lasso->setState(Lasso::CAUGHT);
+          
+          if (!buffer.loadFromFile("./resources/collect.wav")){
+            std::cout <<"ERROR: collect file did not load";
+          }
+          sound.setBuffer(buffer);
+          sound.play();
         }
       }
         /* destination intersect (point-circle)*/
@@ -246,7 +275,13 @@ void Control::handleEvent(sf::Event event){
           _hud -> setburst(_hud->getburst()-1);
         }
       }
-      _gsound.burst();
+      if (!buffer.loadFromFile("./resources/burst.wav")){
+        std::cout <<"ERROR: burst file did not load";
+      }
+      
+      sound.setBuffer(buffer);
+      sound.play();
+
     }
     else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
       _ship->shoot(0);
@@ -274,6 +309,9 @@ void Control::handleEvent(sf::Event event){
 			_ship->getGuideline()->showLine = true;
 		}
     else if (event.key.code == sf::Keyboard::M){
+      if(!music.openFromFile("./resources/song.wav")){
+        std::cout <<"ERROR: song file did not load";
+      }
       music.setLoop(true);
       music.play();
     }
@@ -321,6 +359,12 @@ void Control::die(){
   _hud->setlife(_hud->getlife() - 1);
   if (_hud->getlife() < 0){
     _die = 2;//game over
+    if (!buffer.loadFromFile("./resources/die.wav")){
+      std::cout <<"ERROR: crash file did not load";
+    }
+    sound.setBuffer(buffer);
+    sound.play();
+    
   }
   else{
     _die = 1;//one life

@@ -222,14 +222,14 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       if (event.key.code == sf::Keyboard::Space){
         if (state == GUIDE){
           text2.setCharacterSize(40);
-          text2.setString("HELP\nINSTRUCTIONS GOES HERE");
+          text2.setString("Burst: Up Arrow/W, Shoot Lasso: Spacebar, Guide Line: Shift, Brake: Down Arrow/S");
           text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
           state = BACK;
           text.setString("BACK");
           text.setPosition(400, 580);}
           else if (state == CREDIT){
             text2.setCharacterSize(40);
-            text2.setString("CREDIT GOES HERE");
+            text2.setString("CREDITS: ART");
             text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
             state = BACK;
             text.setString("BACK");
