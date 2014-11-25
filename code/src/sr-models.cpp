@@ -8,9 +8,9 @@
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){
   _currentlevel = level;
+  _totalcow = 0;
   _hud.initialize(30, sf::Vector2f(850,50),3,3,0);
   parse();
-  
   std::cout << "Original models: " << _circlemodels.size() << std::endl;
 }
 
@@ -30,6 +30,7 @@ std::vector<sf::Drawable*>* Models::getDrawables() {
 void Models::restart(){
   _circlemodels.clear();
   _drawables.clear();
+  _totalcow = 0;
   parse();
 }
 

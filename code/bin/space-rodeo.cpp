@@ -71,8 +71,10 @@ int main(int argc, char** argv){
 
   }
   if (myView.isRun()){
-    if (myModels.getcowno() != myModels.getHUD().getcow())
+    if (myModels.getcowno() != myModels.getHUD().getcow()){
       insufcow = true;
+      std::cout << myModels.getcowno();
+    }
     i+= myView.transitionscreen(i+1,totallevel,die,insufcow);
     die = false;
     insufcow = false;
