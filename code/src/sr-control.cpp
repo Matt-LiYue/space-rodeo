@@ -117,7 +117,6 @@ void Control::update(float timeInterval) {
   if (_ship->intersects(_ranch,_ranch->getRadius())) {
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
-    
     GameSound::complete();
     
     
