@@ -9,12 +9,12 @@
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
 
+const int totallevel = 6;
 int main(int argc, char** argv){
   GameSound::inisound();
   View myView;
   sf::Time _interval;
   sf::Clock _mainclock;
-  int totallevel = 4;
   bool die = false;
   bool insufcow = false;
   for (int i = 0 ; i < totallevel; i++){//i<=totallevel is just for displaying game finished screen
@@ -76,7 +76,6 @@ int main(int argc, char** argv){
   if (myView.isRun()){
     if (myModels.getcowno() != myModels.getHUD().getcow()){
       insufcow = true;
-      std::cout << myModels.getcowno();
     }
     i+= myView.transitionscreen(i+1,totallevel,die,insufcow);
     die = false;
