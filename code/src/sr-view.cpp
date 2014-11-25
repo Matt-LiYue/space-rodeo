@@ -156,7 +156,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       text2.setString("SPACE RODEO");
       text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
       state = START;
-      text.setString("START GAME\nHELP\nCREDIT\nEXIT GAME");
+      text.setString("START GAME\nCONTROLS\nCREDITS\nEXIT GAME");
     }
     else if (i == totallevel){
       text2.setCharacterSize(45);
@@ -222,7 +222,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       if (event.key.code == sf::Keyboard::Space){
         if (state == GUIDE){
           text2.setCharacterSize(40);
-          text2.setString("Burst: Up Arrow/W, Shoot Lasso: Spacebar, Guide Line: Shift, Brake: Down Arrow/S");
+          text2.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN");
           text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
           state = BACK;
           text.setString("BACK");
@@ -240,7 +240,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
               text2.setString("SPACE RODEO");
               text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
               state = START;
-              text.setString("START GAME\nHELP\nCREDIT\nEXIT GAME");
+              text.setString("START GAME\nCONTROLS\nCREDITS\nEXIT GAME");
               text.setPosition(400,350);
             }
               else{
