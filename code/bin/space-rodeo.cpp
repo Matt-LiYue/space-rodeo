@@ -4,10 +4,13 @@
 #include "sr-models.h"
 #include "sr-hud.h"
 #include <iostream>
+#include "sr-sound.h"
+
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
 
 int main(int argc, char** argv){
+  GameSound::inisound();
   View myView;
   sf::Time _interval;
   sf::Clock _mainclock;

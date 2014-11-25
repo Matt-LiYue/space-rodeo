@@ -3,7 +3,6 @@
 //
 //
 //
-
 #ifndef ____sr_sound__
 #define ____sr_sound__
 
@@ -13,15 +12,15 @@
 class GameSound {
 public:
   GameSound();
-  void burst();
-  void collect();
-  void crash();
-  void complete();
+  static void inisound();
+  static void burst();
+  static void collect();
+  static void crash();
+  static void complete();
+  static void die();
+  static void musicon();
+  static void musicoff();
   
-private:
-  sf::Sound _sound;
-  sf::SoundBuffer _buffer;
-  int _play;
 };
 
 
