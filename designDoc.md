@@ -14,21 +14,19 @@ __Space Rodeo - Design Document__
 * Joseph Soultanis
 
 ####__Oct 15, 2014__####
-![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Screen%20Shot%202014-10-13%20at%2012.26.41%20PM.png "Space Rodeo")
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Mainscreen.png "Space Rodeo")
 
 ### __2. Executive summary__
 
 
 ----------
 
-
-Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows and defeat the evil cow overlord. Along the way he must master and make use of the physics of the Milky Way.
+Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows. Along the way he must master and make use of the physics of the Milky Way.
 
 ### __3. Overview__
 
 
 ----------
-
 
    * Title: Space Rodeo
    * Tagline: “Would you like fries with that milkshake?”
@@ -118,7 +116,12 @@ __Refer to the following graph__
 
 ----------
 
-We designs our art in an Angry Bird style. 
+We designs our art in an Angry Bird style. __Examples__ are as follows:
+<img src="./code/art/planet.png" alt="Drawing" style="width: 70px;"/>
+<img src="./code/art/sun.png" alt="Drawing" style="width: 70px;"/>
+<img src="./code/art/ranch.png" alt="Drawing" style="width: 70px;"/>
+<img src="./code/art/asteroid.png" alt="Drawing" style="width: 70px;"/>
+<img src="./code/art/wormhole.png" alt="Drawing" style="width: 70px;"/>
 
 ###__10.UI story boards__
 
@@ -127,7 +130,10 @@ We designs our art in an Angry Bird style.
 
 __Sample Sketch:__
 
-![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/SpaceRodeo_illustration.jpg "Space Rodeo")
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/easylevel.png "Space Rodeo")
+
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/hardlevel.png "Space Rodeo")
+
 ###__11.Tags & Dialog__
 
 
@@ -135,13 +141,10 @@ __Sample Sketch:__
 
 __TAGS:__
 
-__Space Adventure__
 
 __Puzzle Solution__
 
 __Collection__
-
-__Upgrade__
 
 __Lasso__
 
@@ -160,7 +163,7 @@ __DIALOG EXAMPLES:__
 
 ----------
 
-We will simply use SFML to implement our game. At this stage no further technology is needed.
+We will simply use SFML to implement our game. No further technology or library is needed.
 
 
 ###__13.Software architecture__
@@ -170,19 +173,21 @@ We will simply use SFML to implement our game. At this stage no further technolo
 
 __Software architecture:__
 
-![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Architecture.jpg "Space Rodeo")
+We use MVC framework to model our name
 
-__UML:__
+__Model:__ Model calss will store all elements in the game. It maintains a big vectors to store all the objects in the game.
 
-![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/UML%20Design.jpg "Space Rodeo")
+__View:__ View class is in charge of rendering. It takes input from Model class, classify the objects into multiple vectors, and draw the objects and their special features
+
+__Controller:__ It takes input from the user (Key strokes) and update the models according to the input. It also updates the models in intervals. 
 
 ###__14.Controls__
-We control the spaceship of Billy traveling in the space. The control mechanism is much like Angry Birds. Player almost loses control of track of the space after firing it with one exception -- bursts that can escape the gravity of a planet. Player has the ability to shoot lassos when flying or trailing lassos when orbiting a planet to collect cows. Player needs to plan ahead to make good use of limited bursts to collect as many as cows and eventually fly to the destination of each level. There are 4 kinds of control.
+We control the spaceship of Billy traveling in the space. Player almost loses control of track of the space after firing it with 2 exceptions -- bursts that can escape the gravity of a planet and speed up and -- Brakes that decelerate the spaceship. Player has the ability to shoot lassos when flying to collect cows. Player needs to plan ahead to make good use of limited bursts to collect all cows and eventually fly to the destination of each level -- Space Ranch. There are 4 kinds of control.
 
 * __Launching:__ In each level, there is a starting point at which the spaceship can be shot into the space. Player presses "left" and "right" arrows to change the direction. Afterward player press "enter" to launch the spaceship.
 * __Burst:__ Player has limited burst in each level. The burst number depends on the spaceship Billy owns. When using a burst (press "space") , the spaceship can temporarily escape the space effect (escape orbiting a planet or escape black holes). 
-* __Shoot Lasso:__ When spaceship is flying, player can press "up" or "down" to shoot a lasso in corresponding direction to capture flying mad cows. 
-* __Trailing Lasso:__ When spaceship is orbiting a planet, player can press "enter" to start trailing lasso. After circling a planet, all walking cows in the planet will be captured.
+* __Shoot Lasso:__ When spaceship is flying, player can press "up", "left", or "right" to shoot a lasso in corresponding direction to capture flying mad cows. 
+* __Brake:__ When spaceship is in motion, player can press "down" to brake. Brake enables the spaceship to decelerate. Player has unlimited use of brake.
 
 ----------
 
@@ -191,23 +196,23 @@ We control the spaceship of Billy traveling in the space. The control mechanism 
 
 ----------
 
-Space Rodeo has multiple levels. To reach the next level, player has to collect sufficient number (level-dependent) of cows in the current level, as well as reach the destination -- Space Ranch --  of the current level. In each level, player will deal with new space effect. An illustration is shown below
-![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/SpaceRodeo_illustration.jpg "Space Rodeo")
-The lower part of this figure shows the most basic level, player simply fires the spaceship in the direction of Space Ranch. Then the level is finished. The higher part of this figure shows a more advanced level. In order to finish this level, player needs to deliberate how to capture the flying mad cow and reaches the Space Ranch while not crashing on the obstacles. In this level, player can take advantage of the gravity of the planet to change its track. 
+Space Rodeo has multiple levels. To reach the next level, player has to collect all of cows in the current level, as well as reach the destination -- Space Ranch --  of the current level. In each level, player will deal with various space effect. An illustration is shown below
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/easylevel.png "Space Rodeo")
+
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/hardlevel.png "Space Rodeo")
+The first of this figure shows the most basic level, player simply fires the spaceship in the direction of Space Ranch, collecting the cow when flying through it or lasso it. Then the level is finished. The second graph shows a more advanced level. In order to finish this level, player needs to deliberate how to capture the flying mad cow and reaches the Space Ranch while not crashing on the obstacles. In this level, player can take advantage of the gravity of the planet to change its track. 
 
 
 ###__16.Mechanics analysis__
 
 
 ----------
-* __Map Objectives:__ Player must capture a certain quota of cows on each level and reach the Space Ranch on the map. He lassos cows by either encircling cows on planets while orbiting the planets or by shooting a lasso rope in one direction
-* __Survival:__ Player has finite number of lives which are lost upon crashes into objects and the map edges
-* __Movement:__ Player controls his space ship’s movement by rotating his ship and by firing a rocket. He may 
-* __Gravity:__ Planet in the map has gravity impact on the spaceship, which will lead to crash, orbit, or curve depending on the track of the spaceship.
+* __Map Objectives:__ Player must capture a all cows on each level and reach the Space Ranch on the map. He lassos cows by traveling through them or shooting a lasso rope in one direction
+* __Survival:__ Player has finite number of lives which are lost upon crashes into objects or when out of the map edges
+* __Movement:__ Player controls his space ship’s movement by rotating his ship and by firing a rocket. He may take advantage of planet gravity to orbit planets, and use burst to escape the orbiting.
+* __Gravity:__ Planet in the map has gravity impact on the spaceship, which will lead to crash, or orbit depending on the track of the spaceship. Spaceship will also be pulled toward the planet slowly so player cannot wait too long before escaping a planet.
 * __Space Effects:__ Player must engage with various space effects such as worm holes (map teleportation effect) and deadly asteroids.
 * __Burst:__ Player has limited number of bursts to alter the track of spaceship in order to collect more cows or avoid dangers. 
-* __Cow usage:__ Player aims to collect more mad cow for currency, which can be used in Space Shop.
-* __Space Shop:__ Player can purchase advanced spaceship, spaceship parts and even life in Space Shop. Space Shop locates at certain levels, which can be visited by traveling through it.
 
 
 ###__17.Schedule__
@@ -219,8 +224,6 @@ The lower part of this figure shows the most basic level, player simply fires th
 > Oct 22 -- Milestone: game playable and tolerable visuals
 
 > Oct 23 -- Progress presentation
-
-> Oct 31 -- Shop System
 
 > Nov 7 --  Enrich elements and levels 
 
@@ -258,6 +261,20 @@ __Highlight:__
 * __Game enhencement__: Added Lasso and animation, various space effect. More levels are implemented. 
 * __TODO__: More levels, space effects. Game start and game over screen, level transitions. 
 
-
 [click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_11_10.md)
+
+####__Report on Nov 24, 2014__
+__Highlight__
+* __A real Billy__
+* __Smooth orbit__
+* __Guidline__
+* __Brake__
+* __Moving Planet and Planet Gravity__
+* __More animations__:crash, rope, lasso, background, burst, brake
+* __Transition screens__
+* __More levels (6 in total)__
+* __Music and more sound effects__
+
+
+[click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_11_24.md)
 
