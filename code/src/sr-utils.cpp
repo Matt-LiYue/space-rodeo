@@ -24,7 +24,7 @@ float utils::norm(sf::Vector2f v) {
   return sqrt(norm_sqrd(v));
 }
 
-sf::Vector2f utils::rotate(sf::Vector2f v, float angle) {
+sf::Vector2f utils::rotate(sf::Vector2f v, float angle) { //radians
   return sf::Vector2f(v.x*cos(angle) - v.y*sin(angle), v.x*sin(angle) + v.y*cos(angle));
 }
 

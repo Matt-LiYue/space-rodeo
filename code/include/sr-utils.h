@@ -7,7 +7,7 @@ public:
 	static float dot(sf::Vector2f,sf::Vector2f);
 	static float norm_sqrd(sf::Vector2f v);
 	static float norm(sf::Vector2f v);
-	static sf::Vector2f rotate(sf::Vector2f, float);
+	static sf::Vector2f rotate(sf::Vector2f, float radians);
 	static bool within(float,float,float);
 	static bool withinBox(sf::Vector2f,float,float,float,float);
 	static float linedotdistance( sf::Vector2f, sf::Vector2f, sf::Vector2f);

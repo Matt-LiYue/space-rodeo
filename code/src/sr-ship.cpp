@@ -9,6 +9,7 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
   _brakeMagnitude = 300;
   
   _lasso = new Lasso(20,100);
+	accelScale = 0;
 	_lasso->getAnimation()->advanceFrame(); // hack for unset texture bug
   _guideline = new Guideline();
   _movable = true;
@@ -42,9 +43,17 @@ Ship::Ship(sf::Vector2f pos, int radius, int burst){
 
 sf::Vector2f Ship::updatePosition(float deltaTime) {
   sf::Vector2f planPos;
-  
+ 
   // update velocity
   sf::Vector2f newVelocity = _spd + _accel * deltaTime;
+	float newSpd = fmax(spdSaved + accelScale * deltaTime, _lowSpd * 5); // hack
+	if (newSpd > _baseSpd && spdSaved <= _baseSpd) {
+		newSpd = _baseSpd;
+		accelScale = 0;
+	}
+	spdSaved = newSpd;
+	//newSpd = fmin(newSpd, _baseSpd);
+	
   if (utils::norm(newVelocity) > _baseSpd && utils::norm(_spd) <= _baseSpd) { // don't accel past base spd
     _spd = _baseSpd * _spd / utils::norm(_spd);
     _accel *= 0.f;
@@ -56,14 +65,16 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
     else
       _spd = newVelocity;
   }
-  
+	
   if (_shipState == ORBIT) {
     int sign = 1;
     if (_angularVelocity < 0) sign = -1;
     float orbitRadius = utils::norm(getPosition() - _orbiting->getPosition());
-    _angularVelocity = sign * utils::norm(_spd) / orbitRadius;
+    _angularVelocity = sign * newSpd / orbitRadius;
   }
 
+
+  std::cout << accelScale << std::endl;
   // update position
   switch (_shipState) {
     case REST: break;    
@@ -77,9 +88,12 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
       break;
     case ORBIT:
       planPos = _orbiting->getPosition();
-      setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
+		
+			setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
+			//_relPos += deltaTime *= 
       setSpd(_spd - _orbiting->getGravMag() * _relPos / utils::norm(_relPos));
-      _relPos += deltaTime * _spd;      
+      _relPos += deltaTime * _spd;
+			      
       setPosition(_relPos + planPos);
       break;
     case BURST:
@@ -138,7 +152,6 @@ void Ship::setAngularVelocity(float av) {
 }
 
 float Ship::getAngularVelocity() {
-  std::cout << "ship AngularVelocity: " << _angularVelocity << std::endl;
   return _angularVelocity;
 }
 
@@ -172,7 +185,7 @@ void Ship::brake(bool on) {
   if (utils::norm(_spd) == 0) return; // avoid divide by 0
   if (on) {
     _accel = -1.0f * _spd * _brakeMagnitude / utils::norm(_spd);
-    //std::cout << "braking, accel set to " << utils::norm(_accel) << std::endl;
+		accelScale = -1 * spdSaved * _brakeMagnitude / 100; // heack
   }
   else {
     if (utils::norm(_spd) < _baseSpd) { // accel back to to base speed
@@ -181,7 +194,12 @@ void Ship::brake(bool on) {
 		else {
 			_accel *= 0.f;
 		}
-    //std::cout << "brake off, accel set to " << utils::norm(_accel) << std::endl;
+		if (spdSaved < _baseSpd) {
+			accelScale = spdSaved * _brakeMagnitude / 100; //hack
+		}
+		else {
+			accelScale = 0;
+		}
   }
 }
 

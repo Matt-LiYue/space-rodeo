@@ -87,6 +87,7 @@ void Control::update(float timeInterval) {
     if (utils::dot(shipToPlanet, _ship->getSpd()) <= 0) {
       _ship->setState(Ship::ORBIT);
       _setAngularVelocities(_ship->getOrbitPlanet());
+			_ship->spdSaved = utils::norm(_ship->getSpd()); // save incoming spd
     }
   }
   
@@ -138,6 +139,7 @@ void Control::update(float timeInterval) {
   for (int j=0; j < _planets.size(); j++) {
     Planet* planet = _planets[j];
     //Planet
+
     if (_ship->intersects(planet)) {
       std::cout << "ship hit planet\n";
       
