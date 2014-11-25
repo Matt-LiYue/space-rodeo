@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-
+#include <cstring>
 
 //This Models will be in charge of storing all the elements in a map, and providing proper APIs for the VIEW Class to draw the elements.
 Models::Models(int level){
