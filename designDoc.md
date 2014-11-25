@@ -14,21 +14,19 @@ __Space Rodeo - Design Document__
 * Joseph Soultanis
 
 ####__Oct 15, 2014__####
-![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Screen%20Shot%202014-10-13%20at%2012.26.41%20PM.png "Space Rodeo")
+![here](https://github.com/mstrotta/space-rodeo/blob/master/materials/Mainscreen.png "Space Rodeo")
 
 ### __2. Executive summary__
 
 
 ----------
 
-
-Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows and defeat the evil cow overlord. Along the way he must master and make use of the physics of the Milky Way.
+Earth’s cows have been abducted into space by an Extraterrestrial Evil Cow Overlord and, if nothing is done to stop him, will be used as part of his Mad Cow army. The courageous cowgoat Billy the Kid ventures from his Wild West home into space to round up the lost cows. Along the way he must master and make use of the physics of the Milky Way.
 
 ### __3. Overview__
 
 
 ----------
-
 
    * Title: Space Rodeo
    * Tagline: “Would you like fries with that milkshake?”
@@ -118,7 +116,9 @@ __Refer to the following graph__
 
 ----------
 
-We designs our art in an Angry Bird style. 
+We designs our art in an Angry Bird style. __Examples__ are as follows:
+
+![here](https://github.com/mstrotta/space-rodeo/blob/master/art/ranch.png=200x "Space Rodeo")
 
 ###__10.UI story boards__
 
