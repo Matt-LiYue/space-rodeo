@@ -11,6 +11,6 @@ TEAM MEMBER:
 
 ---
 Demo Video:
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=lU942W5d
-" target="_blank"><img src="http://img.youtube.com/vi/lU942W5d/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=lU942W5d_IU
+" target="_blank"><img src="http://img.youtube.com/vi/lU942W5d_IU/0.jpg" 
 alt="Space Rodeo" width="240" height="180" border="10" /></a>
