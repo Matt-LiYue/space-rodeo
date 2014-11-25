@@ -117,8 +117,7 @@ __Refer to the following graph__
 ----------
 
 We designs our art in an Angry Bird style. __Examples__ are as follows:
-
-![here](./code/art/ranch.png =200x "Space Rodeo")
+<img src="./code/art/ranch.png" alt="Drawing" style="width: 200px;"/>
 
 ###__10.UI story boards__
 
