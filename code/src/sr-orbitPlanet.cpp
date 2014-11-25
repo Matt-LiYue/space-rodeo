@@ -5,10 +5,13 @@ OrbitPlanet::OrbitPlanet(sf::Vector2f center, float xRad, float yRad, int numPoi
 Planet(sf::Vector2f(center.x + xRad, center.y), planetRad, gravity) {
   
   std::cout << "creating orbit planet\n";
-  _ellipse = new Ellipse(xRad, yRad, numPoints);
-  _ellipse->setOrigin(xRad, yRad);
-  _ellipse->setPosition(center);
+  //_ellipse = new Ellipse(xRad, yRad, numPoints);
+  //_ellipse->setOrigin(xRad, yRad);
+  //_ellipse->setPosition(center);
   //_star = new Star(center, min(xRad,yRad)/2);
+	_xRad = xRad;
+	_yRad = yRad;
+	_center = center;
   _curTheta = 0;
   _prevTheta = 0;
   _dTime = 0;
@@ -19,10 +22,10 @@ Planet(sf::Vector2f(center.x + xRad, center.y), planetRad, gravity) {
 }
 
 void OrbitPlanet::updatePosition(float dTime) {
-  float a = _ellipse->xRad();
-  float b = _ellipse->yRad();
+  float a = _xRad;
+  float b = _yRad;
   float dTheta = dTime * _angularVelocity;
-  sf::Vector2f oldRelPos = getPosition() - _ellipse->getPosition();
+  sf::Vector2f oldRelPos = getPosition() - _center;
   float theta = atan2(oldRelPos.y, oldRelPos.x) + dTheta;
   sf::Vector2f newRelPos = sf::Vector2f(a * cos(theta), b * sin(theta));
   _spd = (newRelPos - oldRelPos) / dTime;
