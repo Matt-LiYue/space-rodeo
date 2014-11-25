@@ -222,7 +222,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       if (event.key.code == sf::Keyboard::Space){
         if (state == GUIDE){
           text2.setCharacterSize(40);
-          text2.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\n Music Off\n");
+          text2.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\n Music Off: N\n");
 
           text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
           state = BACK;
