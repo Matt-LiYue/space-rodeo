@@ -6,12 +6,16 @@
 #include "sr-utils.h"
 
 sf::Music music;
-sf::SoundBuffer buffer;
+sf::SoundBuffer buffer1;
+sf::SoundBuffer buffer2;
+sf::SoundBuffer buffer3;
+sf::SoundBuffer buffer4;
+sf::SoundBuffer buffer5;
 sf::Sound collect;
 sf::Sound complete;
 sf::Sound burst;
 sf::Sound over;
-sf::Sound crash;
+sf::Sound collide;
 
 
 
@@ -20,22 +24,11 @@ Control::Control(){
   _crash=false;
   _die = 0;
   
-  if (!buffer.loadFromFile("./resources/collect.wav")){
-    std::cout <<"ERROR: collect file did not load";
-  }
-  if (!buffer.loadFromFile("./resources/complete.wav")){
-    std::cout <<"ERROR: complete file did not load";
-  }
-  if (!buffer.loadFromFile("./resources/burst.wav")){
-    std::cout <<"ERROR: burst file did not load";
-  }
-  if (!buffer.loadFromFile("./resources/die.wav")){
-    std::cout <<"ERROR: crash file did not load";
-  }
-  if (!buffer.loadFromFile("./resources/crash.wav")){
-    std::cout <<"ERROR: crash file did not load";
-  }
-  
+  buffer1.loadFromFile("./resources/collect.wav");
+  buffer2.loadFromFile("./resources/complete.wav");
+  buffer3.loadFromFile("./resources/burst.wav");
+  buffer4.loadFromFile("./resources/die.wav");
+  buffer5.loadFromFile("./resources/crash.wav");
 }
 
 
@@ -133,7 +126,7 @@ void Control::update(float timeInterval) {
       _removeModel(cow);
       _hud->setcow(_hud->getcow()+1);
       
-      collect.setBuffer(buffer);
+      collect.setBuffer(buffer1);
       collect.play();
       
     }
@@ -143,7 +136,7 @@ void Control::update(float timeInterval) {
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
     
-        complete.setBuffer(buffer);
+    complete.setBuffer(buffer2);
     complete.play();
     
     
@@ -154,8 +147,8 @@ void Control::update(float timeInterval) {
     if (_ship -> intersects(asteroid)){
       std::cout << "ship hit asteroid\n";
       
-      crash.setBuffer(buffer);
-      crash.play();
+      collide.setBuffer(buffer5);
+      collide.play();
 
       setcrash(true);
       die();
@@ -168,8 +161,8 @@ void Control::update(float timeInterval) {
     if (_ship->intersects(planet)) {
       std::cout << "ship hit planet\n";
       
-      crash.setBuffer(buffer);
-      crash.play();
+      collide.setBuffer(buffer5);
+      collide.play();
       
       setcrash(true);
       die();
@@ -237,9 +230,7 @@ void Control::update(float timeInterval) {
           _removeModel(cow);
           _hud->setcow(_hud->getcow()+1);
           lasso->setState(Lasso::CAUGHT);
-          
-
-          collect.setBuffer(buffer);
+          collect.setBuffer(buffer1);
           collect.play();
         }
       }
@@ -286,12 +277,13 @@ void Control::handleEvent(sf::Event event){
       }
 
       
-      burst.setBuffer(buffer);
+      burst.setBuffer(buffer3);
       burst.play();
 
     }
     else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
       _ship->shoot(0);
+
     }
     else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A){
       if (_ship -> getState() == Ship::REST){
@@ -368,7 +360,7 @@ void Control::die(){
   if (_hud->getlife() < 0){
     _die = 2;//game over
 
-    over.setBuffer(buffer);
+    over.setBuffer(buffer4);
     over.play();
     
   }
