@@ -5,30 +5,12 @@
 #include "sr-control.h"
 #include "sr-utils.h"
 
-sf::Music music;
-sf::SoundBuffer buffer1;
-sf::SoundBuffer buffer2;
-sf::SoundBuffer buffer3;
-sf::SoundBuffer buffer4;
-sf::SoundBuffer buffer5;
-sf::Sound collect;
-sf::Sound complete;
-sf::Sound burst;
-sf::Sound over;
-sf::Sound collide;
-
 
 
 Control::Control(){
   _levelfinished = false;
   _crash=false;
   _die = 0;
-  
-  buffer1.loadFromFile("./resources/collect.wav");
-  buffer2.loadFromFile("./resources/complete.wav");
-  buffer3.loadFromFile("./resources/burst.wav");
-  buffer4.loadFromFile("./resources/die.wav");
-  buffer5.loadFromFile("./resources/crash.wav");
 }
 
 
@@ -127,8 +109,7 @@ void Control::update(float timeInterval) {
       _removeModel(cow);
       _hud->setcow(_hud->getcow()+1);
       
-      collect.setBuffer(buffer1);
-      collect.play();
+      GameSound::collect();
       
     }
   }
@@ -137,8 +118,7 @@ void Control::update(float timeInterval) {
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
     
-    complete.setBuffer(buffer2);
-    complete.play();
+    GameSound::complete();
     
     
   }
@@ -148,8 +128,8 @@ void Control::update(float timeInterval) {
     if (_ship -> intersects(asteroid)){
       std::cout << "ship hit asteroid\n";
       
-      collide.setBuffer(buffer5);
-      collide.play();
+      
+      GameSound::crash();
 
       setcrash(true);
       die();
@@ -159,9 +139,12 @@ void Control::update(float timeInterval) {
   for (int j=0; j < _planets.size(); j++) {
     Planet* planet = _planets[j];
     //Planet
-    if (_ship->intersects(planet)) {      
-      collide.setBuffer(buffer5);
-      collide.play();
+
+    if (_ship->intersects(planet)) {
+      std::cout << "ship hit planet\n";
+      
+      GameSound::crash();
+      
       setcrash(true);
       die();
     }
@@ -228,8 +211,7 @@ void Control::update(float timeInterval) {
           _removeModel(cow);
           _hud->setcow(_hud->getcow()+1);
           lasso->setState(Lasso::CAUGHT);
-          collect.setBuffer(buffer1);
-          collect.play();
+          GameSound::collect();
         }
       }
         /* destination intersect (point-circle)*/
@@ -275,8 +257,7 @@ void Control::handleEvent(sf::Event event){
       }
 
       
-      burst.setBuffer(buffer3);
-      burst.play();
+      GameSound::burst();
 
     }
     else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
@@ -306,14 +287,10 @@ void Control::handleEvent(sf::Event event){
 			_ship->getGuideline()->showLine = true;
 		}
     else if (event.key.code == sf::Keyboard::M){
-      if(!music.openFromFile("./resources/song.wav")){
-        std::cout <<"ERROR: song file did not load";
-      }
-      music.setLoop(true);
-      music.play();
+      GameSound::musicon();
     }
     else if(event.key.code == sf::Keyboard::N){
-      music.stop();
+      GameSound::musicoff();
     }
 		
   }
@@ -358,8 +335,7 @@ void Control::die(){
   if (_hud->getlife() < 0){
     _die = 2;//game over
 
-    over.setBuffer(buffer4);
-    over.play();
+    GameSound::die();
     
   }
   else{

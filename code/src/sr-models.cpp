@@ -108,31 +108,28 @@ void Models::parse(){
         _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getGuideline());
         _drawables.push_back(((Ship*) _circlemodels[_circlemodels.size() - 2])->getRope());
         break;
-        
       case 'C':
         _circlemodels.push_back(new Cow(sf::Vector2f(width,height),radius));
          _totalcow++;
         break;
-        
       case 'P':
         _circlemodels.push_back(new Planet(sf::Vector2f(width,height),radius,gravity));
         break;
-        
       case 'R':
         _circlemodels.push_back(new SpaceRanch(sf::Vector2f(width,height),radius));
         break;
-        
       case 'W':
         _circlemodels.push_back(new Wormhole(sf::Vector2f(width,height),radius));
         break;
-        
       case 'A':
         _circlemodels.push_back(new Asteroid(sf::Vector2f(width,height),radius,sf::Vector2f(x,y)));
         break;
-        
       case 'O':
         _circlemodels.push_back(new OrbitPlanet( sf::Vector2f(width,height),x,y,point,period,radius,gravity));
-        
+        break;
+      case 'U':
+        _circlemodels.push_back(new Planet(sf::Vector2f(width,height),radius,gravity,x));
+        break;
       default:
         break;
     }

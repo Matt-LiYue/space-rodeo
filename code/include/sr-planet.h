@@ -8,9 +8,11 @@
 class Planet : public CircleModel{
   public:
     Planet(sf::Vector2f,int,int);
+    Planet(sf::Vector2f,int,int,int);
     sf::CircleShape getGravityCircle();
     sf::Vector2f getVelocity();
 		float getGravMag();
+    //void besun();
 		
   private:
     int _gravitybound;
