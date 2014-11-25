@@ -6,13 +6,36 @@
 #include "sr-utils.h"
 
 sf::Music music;
-sf::Sound sound;
 sf::SoundBuffer buffer;
+sf::Sound collect;
+sf::Sound complete;
+sf::Sound burst;
+sf::Sound over;
+sf::Sound crash;
+
+
 
 Control::Control(){
   _levelfinished = false;
   _crash=false;
   _die = 0;
+  
+  if (!buffer.loadFromFile("./resources/collect.wav")){
+    std::cout <<"ERROR: collect file did not load";
+  }
+  if (!buffer.loadFromFile("./resources/complete.wav")){
+    std::cout <<"ERROR: complete file did not load";
+  }
+  if (!buffer.loadFromFile("./resources/burst.wav")){
+    std::cout <<"ERROR: burst file did not load";
+  }
+  if (!buffer.loadFromFile("./resources/die.wav")){
+    std::cout <<"ERROR: crash file did not load";
+  }
+  if (!buffer.loadFromFile("./resources/crash.wav")){
+    std::cout <<"ERROR: crash file did not load";
+  }
+  
 }
 
 
@@ -110,11 +133,8 @@ void Control::update(float timeInterval) {
       _removeModel(cow);
       _hud->setcow(_hud->getcow()+1);
       
-      if (!buffer.loadFromFile("./resources/collect.wav")){
-        std::cout <<"ERROR: collect file did not load";
-      }
-      sound.setBuffer(buffer);
-      sound.play();
+      collect.setBuffer(buffer);
+      collect.play();
       
     }
   }
@@ -123,11 +143,8 @@ void Control::update(float timeInterval) {
     std::cout << "space ranch reached" << std::endl;
     _levelfinished = true;
     
-    if (!buffer.loadFromFile("./resources/complete.wav")){
-      std::cout <<"ERROR: complete file did not load";
-    }
-    sound.setBuffer(buffer);
-    sound.play();
+        complete.setBuffer(buffer);
+    complete.play();
     
     
   }
@@ -137,11 +154,8 @@ void Control::update(float timeInterval) {
     if (_ship -> intersects(asteroid)){
       std::cout << "ship hit asteroid\n";
       
-      if (!buffer.loadFromFile("./resources/crash.wav")){
-        std::cout <<"ERROR: crash file did not load";
-      }
-      sound.setBuffer(buffer);
-      sound.play();
+      crash.setBuffer(buffer);
+      crash.play();
 
       setcrash(true);
       die();
@@ -154,11 +168,8 @@ void Control::update(float timeInterval) {
     if (_ship->intersects(planet)) {
       std::cout << "ship hit planet\n";
       
-      if (!buffer.loadFromFile("./resources/crash.wav")){
-        std::cout <<"ERROR: crash file did not load";
-      }
-      sound.setBuffer(buffer);
-      sound.play();
+      crash.setBuffer(buffer);
+      crash.play();
       
       setcrash(true);
       die();
@@ -227,11 +238,9 @@ void Control::update(float timeInterval) {
           _hud->setcow(_hud->getcow()+1);
           lasso->setState(Lasso::CAUGHT);
           
-          if (!buffer.loadFromFile("./resources/collect.wav")){
-            std::cout <<"ERROR: collect file did not load";
-          }
-          sound.setBuffer(buffer);
-          sound.play();
+
+          collect.setBuffer(buffer);
+          collect.play();
         }
       }
         /* destination intersect (point-circle)*/
@@ -275,12 +284,10 @@ void Control::handleEvent(sf::Event event){
           _hud -> setburst(_hud->getburst()-1);
         }
       }
-      if (!buffer.loadFromFile("./resources/burst.wav")){
-        std::cout <<"ERROR: burst file did not load";
-      }
+
       
-      sound.setBuffer(buffer);
-      sound.play();
+      burst.setBuffer(buffer);
+      burst.play();
 
     }
     else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W){
@@ -360,11 +367,9 @@ void Control::die(){
   _hud->setlife(_hud->getlife() - 1);
   if (_hud->getlife() < 0){
     _die = 2;//game over
-    if (!buffer.loadFromFile("./resources/die.wav")){
-      std::cout <<"ERROR: crash file did not load";
-    }
-    sound.setBuffer(buffer);
-    sound.play();
+
+    over.setBuffer(buffer);
+    over.play();
     
   }
   else{
