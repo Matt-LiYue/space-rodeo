@@ -118,7 +118,7 @@ __Refer to the following graph__
 
 We designs our art in an Angry Bird style. __Examples__ are as follows:
 
-![here](https://github.com/mstrotta/space-rodeo/blob/master/art/ranch.png=200x "Space Rodeo")
+![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/ranch.png=200x "Space Rodeo")
 
 ###__10.UI story boards__
 
