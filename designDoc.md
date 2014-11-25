@@ -117,11 +117,11 @@ __Refer to the following graph__
 ----------
 
 We designs our art in an Angry Bird style. __Examples__ are as follows:
-<img src="./code/art/planet.png" alt="Drawing" style="width: 70px;"/>
-<img src="./code/art/sun.png" alt="Drawing" style="width: 70px;"/>
-<img src="./code/art/ranch.png" alt="Drawing" style="width: 70px;"/>
-<img src="./code/art/asteroid.png" alt="Drawing" style="width: 70px;"/>
-<img src="./code/art/wormhole.png" alt="Drawing" style="width: 70px;"/>
+<img src="./code/art/planet.png" width="70px" height="70px"/>
+<img src="./code/art/sun.png" width="70px" height="70px"/>
+<img src="./code/art/ranch.png" width="70px" height="70px"/>
+<img src="./code/art/asteroid.png" width="70px" height="70px"/>
+<img src="./code/art/wormhole.png" width="70px" height="70px"/>
 
 ###__10.UI story boards__
 
