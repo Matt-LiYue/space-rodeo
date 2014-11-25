@@ -120,11 +120,17 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   sf::Texture texture;
   sf::Text text;
   sf::Text text2;
+	sf::Text teamText;
+	sf::Text legibleText;
   sf::Font font;
+	sf::Font arialFont;
   bool select = false;
   font.loadFromFile("AstronBoyWonder.ttf");
+	arialFont.loadFromFile("arial.ttf");
   text.setFont(font);
   text2.setFont(font);
+	teamText.setFont(arialFont);
+	legibleText.setFont(arialFont);
   texture.loadFromFile("art/goat_ship8.png");
   icon.setTexture(&texture);
   icon.setTextureRect(sf::IntRect(126,0,66,66));
@@ -134,7 +140,10 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   text.setCharacterSize(45);
   View::transtate state;
   int result;
+	
     //START SCREEN
+	legibleText.setString(" ");
+	teamText.setString(" ");
   if (die){
     text2.setCharacterSize(50);
     text2.setString("  You die!  \nLevel failed");
@@ -151,7 +160,9 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
   }
   else{
     if (i == 0){
-
+      teamText.setCharacterSize(14);
+			teamText.setString("Created by Yue Li, Kate Quinn, Michael Trotta, Joe Soultanis");
+			teamText.setPosition(WINDOW_WIDTH/2 - teamText.getLocalBounds().width/2, WINDOW_HEIGHT - 100);
       text2.setCharacterSize(60);
       text2.setString("SPACE RODEO");
       text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 150);
@@ -220,18 +231,19 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       }
 
       if (event.key.code == sf::Keyboard::Space){
+				legibleText.setString(" ");
         if (state == GUIDE){
-          text2.setCharacterSize(40);
-          text2.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\nMusic Off: N\n");
+          legibleText.setCharacterSize(20);
+          legibleText.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\nMusic Off: N\n");
 
-          text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
+          legibleText.setPosition(WINDOW_WIDTH/2 - legibleText.getLocalBounds().width/2, 250);
           state = BACK;
           text.setString("BACK");
           text.setPosition(400, 580);}
           else if (state == CREDIT){
-            text2.setCharacterSize(22);
-            text2.setString("CREDITS\n Images \n Planet:http://puffleville.wikia.com/wiki/File:Angry-Birds-Space-Red-Planet-Level-5-19-310x232.png \n Ranch: http://towns.gamepedia.com/File:Cow_farm.png\n Asteroid: http://imgarcade.com/1/asteroid-png/\n Wormhole: http://xolarix.deviantart.com/art/SpaceDock-373355292\nCrash: http://www.picgifs.com/graphics/bombs/ \nBackground: http://giphy.com/gifs/astronomy-meteor-astrophotography-bDvL2sCunIvYI\n");
-            text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
+            legibleText.setCharacterSize(18);
+            legibleText.setString("CREDITS\n Images \n Planet:http://puffleville.wikia.com/wiki/File:Angry-Birds-Space-Red-Planet-Level-5-19-310x232.png \n Ranch: http://towns.gamepedia.com/File:Cow_farm.png\n Asteroid: http://imgarcade.com/1/asteroid-png/\n Wormhole: http://xolarix.deviantart.com/art/SpaceDock-373355292\nCrash: http://www.picgifs.com/graphics/bombs/ \nBackground: http://giphy.com/gifs/astronomy-meteor-astrophotography-bDvL2sCunIvYI\n");
+            legibleText.setPosition(WINDOW_WIDTH/2 - legibleText.getLocalBounds().width/2, 250);
             state = BACK;
             text.setString("BACK");
             text.setPosition(400, 580);
@@ -293,6 +305,8 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
     _view.draw(_mainsprite);
     _view.draw(text);
     _view.draw(text2);
+		_view.draw(teamText);
+		_view.draw(legibleText);
     _view.draw(icon);
     _view.display();
   }
