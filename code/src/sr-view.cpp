@@ -234,7 +234,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
 				legibleText.setString(" ");
         if (state == GUIDE){
           legibleText.setCharacterSize(20);
-          legibleText.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\nMusic Off: N\n");
+          legibleText.setString("Aim: LEFT/RIGHT\nRocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\nMusic Off: N\n");
 
           legibleText.setPosition(WINDOW_WIDTH/2 - legibleText.getLocalBounds().width/2, 250);
           state = BACK;
@@ -242,7 +242,7 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
           text.setPosition(400, 580);}
           else if (state == CREDIT){
             legibleText.setCharacterSize(18);
-            legibleText.setString("CREDITS\n Images \n Planet:http://puffleville.wikia.com/wiki/File:Angry-Birds-Space-Red-Planet-Level-5-19-310x232.png \n Ranch: http://towns.gamepedia.com/File:Cow_farm.png\n Asteroid: http://imgarcade.com/1/asteroid-png/\n Wormhole: http://xolarix.deviantart.com/art/SpaceDock-373355292\nCrash: http://www.picgifs.com/graphics/bombs/ \nBackground: http://giphy.com/gifs/astronomy-meteor-astrophotography-bDvL2sCunIvYI\n");
+            legibleText.setString("CREDITS\nImages\nPlanet:http://puffleville.wikia.com/wiki/File:Angry-Birds-Space-Red-Planet-Level-5-19-310x232.png \nRanch: http://towns.gamepedia.com/File:Cow_farm.png\nAsteroid: http://imgarcade.com/1/asteroid-png/\nWormhole: http://xolarix.deviantart.com/art/SpaceDock-373355292\nCrash: http://www.picgifs.com/graphics/bombs/ \nBackground: http://giphy.com/gifs/astronomy-meteor-astrophotography-bDvL2sCunIvYI\n");
             legibleText.setPosition(WINDOW_WIDTH/2 - legibleText.getLocalBounds().width/2, 250);
             state = BACK;
             text.setString("BACK");
