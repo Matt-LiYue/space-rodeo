@@ -4,8 +4,11 @@
 The pure puzzle game has multiple stand-alone levels. Player has to collect all cows in a level to finish it. There are totally 6 levels with increasing difficulty. More space effects are presented  in the levels. 
 
 * __New feature__
+
 A real Billy: We now have a real Billy drawn by ourselves instead of using images from the Internet. Billy has 8 frames to show animations:
+
   ![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/goat_ship8.png "Billy")
+  
 Animation of Billy includes: Shoot a lasso, burst, brake
 
   Smooth orbit: Fixed the orbit gap. We are still using vector-based method to implement the orbiting while not having orbit gap.
