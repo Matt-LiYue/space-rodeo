@@ -258,6 +258,18 @@ __Highlight:__
 * __Game enhencement__: Added Lasso and animation, various space effect. More levels are implemented. 
 * __TODO__: More levels, space effects. Game start and game over screen, level transitions. 
 
+####__Report on Nov 24, 2014__
+__Highlight__
+* __A real Billy__
+* __Smooth orbit__
+* __Guidline__
+* __Brake__
+* __Moving Planet and Planet Gravity__
+* __More animations__:crash, rope, lasso, background, burst, brake
+* __Transition screens__
+* __More levels (6 in total)__
+* __Music and more sound effects__
 
-[click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_11_10.md)
+
+[click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_11_24.md)
 
