@@ -3,7 +3,7 @@
 //Planet Class
 Planet::Planet(sf::Vector2f pos, int radius, int gravity){
   /* tweakable */  
-	_gravMag = 2;
+	_gravMag = 1;
 	
   hasAnimation = false;
   _texture.loadFromFile("./art/planet.png");
