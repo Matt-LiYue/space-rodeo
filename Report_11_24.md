@@ -1,4 +1,4 @@
-###__Report on Oct 23, 2014__
+###__Report on Nov 24, 2014__
 
 * __Design Clarification__
 
@@ -31,7 +31,7 @@ crash, rope, lasso, background, burst, brake
 
 
 * __Contribution:__
-  Yue: Multi-dimensional lasso, crash animation, fix passing by values, background animation, transition screens, more levels
+  Yue: Multi-dimensional lasso, crash animation, fix passing by values, enlarge the game, background animation, transition screens, more levels
 
   Michael: Draw Billy, smooth orbit, guideline, brake, moving planet and planet gravity, rope animation, more levels
   
