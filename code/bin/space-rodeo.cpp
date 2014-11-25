@@ -8,10 +8,10 @@
 
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
-
 const int totallevel = 6;
 int main(int argc, char** argv){
   GameSound::inisound();
+  int lifeleft = 3;
   View myView;
   sf::Time _interval;
   sf::Clock _mainclock;
@@ -32,7 +32,11 @@ int main(int argc, char** argv){
 		std::vector<sf::Drawable*>* drawables = myModels.getDrawables();
     myControl.setmodels(*myCirModels);
     myView.setController(myControl);
-    
+    if (lifeleft < 3){//for insuf cow scenario
+      if (lifeleft >= 0)
+        myModels.getHUD().setlife(lifeleft);
+      lifeleft = 3;
+    }
 
 
     while (myView.isRun()){
@@ -76,6 +80,7 @@ int main(int argc, char** argv){
   if (myView.isRun()){
     if (myModels.getcowno() != myModels.getHUD().getcow()){
       insufcow = true;
+      lifeleft = myModels.getHUD().getlife()-1;
     }
     i+= myView.transitionscreen(i+1,totallevel,die,insufcow);
     die = false;
