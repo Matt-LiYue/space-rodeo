@@ -14,12 +14,12 @@
 __Asteroids__ can move alone a direction in the game. Spaceship will be crashed when hit by an asteroid. Asteroids will crash when hit other objects, like space ranch, planets. Asteroids will appear at the origins after it crashes or goes out of the game bound.
 
 
-![here](https://github.com/mstrotta/space-rodeo/blob/master/code/asteroid.png "Asteroids")
+![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/asteroid.png "Asteroids")
 
 __Wormholes__ are places that transport the spaceship to another wormhole. Every wormhole has a counterpart. Entering either of the wormhole the spaceship will appear on the counterpart, keeping its velocity unchanged.
 
 
-![here](https://github.com/mstrotta/space-rodeo/blob/master/code/wormhole.png "Wormholes")
+![here](https://github.com/mstrotta/space-rodeo/blob/master/code/art/wormhole.png "Wormholes")
 
 * __Added indicators for cows, bursts, and life:__ Player will have limited bursts and life to finish one level. Player use bursts to escape planet gravity and avoid hit by asteroids. In order to finish each level, player will plan ahead how to best take advantage of the limited bursts to capture as many cows as possible. Player has limited life to retry the current level. 
 
