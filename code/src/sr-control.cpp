@@ -348,6 +348,7 @@ void Control::_setAngularVelocities(Planet* planet) {
   // initial angular velocity
   float theta = sqrt(utils::norm_sqrd(_ship->getSpd()) / utils::norm_sqrd(planet->getPosition() - _ship->getPosition()));
   if (utils::dot(planet->getPosition() - _ship->getPosition(), sf::Vector2f(0,1)) < 1) theta *= -1;
+	if (utils::dot(sf::Vector2f(1,0), _ship->getSpd()) < 0) theta *= -1;
   _ship->setAngularVelocity(theta);
 }
 
