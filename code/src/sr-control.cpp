@@ -76,7 +76,7 @@ void Control::update(float timeInterval) {
 	//_ship->getGuideline()->applyEffects(_planets,_wormholes,_asteroids,_cows);
   
   /* map exit */
-  if (pos.x < 0 || pos.y < 0 || pos.x > WINDOW_WIDTH || pos.y > WINDOW_HEIGHT) { 
+  if (pos.x < -100 || pos.y < -100 || pos.x > WINDOW_WIDTH+100 || pos.y > WINDOW_HEIGHT+100) { 
     die();
   }
   
@@ -234,6 +234,10 @@ void Control::update(float timeInterval) {
 
 void Control::handleEvent(sf::Event event){
   if (event.type == sf::Event::KeyPressed) {
+    if (event.key.code == sf::Keyboard::Return){//backdoor to finish a level
+        _hud->setcow(_hud->getcow()+_cows.size());
+        _levelfinished = true;
+    }
     if (event.key.code == sf::Keyboard::Space) {
       if (_ship -> getState() == Ship::REST){
         _ship -> adjustSpd(_ship->getBaseSpd());
