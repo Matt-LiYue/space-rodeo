@@ -71,7 +71,7 @@ void Control::update(float timeInterval) {
   //_ship->decelerate(); disabled for now, replace with brake functionality?
   sf::Vector2f pos = _ship->updatePosition(timeInterval);
   _ship->updateOrientation();
-  _ship->updateGuideline(_planets, _wormholes);
+  _ship->updateGuideline(_planets, _wormholes, _asteroids);
 	_ship->updateAnimation();
 	//_ship->getGuideline()->applyEffects(_planets,_wormholes,_asteroids,_cows);
   

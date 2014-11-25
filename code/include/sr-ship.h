@@ -64,7 +64,7 @@ public:
   void brake(bool on);
   //void decelerate(); deprecated
   void shoot(int);
-  void updateGuideline(std::vector<Planet*>, std::vector<Wormhole*>);
+  void updateGuideline(std::vector<Planet*>&, std::vector<Wormhole*>&, std::vector<Asteroid*>&);
 	void resetAccel();
 	void setFrame(int frame);
 	void updateAnimation();

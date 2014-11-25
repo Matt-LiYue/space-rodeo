@@ -16,7 +16,8 @@ void Guideline::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 
 void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx, 
-                        std::vector<Planet*>& planets, std::vector<Wormhole*>& wormholes) {
+                        std::vector<Planet*>& planets, std::vector<Wormhole*>& wormholes, 
+												std::vector<Asteroid*>& asteroids) {
                           // startPointNdx should be 0 unless called within this fn
                           
   
@@ -49,7 +50,7 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
       _linePoints[_linePoints.size() - 1] = firstEnd;
       _linePoints.push_back(secondStart);
       _linePoints.push_back(secondEnd);
-      setLine(start, dir, n + 2, planets, wormholes);
+      setLine(start, dir, n + 2, planets, wormholes, asteroids);
       return;
     }
   }
@@ -65,9 +66,15 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
       float d = utils::getLenToPerp(_linePoints[n], _linePoints[n+1], gravity.getPosition());
       _linePoints[n+1] = _linePoints[n] + dir * d;
       _addCircleDotted(gravity.getPosition(), utils::norm(_linePoints[n+1] - gravity.getPosition()));
-      
     }
   }
+	
+	for (int i=0; i < asteroids.size(); i++) {
+		if (utils::intersects(_linePoints[n], _linePoints[n+1], *asteroids[i])) {
+			float d = utils::getLenToIntersect(_linePoints[n], _linePoints[n+1], *asteroids[i]);
+			_linePoints[n+1] = _linePoints[n] + dir * d;
+		}
+	}
   
   for (int i=0; i < _linePoints.size(); i = i+2) {
     _addLinearDotted(_linePoints[i], _linePoints[i+1], dir);

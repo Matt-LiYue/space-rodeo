@@ -74,7 +74,6 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
   }
 
 
-  std::cout << accelScale << std::endl;
   // update position
   switch (_shipState) {
     case REST: break;    
@@ -90,7 +89,6 @@ sf::Vector2f Ship::updatePosition(float deltaTime) {
       planPos = _orbiting->getPosition();
 		
 			setSpd((utils::rotate(_relPos, deltaTime * _angularVelocity) - _relPos) / deltaTime);
-			//_relPos += deltaTime *= 
       setSpd(_spd - _orbiting->getGravMag() * _relPos / utils::norm(_relPos));
       _relPos += deltaTime * _spd;
 			      
@@ -129,7 +127,6 @@ Ship::ShipState Ship::getState(){
 }
 
 void Ship::setState(Ship::ShipState state){
-  std::cout << "Ship state " << state << std::endl;
   _shipState = state;
 }
 
@@ -223,9 +220,10 @@ void Ship::shoot(int direction) {
 
 void Ship::setFrame(int frame) { _animation.setFrame(frame); }
 
-void Ship::updateGuideline(std::vector<Planet*> planets, std::vector<Wormhole*> wormholes) {
+void Ship::updateGuideline(std::vector<Planet*>& planets, std::vector<Wormhole*>& wormholes,
+                           std::vector<Asteroid*>& asteroids) {
   float theta = getDir() * M_PI / 180;
-  _guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes);
+  _guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes, asteroids);
 }
 
 void Ship::updateAnimation() {
