@@ -223,7 +223,7 @@ void Ship::setFrame(int frame) { _animation.setFrame(frame); }
 void Ship::updateGuideline(std::vector<Planet*>& planets, std::vector<Wormhole*>& wormholes,
                            std::vector<Asteroid*>& asteroids) {
   float theta = getDir() * M_PI / 180;
-  _guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes, asteroids);
+  _guideline->setLine(getPosition(), sf::Vector2f(cos(theta),sin(theta)), 0, planets, wormholes, asteroids, getRadius());
 }
 
 void Ship::updateAnimation() {

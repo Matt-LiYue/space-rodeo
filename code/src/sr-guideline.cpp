@@ -17,7 +17,7 @@ void Guideline::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx, 
                         std::vector<Planet*>& planets, std::vector<Wormhole*>& wormholes, 
-												std::vector<Asteroid*>& asteroids) {
+												std::vector<Asteroid*>& asteroids, float shipRad) {
                           // startPointNdx should be 0 unless called within this fn
                           
   
@@ -50,7 +50,7 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
       _linePoints[_linePoints.size() - 1] = firstEnd;
       _linePoints.push_back(secondStart);
       _linePoints.push_back(secondEnd);
-      setLine(start, dir, n + 2, planets, wormholes, asteroids);
+      setLine(start, dir, n + 2, planets, wormholes, asteroids, shipRad);
       return;
     }
   }
@@ -62,10 +62,20 @@ void Guideline::setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
       float d = utils::getLenToIntersect(_linePoints[n], _linePoints[n+1], *planets[i]);
       _linePoints[n+1] = _linePoints[n] + dir * d;
     }
-    else if (utils::intersects(_linePoints[n], _linePoints[n+1], gravity)) {
-      float d = utils::getLenToPerp(_linePoints[n], _linePoints[n+1], gravity.getPosition());
-      _linePoints[n+1] = _linePoints[n] + dir * d;
-      _addCircleDotted(gravity.getPosition(), utils::norm(_linePoints[n+1] - gravity.getPosition()));
+    else {
+			/* we want to check the whole width of the ship's intersection */
+			sf::Vector2f temp = _linePoints[n+1] - _linePoints[n];
+			sf::Vector2f perp = sf::Vector2f(temp.y, -temp.x);
+		  perp *= shipRad / utils::norm(perp);
+			
+			if (utils::intersects(_linePoints[n], _linePoints[n+1], gravity) ||
+				  utils::intersects(_linePoints[n]+perp,_linePoints[n+1]+perp, gravity) ||
+					utils::intersects(_linePoints[n]-perp, _linePoints[n+1]-perp, gravity)
+			) {
+        float d = utils::getLenToPerp(_linePoints[n], _linePoints[n+1], gravity.getPosition());
+        _linePoints[n+1] = _linePoints[n] + dir * d;
+        _addCircleDotted(gravity.getPosition(), utils::norm(_linePoints[n+1] - gravity.getPosition()));
+		  }
     }
   }
 	

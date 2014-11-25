@@ -16,7 +16,7 @@ class Guideline : public sf::Drawable {
     //float length;
     void setLine(sf::Vector2f start, sf::Vector2f dir, int startPointNdx,
 		             std::vector<Planet*>&, std::vector<Wormhole*>&,
-								 std::vector<Asteroid*>&);
+								 std::vector<Asteroid*>&, float shipRad);
 								 // use 0 for startPointNdx
   private:
 		float _segLength;

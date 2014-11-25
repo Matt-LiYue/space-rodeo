@@ -11,4 +11,14 @@ code/space-rodeo
 code/test.cpp
 design-doc-5to7.odt
 pong.zip
-
+code/art/goat ship (3).png
+code/art/goat_ship.png
+code/art/goat_ship2.png
+code/art/goat_ship_L.png
+code/art/ship_r1.png 
+materials/goat_ship.xcf
+materials/goat_ship2.xcf
+code/src/sr-rope.cpp
+code/include/sr-rope.h
+.gitignore
+code/art/ship_r1.png
