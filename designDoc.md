@@ -174,7 +174,7 @@ We will simply use SFML to implement our game. No further technology or library 
 
 __Software architecture:__
 
-We use MVC framework to model our name
+We use MVC framework to model our game.
 
 __Model:__ Model calss will store all elements in the game. It maintains a big vectors to store all the objects in the game.
 
