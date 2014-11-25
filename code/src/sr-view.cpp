@@ -222,14 +222,15 @@ int View::transitionscreen(int i, int totallevel, bool die, bool insufcow){
       if (event.key.code == sf::Keyboard::Space){
         if (state == GUIDE){
           text2.setCharacterSize(40);
-          text2.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN");
+          text2.setString("Aim: LEFT/RIGHT\n Rocket Burst: SPACE\nThrow Lasso:\n\tLEFT\n\tUP\n\tRIGHT\nGuide Line: SHIFT\nBrake: DOWN\nMusic On: M\n Music Off: N\n");
+
           text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
           state = BACK;
           text.setString("BACK");
           text.setPosition(400, 580);}
           else if (state == CREDIT){
             text2.setCharacterSize(40);
-            text2.setString("CREDITS: ART");
+            text2.setString("CREDITS\n Images: Planet:http://puffleville.wikia.com/wiki/File:Angry-Birds-Space-Red-Planet-Level-5-19-310x232.png \n Ranch: http://towns.gamepedia.com/File:Cow_farm.png\n Asteroid: http://imgarcade.com/1/asteroid-png/\n Wormhole: http://xolarix.deviantart.com/art/SpaceDock-373355292\nCrash: http://www.picgifs.com/graphics/bombs/ \nBackground: http://giphy.com/gifs/astronomy-meteor-astrophotography-bDvL2sCunIvYI\n");
             text2.setPosition(WINDOW_WIDTH/2 - text2.getLocalBounds().width/2, 50);
             state = BACK;
             text.setString("BACK");
