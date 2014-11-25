@@ -69,6 +69,10 @@ public:
 	void setFrame(int frame);
 	void updateAnimation();
   
+	// other
+	float spdSaved; // hack for adjusting angular velocity
+	float accelScale; // needed for hack
+	
 private:
   ShipState _shipState;
   float _angularVelocity;
