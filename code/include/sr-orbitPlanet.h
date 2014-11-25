@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "sr-planet.h"
-#include "sr-ellipse.h"
-
 
 class OrbitPlanet : public Planet {
   public:
@@ -12,7 +10,10 @@ class OrbitPlanet : public Planet {
 		void updatePosition(float dTime);
 		sf::Vector2f getVelocity();
 	private:
-		Ellipse* _ellipse;
+		//Ellipse* _ellipse;
+		sf::Vector2f _center;
+		float _xRad;
+		float _yRad;
 		float _period;
 		float _curTheta;
 		float _prevTheta;
