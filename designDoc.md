@@ -258,6 +258,8 @@ __Highlight:__
 * __Game enhencement__: Added Lasso and animation, various space effect. More levels are implemented. 
 * __TODO__: More levels, space effects. Game start and game over screen, level transitions. 
 
+[click here to read complete report](https://github.com/mstrotta/space-rodeo/blob/master/Report_11_10.md)
+
 ####__Report on Nov 24, 2014__
 __Highlight__
 * __A real Billy__
