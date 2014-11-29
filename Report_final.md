@@ -63,10 +63,13 @@ In addition, these screens have animated outer-space background images.
 
 ####Design Decisions
 * __Pseudo physics__
+
     > Orbiting planets in Space Rodeo uses pseudo physics. It will be very difficult to use real physics to implement the orbiting mechanism because It requires a strict speed to orbit the planet. Billy will easily pass the planet with a little bending or simply crash on the planets. Using pseudo physics make the game more fun and meaningful. 
 * __Burst__
+
     > Burst uses real physics. Once Billy speeds up, the speed will not drop to the original value. However, player can use brake to decelerate Billy.
 * __Brake__
+
     > Brake is a mechanism to reduce the difficulty. Player uses brake to avoid obstacles like asteroids. Player has unlimited use of brake, which will slow down Billy, providing better timing.
 * __Guideline__
 
