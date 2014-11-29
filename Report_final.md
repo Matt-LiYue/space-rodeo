@@ -21,6 +21,7 @@ In addition, these screens have animated outer-space background images.
 * __Billy:__ 
 
 <img src="./code/art/goat_ship8.png" width="400px" height="200px"/>
+
 	* Billy the goat is the main character of this game
 	* Functions:
 		* Launching: Billy starts its adventure in every game from launching its spaceship.
@@ -36,6 +37,7 @@ In addition, these screens have animated outer-space background images.
 * __Planet:__
 
 <img src="./code/art/planet.png" width="200px" height="200px"/>
+
 	* Effects:
 		* Billy can orbit planets to change its flying directions if it travels through the gravity field of the planet while not crashing it.
 		* Billy will crash into the planet if it makes direct contact with the planet.
@@ -45,6 +47,7 @@ In addition, these screens have animated outer-space background images.
 * __Asteroid:__
 
 <img src="./code/art/asteroid.png" width="200px" height="200px"/>
+
 	* Effects:
 		* Asteroids can travel across the screen.
 		* Billy will crash on asteroids and die.
@@ -54,6 +57,7 @@ In addition, these screens have animated outer-space background images.
 * __Wormhole:__
 
 <img src="./code/art/wormhole.png" width="200px" height="200px"/>
+
 	* Wormholes always appear in pairs, each wormhole has a counterpart wormhole.
 	* Effects:
 		* The wormhole will teleport Billy to its counterpart.
@@ -61,10 +65,12 @@ In addition, these screens have animated outer-space background images.
 * __Space Ranch:__
 
 <img src="./code/art/ranch.png" width="200px" height="200px"/>
+
 	* Space Ranch is the key to next level. Billy has to reach the Space Ranch after collecting all the cows. 
 * __Sun:__
 
 <img src="./code/art/sun.png" width="200px" height="200px"/>
+
 	* Sun is just another Planet with different texture. We can simulate a solar system using the Sun model. 
 
 ####Design Decisions
@@ -81,6 +87,7 @@ As there are certain hidden information such as the gravity field of a planet an
 * Game Framework: MVC
 
 [MVC in Wikipedia](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
+
 	* Models: Store all objects in the game.
 	* View: Take Models as input and render all objects
 	* Controller: Take user input and make corresponding change to Models.
