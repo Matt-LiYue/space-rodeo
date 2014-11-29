@@ -108,17 +108,23 @@ As there are certain hidden information such as the gravity field of a planet an
 
 ####Challenges and solutions
 * __Make a flexible framework__
+
 We realized that make a framework is important to the game, especially when we want to slowly grow the game to certain level. Instead of simply writing some running code, we carefully chose and implement the framework. It turns out to be a very effective one. It saves a lot of time and work. 
 * __Orbit__
+
 We evolved the way we used to implement the orbiting mechanism. Firstly, the orbiting is implemented by changing the center of the spaceship object and use "rotate" function. This provides good orbit motion. However, it introduces many troubles when doing collision detection. Then we use vector-based mechanism by calculating the angular speed and change corresponding x and y speed values. However, we find there is a jump gap when entering the orbit state. This is addressed then by starting orbit only when the angle between speed of Billy and the line connecting Billy and the center of the planet is around 90 degrees.
 * __Guideline__
+
 Guideline is difficult to implement because we need to precompute the collision and draw a good dotted line (might be straight or curly). 
 * __Mathematical computation__
+
 The game involves much mathematical computation when calculating the movement. One example is the orbiting. Billy needs to orbit the planet even when the planet itself is moving. These computations will take much time to test and modify.
+
 ####Team Collaborations
 * Team members should provide interfaces to interact with other members to avoid messing the code up.
 * Version control should be extensively used. It keeps every member being informed the latest change and progress. It also help rollback to old implementations. 
 * Any ad-hoc solution should be avoided. It not only introduce problems in future implementations but also introduce problems to other team members. 
+
 ####Future works
 * More levels and space effects can be added to make this game more complex.
 * More animations
