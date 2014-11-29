@@ -19,6 +19,7 @@ __In this report, only game design detail and technical parts are included__
 In addition, these screens have animated outer-space background images.
 
 * __Billy:__ 
+
 <img src="./code/art/goat_ship8.png" width="400px" height="200px"/>
 	* Billy the goat is the main character of this game
 	* Functions:
@@ -33,6 +34,7 @@ In addition, these screens have animated outer-space background images.
 		* Crash
 		* Lassos related (Shoot, hold, etc) 
 * __Planet:__
+
 <img src="./code/art/planet.png" width="200px" height="200px"/>
 	* Effects:
 		* Billy can orbit planets to change its flying directions if it travels through the gravity field of the planet while not crashing it.
@@ -40,7 +42,8 @@ In addition, these screens have animated outer-space background images.
 		* When Billy is orbiting the planet, the planet will pull Billy slowly towards it and eventually Billy will crash the plane unless Billy uses a burst to escape the planet gravity.
 		* Planets can move themselves in circles.
 
-* __Asteroid__
+* __Asteroid:__
+
 <img src="./code/art/asteroid.png" width="200px" height="200px"/>
 	* Effects:
 		* Asteroids can travel across the screen.
@@ -49,17 +52,21 @@ In addition, these screens have animated outer-space background images.
 		* Asteroids will regenerate if they are crashed or out of screen
 
 * __Wormhole:__
+
 <img src="./code/art/wormhole.png" width="200px" height="200px"/>
 	* Wormholes always appear in pairs, each wormhole has a counterpart wormhole.
 	* Effects:
 		* The wormhole will teleport Billy to its counterpart.
 		* The wormhole does not change the moving status (speed, direction) of Billy.
 * __Space Ranch:__
+
 <img src="./code/art/ranch.png" width="200px" height="200px"/>
 	* Space Ranch is the key to next level. Billy has to reach the Space Ranch after collecting all the cows. 
 * __Sun:__
-<img src="./code/art/asteroid.png" width="200px" height="200px"/>
+
+<img src="./code/art/sun.png" width="200px" height="200px"/>
 	* Sun is just another Planet with different texture. We can simulate a solar system using the Sun model. 
+
 ####Design Decisions
 * __Pseudo physics__
 Orbiting planets in Space Rodeo uses pseudo physics. It will be very difficult to use real physics to implement the orbiting mechanism because It requires a strict speed to orbit the planet. Billy will easily pass the planet with a little bending or simply crash on the planets. Using pseudo physics make the game more fun and meaningful. 
@@ -72,6 +79,7 @@ As there are certain hidden information such as the gravity field of a planet an
 
 ####Implementations
 * Game Framework: MVC
+
 [MVC in Wikipedia](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
 	* Models: Store all objects in the game.
 	* View: Take Models as input and render all objects
@@ -90,6 +98,7 @@ As there are certain hidden information such as the gravity field of a planet an
 * Guideline
 	* Guideline is composed of line segments, which is stored in a sf::VertexArray vector. And the points representing the dotted lines are stored in another vector of sf::Vector2f
 	* The collision is precomputed based on the direction of Billy.
+
 ####Challenges and solutions
 * __Make a flexible framework__
 We realized that make a framework is important to the game, especially when we want to slowly grow the game to certain level. Instead of simply writing some running code, we carefully chose and implement the framework. It turns out to be a very effective one. It saves a lot of time and work. 
